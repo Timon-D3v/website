@@ -1,0 +1,39 @@
+{
+  "name": "website",
+  "version": "0.0.1",
+  "description": "This is the entire source code of the website timondev.vip and of all my projects.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timon-D3v/website.git"
+  },
+  "keywords": [
+    "Website",
+    "Portfolio",
+    "Nodejs",
+    "EJS"
+  ],
+  "author": "Timon Fiedler",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Timon-D3v/website/issues"
+  },
+  "homepage": "https://github.com/Timon-D3v/website#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "morgan": "^1.10.0"
+  }
+}

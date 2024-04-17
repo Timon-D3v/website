@@ -16,6 +16,7 @@ import { fileURLToPath } from "url";
 
 // Routes
 import routeRoot from "./routes/root.js";
+import routeOriginal from "./routes/original.js";
 
 
 
@@ -90,7 +91,11 @@ app.use(cors());
 
 // Set up routes
 app.use("/", routeRoot);
+app.use("/original", routeOriginal);
 
+app.get("*", (req, res) => {
+    res.render("./errors/error404.ejs", {requested: req.url});
+});
 
 
 if (ENVIRONMENT === "prod") {

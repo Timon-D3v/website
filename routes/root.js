@@ -36,10 +36,6 @@ router.get("/profile", async (req, res) => {
     };
 });
 
-router.get("*", (req, res) => {
-    res.render("./errors/error404.ejs", {requested: req.url});
-});
-
 
 
 

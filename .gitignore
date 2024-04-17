@@ -132,3 +132,7 @@ dist
 # Custom
 TODO.txt
 public/zmt/vid/
+cert/
+backend/*/backup/
+backend/backup/
+logs/

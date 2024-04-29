@@ -22,7 +22,7 @@ As a full stack web developer, I'm well-versed in HTML, CSS, and JavaScript for 
 
 ## 🔗 Links
 
-- [My Portfolio](https://timondev.vip)
+- [My Portfolio](https://timondev.com)
 
 - [My Instagram](https://www.instagram.com/timon.dev/)
 

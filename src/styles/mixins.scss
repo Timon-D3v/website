@@ -1,0 +1,35 @@
+@use "./variables.scss" as *;
+@use "./colors.scss" as clr;
+@use "./fonts.scss" as font;
+@use "sass:color";
+
+
+@mixin main-button($bg-color, $size: 40px, $text-color: clr.$text-50) {
+    display: block;
+    border: none;
+    font-size: calc($size / 2.5);
+    font-weight: 700;
+    font-family: font.$text;
+    color: $text-color;
+    background-color: $bg-color;
+    text-transform: uppercase;
+    height: $size;
+    padding: 0 calc($size / 2);
+    border-radius: calc($size / 2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    line-height: 1;
+    line-break: strict;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:hover {
+        background-color: color.adjust($bg-color, $lightness: -10%);
+    }
+    &:active {
+        background-color: color.adjust($bg-color, $lightness: -20%);
+    }
+}

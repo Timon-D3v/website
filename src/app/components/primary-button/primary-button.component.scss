@@ -1,0 +1,11 @@
+@use "../../../styles/mixins.scss" as mixin;
+@use "../../../styles/colors.scss" as color;
+@use "../../../styles/variables.scss" as *;
+@use "../../../styles/keyframes.scss";
+
+button {
+    @include mixin.main-button(color.$primary-500, calc($header-height * 0.6));
+    &:hover {
+        animation: rubberBand 1s ease-in-out;
+    }
+}

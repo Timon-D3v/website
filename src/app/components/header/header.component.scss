@@ -1,0 +1,100 @@
+@use "../../../styles/colors.scss" as color;
+@use "../../../styles/variables.scss" as *;
+@use "../../../styles/fonts.scss" as font;
+@use "../../../styles/keyframes.scss";
+@use "sass:list";
+
+$header-content-height: calc($header-height * 0.8);
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc($header-height / 10) $padding-side;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $header-height;
+    background-color: color.$background-950;
+    box-shadow: 0 2px 5px rgb(115, 131, 140, 0.5);
+    z-index: 1000;
+
+    > a {
+        height: $header-content-height;
+        display: flex;
+        align-items: center;
+        gap: calc($header-height / 7.5);
+        cursor: pointer;
+
+        span {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            font-family: font.$title;
+            font-weight: 900;
+            font-size: calc($header-height / 2);
+            transform: translateY(calc($header-height / 40));
+        }
+    }
+}
+
+.logo-wrapper {
+    z-index: 2;
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+
+    img {
+        position: relative;
+        height: 100%;
+        z-index: 2;
+        aspect-ratio: 1 / 1;
+
+        &:hover {
+            animation: header-hue-360 2s infinite linear;
+        }
+
+        &:active {
+            transition: all 0.1s ease;
+            transform: scale(0.9, 0.9);
+        }
+    }
+}
+
+.particles {
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    &::after {
+        content: "";
+        position: absolute;
+        left: -455px;
+        top: -455px;
+        min-width: 1000px;
+        min-height: 1000px;
+        pointer-events: none;
+        transition: background-size ease-in-out 0.5s,
+            background-position ease-in-out 0.5s;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        z-index: 1;
+    }
+}
+
+img:hover ~ .particles::after {
+    $gradients: ();
+    @for $i from 1 through 70 {
+        $gradients: list.append($gradients, radial-gradient(circle, white 45%, transparent 45%), comma);
+    }
+    animation: header-bg-animation 1.65s linear forwards,
+        header-hue-360 2s linear infinite;
+    background-image: $gradients;
+}

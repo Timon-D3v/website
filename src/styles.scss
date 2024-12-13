@@ -1,21 +1,23 @@
 @use "./styles/fonts.scss" as font;
-@use "./styles/colors.scss" as color;
+@use "./styles/colors.scss" as clr;
+@use "./styles/variables.scss" as *;
+@use "sass:color" as color;
 
 
 
 body {
-    font-family: font.$text;
-    color: color.$text-50;
-    background-color: color.$background-950;
+    font-family: $text;
+    color: clr.$text-50;
+    background-color: clr.$background-950;
     margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: font.$title;
+    font-family: $title;
 }
 
 *::selection {
-    background-color: rgba(color.$accent-400, 0.5);
+    background-color: rgba(clr.$accent-400, 0.5);
 }
 
 img::selection {

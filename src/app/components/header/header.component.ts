@@ -1,14 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from "@angular/core";
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
-import { LoginButtonComponent } from '../login-button/login-button.component';
-import { HomeCounterService } from '../../services/home-counter.service';
-import { catchError, pipe } from 'rxjs';
+import { LoginButtonComponent } from "../login-button/login-button.component";
+import { HomeCounterService } from "../../services/home-counter.service";
+import { catchError, pipe } from "rxjs";
 
 @Component({
-    selector: 'app-header',
+    selector: "app-header",
     imports: [PrimaryButtonComponent, LoginButtonComponent],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
+    templateUrl: "./header.component.html",
+    styleUrl: "./header.component.scss"
 })
 export class HeaderComponent implements OnInit {
     homeClicked = signal(0);

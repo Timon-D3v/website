@@ -3,40 +3,28 @@ import {
     createNodeRequestHandler,
     isMainModule,
     writeResponseToNodeResponse,
-} from '@angular/ssr/node';
-import express from 'express';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import CONFIG from './config';
+} from "@angular/ssr/node";
+import express from "express";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import CONFIG from "./config";
 import apiRouter from "./router/api.router";
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-const browserDistFolder = resolve(serverDistFolder, '../browser');
+const publicDistFolder = resolve(serverDistFolder, "../public");
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
-
-/**
- * Serve static files from /browser
+ * Serve static files from /public
  */
 app.use(
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
-    redirect: false,
-  })
+    express.static(publicDistFolder, {
+        maxAge: "1y",
+        index: false,
+        redirect: false,
+    })
 );
 
 app.use("/api", apiRouter);
@@ -44,7 +32,7 @@ app.use("/api", apiRouter);
 /**
  * Handle all other requests by rendering the Angular application.
  */
-app.use('/**', (req, res, next) => {
+app.use("/**", (req, res, next) => {
     angularApp
         .handle(req)
         .then((response) =>

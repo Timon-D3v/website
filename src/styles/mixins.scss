@@ -1,6 +1,5 @@
 @use "./variables.scss" as *;
 @use "./colors.scss" as clr;
-@use "./fonts.scss" as font;
 @use "sass:color";
 
 
@@ -9,7 +8,7 @@
     border: none;
     font-size: calc($size / 2.5);
     font-weight: 700;
-    font-family: font.$text;
+    font-family: $text;
     color: $text-color;
     background-color: $bg-color;
     text-transform: uppercase;

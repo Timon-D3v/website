@@ -1,6 +1,5 @@
 @use "../../../styles/colors.scss" as color;
 @use "../../../styles/variables.scss" as *;
-@use "../../../styles/fonts.scss" as font;
 @use "../../../styles/keyframes.scss";
 @use "sass:list";
 
@@ -34,7 +33,7 @@ header {
             height: 100%;
             display: inline-flex;
             align-items: center;
-            font-family: font.$title;
+            font-family: $title;
             font-weight: 900;
             font-size: calc($header-height / 2);
             transform: translateY(calc($header-height / 40));

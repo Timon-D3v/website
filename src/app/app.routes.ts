@@ -7,6 +7,6 @@ export const routes: Routes = [
         loadComponent: async () => {
             const component = await import("./home/home.component");
             return component.HomeComponent;
-        },
+        }
     }
 ];

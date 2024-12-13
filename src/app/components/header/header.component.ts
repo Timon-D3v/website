@@ -2,11 +2,12 @@ import { Component, inject, OnInit, signal } from "@angular/core";
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
 import { LoginButtonComponent } from "../login-button/login-button.component";
 import { HomeCounterService } from "../../services/home-counter.service";
-import { catchError, pipe } from "rxjs";
+import { catchError } from "rxjs";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-header",
-    imports: [PrimaryButtonComponent, LoginButtonComponent],
+    imports: [PrimaryButtonComponent, LoginButtonComponent, RouterLink],
     templateUrl: "./header.component.html",
     styleUrl: "./header.component.scss"
 })

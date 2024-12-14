@@ -1,1 +1,20 @@
-<p>footer works!</p>
+<footer>
+    <div class="contact">
+        <app-footer-element [text]="appName" [title]="appName" [bold]="true" class="special-effect"></app-footer-element>
+        <span>|</span>
+        <app-footer-element [text]="appEmail" [title]="'Contact Me :)'" routerLink="/contact" class="cursor-pointer"></app-footer-element>
+    </div>
+    <div class="social">
+        <app-socials-icon [type]="'Website'" [theme]="'white'"></app-socials-icon>
+        <app-socials-icon [type]="'Instagram'" [theme]="'white'"></app-socials-icon>
+        <app-socials-icon [type]="'LinkedIn'" [theme]="'white'"></app-socials-icon>
+        <app-socials-icon [type]="'GitHub'" [theme]="'white'"></app-socials-icon>
+    </div>
+    <div class="cc">
+        <app-footer-element [text]="copyRight"></app-footer-element>
+        <span>|</span>
+        <app-footer-element [text]="'Impressum'" [title]="'Impressum'" routerLink="/imprint" class="cursor-pointer"></app-footer-element>
+        <span>|</span>
+        <app-footer-element [text]="'Datenschutzerklärung'" [title]="'Datenschutzerklärung'" routerLink="/privacy" class="cursor-pointer"></app-footer-element>
+    </div>
+</footer>

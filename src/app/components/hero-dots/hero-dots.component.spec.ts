@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { HeroDotsComponent } from './hero-dots.component';
+import { HeroDotsComponent } from "./hero-dots.component";
 
-describe('HeroDotsComponent', () => {
-  let component: HeroDotsComponent;
-  let fixture: ComponentFixture<HeroDotsComponent>;
+describe("HeroDotsComponent", () => {
+    let component: HeroDotsComponent;
+    let fixture: ComponentFixture<HeroDotsComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HeroDotsComponent]
-    })
-    .compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [HeroDotsComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(HeroDotsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(HeroDotsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

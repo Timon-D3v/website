@@ -4,7 +4,7 @@ import { HomeCount } from "../../@types/homeCount.type";
 import { ApiResponse } from "../../@types/apiResponse.type";
 
 @Injectable({
-    providedIn: "root"
+    providedIn: "root",
 })
 export class HomeCounterService {
     http = inject(HttpClient);

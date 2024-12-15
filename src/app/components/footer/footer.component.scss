@@ -1,6 +1,4 @@
-@use "../../../styles/variables.scss" as *;
-@use "../../../styles/colors.scss" as clr;
-@use "../../../styles/functions.scss" as *;
+@use "../../../styles/index" as *;
 
 $height-4: calc($footer-height / 4);
 
@@ -9,7 +7,7 @@ footer {
     width: 100%;
     position: relative;
     height: $footer-height;
-    background: linear-gradient(var(--angle), clr.$accent-800 8%, clr.$secondary-700 100%);
+    background: linear-gradient(var(--angle), $accent-800 8%, $secondary-700 100%);
     box-sizing: border-box;
     padding-top: $height-4;
 
@@ -20,7 +18,7 @@ footer {
         left: 0;
         width: 100%;
         height: $height-4;
-        background-color: clr.$background-950;
+        background-color: $background-950;
     }
 }
 
@@ -31,7 +29,7 @@ footer {
     align-items: stretch;
     height: calc($height-4 / 3 * 2);
     margin: calc($height-4 / 10) $padding-side;
-    border-bottom: solid 1px clr.$background-50;
+    border-bottom: solid 1px $background-50;
     gap: calc($footer-height / 35);
 }
 

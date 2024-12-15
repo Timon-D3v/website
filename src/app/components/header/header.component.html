@@ -1,16 +1,18 @@
 <header>
     <a class="logo-link" routerLink="/">
         <div class="logo-wrapper">
-            <img src="/svg/logo.svg" alt="Timon.dev Logo" class="times-clicked-{{ homeClicked() }}" (click)="increaseHomeCounter()">
+            <img src="/svg/logo.svg" alt="Timon.dev Logo" class="times-clicked-{{ homeClicked() }} special-effect" (click)="increaseHomeCounter()" />
             <div class="particles"></div>
         </div>
         <span>Timon.dev</span>
     </a>
 
     <div class="header-buttons">
-        <app-primary-button [text]="'Contact Me'" [title]="'Contact Me!'"></app-primary-button>
-        <!-- If is logged in: link to cloud
-         else: -->
-        <app-login-button></app-login-button>
+        <app-primary-button [text]="'Contact Me'" [title]="'Contact Me!'" routerLink="/contact"></app-primary-button>
+        @if (authService.isLoggedIn()) {
+            <app-profile-button></app-profile-button>
+        } @else {
+            <app-login-button></app-login-button>
+        }
     </div>
 </header>

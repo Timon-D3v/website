@@ -5,9 +5,7 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
     providedIn: "root",
 })
 export class SiteTitleService {
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: any
-    ) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
     getTitleFromRoute(route: string): string {
         return route + " | Timon.dev";

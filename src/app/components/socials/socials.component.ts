@@ -4,8 +4,6 @@ import { Component } from "@angular/core";
     selector: "app-socials",
     imports: [],
     templateUrl: "./socials.component.html",
-    styleUrl: "./socials.component.scss"
+    styleUrl: "./socials.component.scss",
 })
-export class SocialsComponent {
-
-}
+export class SocialsComponent {}

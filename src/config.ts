@@ -16,4 +16,4 @@ export default {
     IMAGEKIT_PUBLIC_KEY: process.env["IMAGEKIT_PUBLIC_KEY"],
     IMAGEKIT_PRIVATE_KEY: process.env["IMAGEKIT_PRIVATE_KEY"],
     ORIGIN: process.env["ORIGIN"],
-}
+};

@@ -4,7 +4,7 @@ import { Component, input } from "@angular/core";
     selector: "app-primary-button",
     imports: [],
     templateUrl: "./primary-button.component.html",
-    styleUrl: "./primary-button.component.scss"
+    styleUrl: "./primary-button.component.scss",
 })
 export class PrimaryButtonComponent {
     type = input("button");

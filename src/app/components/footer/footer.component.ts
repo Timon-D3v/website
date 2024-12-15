@@ -9,12 +9,10 @@ import { SocialsIconComponent } from "../socials-icon/socials-icon.component";
     selector: "app-footer",
     imports: [FooterElementComponent, RouterLink, SocialsIconComponent],
     templateUrl: "./footer.component.html",
-    styleUrl: "./footer.component.scss"
+    styleUrl: "./footer.component.scss",
 })
 export class FooterComponent implements OnInit {
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: any
-    ) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
     screenWith = signal(0);
     currentX = signal(0);
@@ -25,9 +23,7 @@ export class FooterComponent implements OnInit {
     appEmail = publicConfig.EMAIL;
     copyRight = publicConfig.COPYRIGHT;
 
-
     ngOnInit() {
-
         if (isPlatformBrowser(this.platformId)) {
             this.styleElement = document.createElement("style");
 
@@ -81,14 +77,14 @@ export class FooterComponent implements OnInit {
     }
 
     degreeToRadian(degree: number): number {
-        return degree * Math.PI / 180;
+        return (degree * Math.PI) / 180;
     }
 
     maxAngle(): number {
         const hypotenuse = Math.sqrt(Math.pow(this.screenWith(), 2) + Math.pow(this.maxHeight(), 2));
         const scale = this.screenWith() / hypotenuse;
         const rad = Math.acos(scale);
-        return rad * 180 / Math.PI;
+        return (rad * 180) / Math.PI;
     }
 
     exponentialEase(value: number, power: number): number {
@@ -102,17 +98,17 @@ export class FooterComponent implements OnInit {
     clipBoxPath() {
         const isLeft = this.isMouseLeft();
         const pxFromCenter = isLeft ? this.screenWith() / 2 - this.currentX() : this.currentX() - this.screenWith() / 2;
-        
+
         let percentage = pxFromCenter / (this.screenWith() / 2);
         percentage = this.reverseExponentialEase(percentage, 2);
 
         const angle = percentage * this.maxAngle();
         const height = this.triangleHeight(angle);
-        const clipPercentage = (this.maxHeight() - height) / this.maxHeight() * 100;
+        const clipPercentage = ((this.maxHeight() - height) / this.maxHeight()) * 100;
 
         if (isPlatformBrowser(this.platformId)) {
-            let clipPath = this.clipPathStart
-            
+            let clipPath = this.clipPathStart;
+
             if (isLeft) clipPath += `${clipPercentage}%, 0% 100%)`;
             else clipPath += `100%, 0% ${clipPercentage}%)`;
 
@@ -122,7 +118,6 @@ export class FooterComponent implements OnInit {
                     transform: translateY(${-clipPercentage / 2}px);
                 }`;
             }
-            
         }
     }
 }

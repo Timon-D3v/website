@@ -10,26 +10,26 @@ export default {
                 type: "GitHub",
                 commonName: "GitHub",
                 url: "https://github.com/Timon-D3v",
-                iconUrl: "/socials/logo_github_"
+                iconUrl: "/socials/logo_github_",
             } as SocialsIconInfo,
             LinkedIn: {
                 type: "LinkedIn",
                 commonName: "LinkedIn",
                 url: "https://www.linkedin.com/in/timon-fiedler/",
-                iconUrl: "/socials/logo_linkedin_"
+                iconUrl: "/socials/logo_linkedin_",
             } as SocialsIconInfo,
             Instagram: {
                 type: "Instagram",
                 commonName: "Instagram",
                 url: "https://www.instagram.com/timon.dev/",
-                iconUrl: "/socials/logo_instagram_"
+                iconUrl: "/socials/logo_instagram_",
             } as SocialsIconInfo,
             Website: {
                 type: "Website",
                 commonName: "Website",
                 url: "https://www.timondev.com",
-                iconUrl: "/socials/logo_website_"
-            } as SocialsIconInfo
-        } as Record<string, SocialsIconInfo>
-    }
-}
+                iconUrl: "/socials/logo_website_",
+            } as SocialsIconInfo,
+        } as Record<string, SocialsIconInfo>,
+    },
+};

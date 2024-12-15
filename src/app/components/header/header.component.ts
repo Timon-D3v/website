@@ -4,16 +4,19 @@ import { LoginButtonComponent } from "../login-button/login-button.component";
 import { HomeCounterService } from "../../services/home-counter.service";
 import { catchError } from "rxjs";
 import { RouterLink } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { ProfileButtonComponent } from "../profile-button/profile-button.component";
 
 @Component({
     selector: "app-header",
-    imports: [PrimaryButtonComponent, LoginButtonComponent, RouterLink],
+    imports: [PrimaryButtonComponent, LoginButtonComponent, RouterLink, ProfileButtonComponent],
     templateUrl: "./header.component.html",
-    styleUrl: "./header.component.scss"
+    styleUrl: "./header.component.scss",
 })
 export class HeaderComponent implements OnInit {
     homeClicked = signal(0);
     homeCountService = inject(HomeCounterService);
+    authService = inject(AuthService);
 
     ngOnInit(): void {
         this.getHomeCount();
@@ -22,10 +25,12 @@ export class HeaderComponent implements OnInit {
     getHomeCount(): void {
         const request = this.homeCountService.getCurrentCount();
 
-        request.pipe(catchError((error) => {
-            console.error(error);
-            return error;
-        }));
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
 
         request.subscribe((data: any) => {
             if (data.error) return console.error(data.message);
@@ -37,15 +42,17 @@ export class HeaderComponent implements OnInit {
     increaseHomeCounter() {
         const request = this.homeCountService.incrementCount();
 
-        request.pipe(catchError((error) => {
-            console.error(error);
-            return error;
-        }));
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
 
         request.subscribe((data: any) => {
             if (data.error) return console.error(data.message);
 
-            this.homeClicked.update(value => value + 1);
+            this.homeClicked.update((value) => value + 1);
             console.log(`The Home Counter has already been clicked ${this.homeClicked()} times.`);
         });
     }

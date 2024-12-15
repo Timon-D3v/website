@@ -3,4 +3,4 @@ export type SocialsIconInfo = {
     commonName: string;
     url: string;
     iconUrl: string;
-}
+};

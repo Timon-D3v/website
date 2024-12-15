@@ -1,16 +1,12 @@
-@use "./styles/fonts.scss" as font;
-@use "./styles/colors.scss" as clr;
-@use "./styles/variables.scss" as *;
-@use "./styles/functions.scss" as *;
-@use "./styles/keyframes.scss";
-@use "sass:color" as color;
+@use "./styles/index" as *;
+@use "sass:color";
 
 
 
 body {
     font-family: $text;
-    color: clr.$text-50;
-    background-color: clr.$background-950;
+    color: $text-50;
+    background-color: $background-950;
     margin: 0;
 }
 
@@ -29,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 *::selection {
-    background-color: rgba(clr.$accent-400, 0.5);
+    background-color: rgba($accent-400, 0.5);
 }
 
 img::selection {
@@ -37,9 +33,25 @@ img::selection {
 }
 
 .special-effect:hover {
-    animation: header-hue-360 2s infinite linear;
+    animation: special-effect 2s infinite linear;
 }
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+@keyframes special-effect {
+    0% {
+        filter: invert(1) invert(49%) sepia(98%) saturate(2436%) hue-rotate(89deg) brightness(124%) contrast(122%) hue-rotate(0deg);
+    }
+
+    100% {
+        filter: invert(1) invert(49%) sepia(98%) saturate(2436%) hue-rotate(89deg) brightness(124%) contrast(122%) hue-rotate(360deg);
+    }
 }

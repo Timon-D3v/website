@@ -10,4 +10,5 @@ export class PrimaryButtonComponent {
     type = input("button");
     text = input("");
     title = input("");
+    size = input("");
 }

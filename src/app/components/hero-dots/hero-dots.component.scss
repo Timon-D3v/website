@@ -1,0 +1,18 @@
+@use "../../../styles/index" as *;
+
+
+
+object {
+    display: grid;
+    grid-template-columns: repeat(4, calc($header-height / 10));
+    grid-template-rows: repeat(8, calc($header-height / 10));
+    place-items: center;
+    gap: calc($header-height / 10);
+}
+
+div {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background-color: $text-50;
+}

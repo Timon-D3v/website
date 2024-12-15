@@ -1,0 +1,21 @@
+@use "../../../styles/index" as *;
+@use "sass:color";
+
+
+
+button {
+    @include main-button($secondary-500, var(--size, calc($header-height * 0.6)));
+
+    background-color: transparent;
+    border: 1px solid $secondary-500;
+
+    &:hover {
+        transform: skewX(-5deg);
+        border-color: color.adjust($secondary-500, $lightness: -10%);
+    }
+
+    &:active {
+        transform: skewX(-10deg);
+        border-color: color.adjust($secondary-500, $lightness: -20%);
+    }
+}

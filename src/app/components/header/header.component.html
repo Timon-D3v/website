@@ -8,7 +8,7 @@
     </a>
 
     <div class="header-buttons">
-        <app-primary-button [text]="'Contact Me'" [title]="'Contact Me!'" routerLink="/contact"></app-primary-button>
+        <app-primary-button [text]="'Kontaktieren'" [title]="'Kontaktiere mich!'" routerLink="/contact"></app-primary-button>
         @if (authService.isLoggedIn()) {
             <app-profile-button></app-profile-button>
         } @else {

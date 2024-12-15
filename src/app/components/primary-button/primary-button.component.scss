@@ -3,9 +3,12 @@
 
 
 button {
-    @include main-button($primary-500, calc($header-height * 0.6));
+    @include main-button($primary-500, var(--size, calc($header-height * 0.6)));
     &:hover {
         animation: rubberBand 1s ease-in-out;
+    }
+    &::selection {
+        background-color: rgba($secondary-500, 0.75);
     }
 }
 

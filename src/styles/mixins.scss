@@ -2,7 +2,6 @@
 @use "./colors.scss" as clr;
 @use "sass:color";
 
-
 @mixin main-button($bg-color, $size: 40px, $text-color: clr.$text-50) {
     display: block;
     border: none;

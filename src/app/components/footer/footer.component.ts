@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from "@angular/common";
-import { Component, Inject, OnInit, PLATFORM_ID, signal } from "@angular/core";
+import { Component, inject, Inject, OnInit, PLATFORM_ID, signal } from "@angular/core";
 import { FooterElementComponent } from "../footer-element/footer-element.component";
 import publicConfig from "../../../public.config";
 import { RouterLink } from "@angular/router";
@@ -12,7 +12,7 @@ import { SocialsIconComponent } from "../socials-icon/socials-icon.component";
     styleUrl: "./footer.component.scss",
 })
 export class FooterComponent implements OnInit {
-    constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+    platformId = inject(PLATFORM_ID);
 
     screenWith = signal(0);
     currentX = signal(0);

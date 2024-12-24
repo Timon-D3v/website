@@ -1,8 +1,8 @@
 @use "../../../styles/index" as *;
 
-
-
-a, img {
+a,
+img {
+    display: block;
     height: 100%;
     width: 100%;
     aspect-ratio: 1 / 1;

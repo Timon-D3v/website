@@ -1,7 +1,5 @@
 @use "../../../styles/index" as *;
 
-
-
 object {
     display: grid;
     grid-template-columns: repeat(4, calc($header-height / 10));

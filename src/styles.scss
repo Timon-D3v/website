@@ -1,8 +1,6 @@
 @use "./styles/index" as *;
 @use "sass:color";
 
-
-
 body {
     font-family: $text;
     color: $text-50;
@@ -20,7 +18,12 @@ main::before {
     height: $header-height;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: $title;
 }
 
@@ -43,8 +46,6 @@ img::selection {
 .hidden {
     display: none;
 }
-
-
 
 @keyframes special-effect {
     0% {

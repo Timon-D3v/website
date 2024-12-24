@@ -30,6 +30,12 @@ export default {
                 url: "https://www.timondev.com",
                 iconUrl: "/socials/logo_website_",
             } as SocialsIconInfo,
+            Email: {
+                type: "Email",
+                commonName: "Email",
+                url: "mailto:fiedlertimon@gmail.com",
+                iconUrl: "/socials/logo_email_",
+            } as SocialsIconInfo,
         } as Record<string, SocialsIconInfo>,
     },
 };

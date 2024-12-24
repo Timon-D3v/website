@@ -1,7 +1,5 @@
 @use "../../../styles/index" as *;
 
-
-
 button {
     @include main-button($primary-500, var(--size, calc($header-height * 0.6)));
     &:hover {
@@ -11,8 +9,6 @@ button {
         background-color: rgba($secondary-500, 0.75);
     }
 }
-
-
 
 @keyframes rubberBand {
     from {

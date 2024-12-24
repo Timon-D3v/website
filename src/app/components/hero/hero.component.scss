@@ -3,8 +3,6 @@
 
 $font-size: 1.3rem;
 
-
-
 .hero {
     width: 100%;
     min-height: calc(100vh - $header-height);
@@ -53,17 +51,19 @@ $font-size: 1.3rem;
 
 .right {
     min-width: 500px;
+    margin-top: calc($font-size * 2);
+    aspect-ratio: 1 / 1;
 
     div > img {
         width: 100%;
         height: 100%;
         object-fit: contain;
-        object-position: center calc($font-size * 2);
+        object-position: center top;
     }
 
     .layer__2 img {
         background-color: $primary-500;
-        object-position: center calc($font-size * -3);
+        object-position: center calc($font-size * -5);
         position: absolute;
         width: 100%;
         height: 200%;
@@ -76,8 +76,8 @@ $font-size: 1.3rem;
         mask-size: contain;
         -webkit-mask-repeat: no-repeat;
         mask-repeat: no-repeat;
-        -webkit-mask-position: center calc($font-size * 2);
-        mask-position: center calc($font-size * 2);
+        -webkit-mask-position: center top;
+        mask-position: center top;
         position: relative;
         overflow: hidden;
     }
@@ -85,7 +85,7 @@ $font-size: 1.3rem;
     .layer__3 {
         .vertical {
             position: absolute;
-            top: 60%;
+            top: 40%;
             left: 10%;
         }
 

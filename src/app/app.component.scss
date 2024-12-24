@@ -1,0 +1,10 @@
+app-footer {
+    position: relative;
+    z-index: 1;
+}
+
+main {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
+}

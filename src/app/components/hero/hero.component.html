@@ -1,18 +1,3 @@
-<!--
-- two sides
-left:
-    - small "Hey du"
-    - big "Neue Website?<br>Timon ist schon Bereit!"
-    - subtitle: "Ich bin Timon, ein Webentwickler aus Zürich. Ich helfe dir dabei, deine Ideen in die digitale Welt zu bringen."
-    - button: "Los geht's!"
-right:
-    layer1: backround blob colorful
-    layer2: my dark picture from the fotoshoot with and blob outline
-    layer3: vierecke mit runden punkten neutrale farbe (wie im bild)
-    layer4: 3 popups mit icons und text
-        inhalt: coole sachen über mich => stärken / fun facts
-
--->
 <section aria-label="hero" class="hero">
     <div class="left">
         <p class="greetings">Willkommen, Fremder</p>
@@ -41,21 +26,5 @@ right:
             <app-hero-dots class="vertical"></app-hero-dots>
             <app-hero-dots class="horizontal"></app-hero-dots>
         </div>
-        <div class="layer__4">
-            <app-hero-popup [iconUrl]="'/svg/rocket.svg'" [text]="''" [title]="''"></app-hero-popup>
-            <app-hero-popup [iconUrl]="'/svg/diamond.svg'" [text]="''" [title]="''"></app-hero-popup>
-            <app-hero-popup [iconUrl]="'/svg/code.svg'" [text]="''" [title]="''"></app-hero-popup>
-        </div>
     </div>
 </section>
-
-<!--
-components
-
-    button
-    cool text span
-    vierecke mit punkten
-    popups
-
-scss file
-    for the layer section-->

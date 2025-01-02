@@ -1,9 +1,10 @@
 <div class="wrapper">
     <h2>Meine Projekte</h2>
-    <div class="carousel" [style]="{ width: (elements.length * 100) + 'vw' }">
+    <div class="carousel" [style]="{ width: elements.length * 100 + 'vw' }">
         @for (element of elements; track element.id) {
             <div [class]="'carousel__item id-' + element.id">
                 <app-project [id]="element.id" [title]="element.title" [description]="element.description" [image]="element.image"></app-project>
             </div>
         }
+    </div>
 </div>

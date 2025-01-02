@@ -11,4 +11,5 @@ export class PrimaryButtonComponent {
     text = input("");
     title = input("");
     size = input("");
+    disabled = input(false);
 }

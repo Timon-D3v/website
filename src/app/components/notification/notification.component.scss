@@ -1,0 +1,99 @@
+@use "../../../styles/_index.scss" as *;
+
+.wrapper {
+    border: 1px solid $secondary-500;
+    background-color: $background-900;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    border-top-width: 3px;
+    padding: 1.25rem;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.content {
+    display: block;
+    padding-left: 1.25rem;
+}
+
+img {
+    height: 2rem;
+    width: 2rem;
+    aspect-ratio: 1 / 1;
+}
+
+.close {
+    display: none;
+}
+
+.closable .close {
+    display: block;
+    height: 1rem;
+    width: 1rem;
+    aspect-ratio: 1 / 1;
+    padding-left: 1.25rem;
+    cursor: pointer;
+}
+
+h2 {
+    line-height: 1;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-top: 0;
+}
+
+p {
+    line-height: 1;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.wrapper.info {
+    border-top-color: $primary-500;
+}
+
+.wrapper.success {
+    border-top-color: $success-500;
+}
+
+.wrapper.warn {
+    border-top-color: $warning-500;
+}
+
+.wrapper.error {
+    border-top-color: $error-500;
+}
+
+.wrapper.neutral {
+    fill: $secondary-500;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    fill: $secondary-500;
+
+    &.info:hover {
+        fill: $primary-500;
+    }
+
+    &.success:hover {
+        fill: $success-500;
+    }
+
+    &.warn:hover {
+        fill: $warning-500;
+    }
+
+    &.error:hover {
+        fill: $error-500;
+    }
+
+    &.neutral:hover {
+        fill: $secondary-500;
+    }
+}

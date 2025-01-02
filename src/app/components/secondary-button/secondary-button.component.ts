@@ -11,4 +11,5 @@ export class SecondaryButtonComponent {
     text = input("");
     title = input("");
     size = input("");
+    disabled = input(false);
 }

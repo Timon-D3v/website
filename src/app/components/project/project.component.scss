@@ -1,6 +1,5 @@
 @use "../../../styles/index" as *;
 
-
 .wrapper {
     --box-shadow-blur: 30px;
     --box-shadow-spread: 2px;
@@ -59,7 +58,6 @@
         text-wrap: pretty;
     }
 }
-
 
 @keyframes moveBoxShadow {
     0% {

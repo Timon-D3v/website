@@ -16,4 +16,9 @@ button {
         transform: skewX(-10deg);
         border-color: color.adjust($secondary-500, $lightness: -20%);
     }
+
+    &:disabled:hover,
+    &:disabled:active {
+        transform: none;
+    }
 }

@@ -27,6 +27,19 @@ h6 {
     font-family: $title;
 }
 
+a {
+    color: $primary-500;
+
+    &:hover {
+        color: $primary-400;
+    }
+
+    &::selection {
+        background-color: rgba($secondary-800, 0.5);
+        color: $primary-300;
+    }
+}
+
 *::selection {
     background-color: rgba($accent-400, 0.5);
 }
@@ -44,7 +57,7 @@ img::selection {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 @keyframes special-effect {

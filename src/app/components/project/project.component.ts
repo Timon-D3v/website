@@ -21,26 +21,34 @@ export class ProjectComponent {
     }
 
     boxShadowEaseIn() {
-        gsap.fromTo(document.getElementById(this.wrapperId()), {
-            "--box-shadow-blur": "30px",
-            "--box-shadow-spread": "2px"
-        }, {
-            "--box-shadow-blur": "40px",
-            "--box-shadow-spread": "10px",
-            duration: 0.5,
-            ease: "power2.inOut"
-        });
+        gsap.fromTo(
+            document.getElementById(this.wrapperId()),
+            {
+                "--box-shadow-blur": "30px",
+                "--box-shadow-spread": "2px",
+            },
+            {
+                "--box-shadow-blur": "40px",
+                "--box-shadow-spread": "10px",
+                "duration": 0.5,
+                "ease": "power2.inOut",
+            },
+        );
     }
 
     boxShadowEaseOut() {
-        gsap.fromTo(document.getElementById(this.wrapperId()), {
-            "--box-shadow-blur": "40px",
-            "--box-shadow-spread": "10px"
-        }, {
-            "--box-shadow-blur": "30px",
-            "--box-shadow-spread": "2px",
-            duration: 0.5,
-            ease: "power2.inOut"
-        });
+        gsap.fromTo(
+            document.getElementById(this.wrapperId()),
+            {
+                "--box-shadow-blur": "40px",
+                "--box-shadow-spread": "10px",
+            },
+            {
+                "--box-shadow-blur": "30px",
+                "--box-shadow-spread": "2px",
+                "duration": 0.5,
+                "ease": "power2.inOut",
+            },
+        );
     }
 }

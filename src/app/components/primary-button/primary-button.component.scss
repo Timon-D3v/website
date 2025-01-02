@@ -8,6 +8,9 @@ button {
     &::selection {
         background-color: rgba($secondary-500, 0.75);
     }
+    &:disabled:hover {
+        animation: none;
+    }
 }
 
 @keyframes rubberBand {

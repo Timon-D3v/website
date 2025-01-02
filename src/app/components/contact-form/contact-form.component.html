@@ -1,0 +1,25 @@
+<form [formGroup]="contactForm" (submit)="onSubmit()">
+    <div class="container full top">
+        <h1>Kontaktiere mich</h1>
+        <p>Du kannst mich entweder durch das Formular unter, oder direkt via E-Mail unter <a href="mailto:{{ email }}" target="_blank">{{ email }}</a> erreichen.</p>
+    </div>
+    <div class="container">
+        <label for="name">Name</label>
+        <input type="text" id="name" title="Dein Name" formControlName="nameControl" required />
+    </div>
+    <div class="container">
+        <label for="family_name">Nachname</label>
+        <input type="text" id="family_name" title="Dein Nachname" formControlName="familyNameControl" required />
+    </div>
+    <div class="container full">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" title="Deine E-Mail-Adresse" formControlName="emailControl" required />
+    </div>
+    <div class="container full">
+        <label for="message">Nachricht</label>
+        <textarea id="message" title="Deine Nachricht an mich" formControlName="messageControl" required></textarea>
+    </div>
+    <div class="container full center">
+        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Nachricht abschicken'" [disabled]="disabledButton()"></app-primary-button>
+    </div>
+</form>

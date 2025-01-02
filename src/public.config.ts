@@ -1,8 +1,10 @@
 import { SocialsIconInfo } from "./@types/socialsIconInfo.type";
 
 export default {
+    ORIGIN: "https://www.timondev.com",
     NAME: "Timon.dev",
     EMAIL: "info@timondev.com",
+    CONTACT_EMAIL: "fiedlertimon@gmail.com",
     COPYRIGHT: "© 2024 Timon Fiedler",
     SOCIALS: {
         ICONS: {
@@ -37,5 +39,20 @@ export default {
                 iconUrl: "/socials/logo_email_",
             } as SocialsIconInfo,
         } as Record<string, SocialsIconInfo>,
+    },
+    TEMPLATES: {
+        EMAIL: {
+            COLOR: "#2046df",
+            TITLE: "Nachricht über Kontaktformular",
+            MESSAGE_END: 'Diese Nachricht wurde über das Webseitenformular von <a href="https://www.timondev.com" style="color:#8c8c8c;">timondev.com</a> versendet.',
+            FOOTER: "Der Ersteller (Timon Fiedler) ist nicht verantwortlich für eventuellen Spam oder missbrauch jeglicher Art, welche durch den Endnutzer entstehen.",
+            FOOTER_2: "Bitte lass es mich wissen, wenn du denkst, dass dir diese E-Mail nicht zugestellt hätte werden sollen.",
+            URLS: {
+                INSTAGRAM: "/email/instagram.jpg",
+                GITHUB: "/email/github.jpg",
+                LINKEDIN: "/email/linkedin.jpg",
+                WEBSITE: "/email/website.jpg",
+            },
+        },
     },
 };

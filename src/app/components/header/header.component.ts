@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
         );
 
         request.subscribe((data: any) => {
-            if (data.error) return console.error(data.message);
+            if (data?.error) return console.error(data?.message);
 
             this.homeClicked.update((value) => value + 1);
             console.log(`The Home Counter has already been clicked ${this.homeClicked()} times.`);

@@ -32,6 +32,7 @@
     "gsap": "^3.12.5",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.5",
+    "node-mailjet": "^6.0.6",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "poisson-disk-sampling": "^2.3.1",

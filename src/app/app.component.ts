@@ -5,10 +5,11 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { timonjs_message } from "timonjs";
 import { SiteTitleService } from "./services/site-title.service";
 import { filter } from "rxjs";
+import { NotificationsWrapperComponent } from "./components/notifications-wrapper/notifications-wrapper.component";
 
 @Component({
     selector: "app-root",
-    imports: [RouterOutlet, HeaderComponent, FooterComponent],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, NotificationsWrapperComponent],
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.scss",
 })

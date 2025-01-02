@@ -30,4 +30,66 @@
     &:active {
         background-color: color.adjust($bg-color, $lightness: -20%);
     }
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        cursor: not-allowed;
+        background-color: color.adjust($bg-color, $blackness: 50%);
+        color: color.adjust($text-color, $lightness: -10%);
+    }
+}
+
+@mixin main-input($height, $width, $valid-color, $error-color, $text-color, $bg-color, $display-type: inline-block) {
+    width: $width;
+    height: $height;
+    box-sizing: border-box;
+    display: $display-type;
+    color: $text-color;
+    background-color: $bg-color;
+    border: calc($height / 15) solid transparent;
+    font-size: calc($height / 2.5);
+    line-height: 1;
+    padding: calc($height / 4) calc($height / 3);
+    transition: all 0.25s ease;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-within {
+        background-color: color.adjust($bg-color, $lightness: 10%);
+    }
+
+    &.ng-untouched,
+    &.ng-untouched.ng-invalid,
+    &.ng-untouched.ng-valid {
+        border-bottom-color: $text-color !important;
+    }
+
+    &:valid,
+    &:user-valid {
+        border-bottom-color: $valid-color;
+    }
+
+    &:invalid,
+    &:disabled,
+    &:user-invalid {
+        border-bottom-color: $error-color;
+    }
+
+    &.ng-invalid {
+        border-bottom-color: $error-color !important;
+    }
+
+    &.ng-valid {
+        border-bottom-color: $valid-color !important;
+    }
+
+    &:focus {
+        border-bottom-color: $valid-color;
+        outline: none;
+    }
+
+    &::placeholder {
+        color: color.adjust($text-color, $lightness: -10%);
+    }
 }

@@ -3,6 +3,7 @@ import { GradientTextComponent } from "../gradient-text/gradient-text.component"
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
 import { SecondaryButtonComponent } from "../secondary-button/secondary-button.component";
 import { HeroDotsComponent } from "../hero-dots/hero-dots.component";
+import { scrollToQuery } from "timonjs";
 
 @Component({
     selector: "app-hero",
@@ -10,4 +11,12 @@ import { HeroDotsComponent } from "../hero-dots/hero-dots.component";
     templateUrl: "./hero.component.html",
     styleUrl: "./hero.component.scss",
 })
-export class HeroComponent {}
+export class HeroComponent {
+    scrollToAbout() {
+        scrollToQuery("app-about-me");
+    }
+
+    scrollToContact() {
+        scrollToQuery("app-contact-form");
+    }
+}

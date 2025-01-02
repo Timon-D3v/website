@@ -1,0 +1,9 @@
+@use "../../styles/index" as *;
+
+h1, h2, h3, h4, p, ul {
+    padding: 0 $padding-side;
+}
+
+ul {
+    padding-left: calc($padding-side + 40px);
+}

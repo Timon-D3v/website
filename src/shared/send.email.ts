@@ -3,8 +3,6 @@ import { randomString, errorLog } from "timonjs";
 import CONFIG from "../config";
 import { EmailResponse } from "../@types/emailResponse.type";
 
-console.log(CONFIG.MAILJET_PUBLIC_KEY, CONFIG.MAILJET_PRIVATE_KEY);
-
 const mailjet = new Mailjet({
     apiKey: CONFIG.MAILJET_PUBLIC_KEY,
     apiSecret: CONFIG.MAILJET_PRIVATE_KEY,

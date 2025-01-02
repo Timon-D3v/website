@@ -34,4 +34,18 @@ export const routes: Routes = [
         },
         canActivate: [notAuthGuard],
     },
+    {
+        path: "imprint",
+        loadComponent: async () => {
+            const component = await import("./imprint/imprint.component");
+            return component.ImprintComponent;
+        },
+    },
+    {
+        path: "privacy",
+        loadComponent: async () => {
+            const component = await import("./privacy/privacy.component");
+            return component.PrivacyComponent;
+        },
+    },
 ];

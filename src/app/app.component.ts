@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { Router, RouterOutlet, NavigationEnd } from "@angular/router";
-import { HeaderComponent } from "./components/header/header.component";
-import { FooterComponent } from "./components/footer/footer.component";
 import { timonjs_message } from "timonjs";
-import { SiteTitleService } from "./services/site-title.service";
 import { filter } from "rxjs";
 import { NotificationsWrapperComponent } from "./components/notifications-wrapper/notifications-wrapper.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { SiteTitleService } from "./services/site-title.service";
+import { GsapService } from "./services/gsap.service";
 
 @Component({
     selector: "app-root",
@@ -14,13 +15,14 @@ import { NotificationsWrapperComponent } from "./components/notifications-wrappe
     styleUrl: "./app.component.scss",
 })
 export class AppComponent implements OnInit {
-    constructor(
-        private router: Router,
-        private siteTitleService: SiteTitleService,
-    ) {}
+    router = inject(Router);
+    siteTitleService = inject(SiteTitleService);
+    gsapService = inject(GsapService);
 
     ngOnInit(): void {
         timonjs_message();
+
+        this.gsapService.init();
 
         const events = this.router.events;
 

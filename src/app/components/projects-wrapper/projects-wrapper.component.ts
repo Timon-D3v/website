@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from "@angular/core";
+import { AfterViewInit, Component, inject, OnDestroy, PLATFORM_ID } from "@angular/core";
 import { ProjectComponent } from "../project/project.component";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,7 +10,7 @@ import { isPlatformBrowser } from "@angular/common";
     templateUrl: "./projects-wrapper.component.html",
     styleUrl: "./projects-wrapper.component.scss",
 })
-export class ProjectsWrapperComponent implements OnInit {
+export class ProjectsWrapperComponent implements OnDestroy, AfterViewInit {
     elements = [
         {
             id: 0,
@@ -80,13 +80,19 @@ export class ProjectsWrapperComponent implements OnInit {
 
     platformId = inject(PLATFORM_ID);
 
-    ngOnInit(): void {
+    ngOnDestroy(): void {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    }
+
+    ngAfterViewInit(): void {
+        this.initScrollTrigger();
+    }
+
+    initScrollTrigger(): void {
         if (!isPlatformBrowser(this.platformId)) return;
 
         const container = document.querySelector(".carousel");
         const sections: HTMLElement[] = gsap.utils.toArray(".carousel__item");
-
-        gsap.registerPlugin(ScrollTrigger);
 
         const scrollTween = gsap.to(sections, {
             xPercent: -100 * (sections.length - 1),

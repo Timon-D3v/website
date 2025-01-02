@@ -27,7 +27,7 @@ export class ContactFormComponent {
         messageControl: new FormControl(""),
     });
 
-    email = publicConfig.EMAIL
+    email = publicConfig.EMAIL;
 
     submitButtonText = signal("Abschicken");
     disabledButton = signal(false);

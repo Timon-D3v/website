@@ -82,10 +82,13 @@ export class ProjectsWrapperComponent implements OnDestroy, AfterViewInit {
 
     ngOnDestroy(): void {
         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+        if (isPlatformBrowser(this.platformId)) gsap.killTweensOf('*');
+
     }
 
     ngAfterViewInit(): void {
-        this.initScrollTrigger();
+        setTimeout(() => this.initScrollTrigger(), 100);
     }
 
     initScrollTrigger(): void {

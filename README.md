@@ -1,94 +1,29 @@
-![Logo](https://ik.imagekit.io/timon/cdn/logo?updatedAt=1710793404927&tr=h-100,w-100)
+```txt
+  _______                            __         
+ /_  __(_)___ ___  ____  ____   ____/ /__ _   __
+  / / / / __ `__ \/ __ \/ __ \ / __  / _ \ | / /
+ / / / / / / / / / /_/ / / / // /_/ /  __/ |/ / 
+/_/ /_/_/ /_/ /_/\____/_/ /_(_)__,_/\___/|___/  
 
-# My portfolio website
-
-## About Me:
-I'm Timon Fiedler, a 17-year-old student with a passion for web development and interest in volleyball. Born on December 22nd, 2006, I attend the KZN high school and stand at a height of 1.75m.
-
-
-## Skills:
-As a full stack web developer, I'm well-versed in HTML, CSS, and JavaScript for front-end development, while also proficient in back-end technologies. I can code in Node.js, enabling me to create dynamic and functional web applications.
-
-
-## License
-
-[Mozilla Public License Version 2.0](http://mozilla.org/MPL/2.0/)
-
-
-## Author
-
-- [Timon Fiedler](https://github.com/Timon-D3v)
-
-
-## 🔗 Links
-
-- [My Portfolio](https://timondev.com)
-
-- [My Instagram](https://www.instagram.com/timon.dev/)
-
-- [My Discord](https://discordapp.com/users/560914605145325596)
-
-- [Mail me](mailto:timon.dev.main@gmail.com)
-
-
-
-
-# Portfolio
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.3.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+<h1>
+    <a href="https://www.timondev.com" style="color: black; text-decoration: none; font-weight: bold; cursor: pointer;">Timon.dev's Portfolio</a>
+</h1>
+<br>
 
-## Code scaffolding
+##### Welcome, stranger
+## Need a new website? Timon is already ready!
+I'm a web developer from Zurich and I'll help you bring your ideas into the digital world.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+<br>
 
-```bash
-ng generate component component-name
-```
+## About me
+### Timon Fiedler - Fullstack Developer
+Hi, I'm Timon, 18 years old and one of my hobbies is programming. I taught myself web development through learning-by-doing and have already successfully completed several projects. These include developing the website for the ‘zurich meets tanzania’ charity project, as well as some smaller projects. Because programming is my hobby, I am fast and cheap and always try to achieve the best result. Another advantage of my interest in technology is that I have my own server and can therefore host your website myself, which can save a lot of annual costs. To get more impressions about my work, have a look at my projects below or contact me directly. I look forward to hearing from you :]
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+<br>
 
-```bash
-ng generate --help
-```
+## About this Website
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This repository contains the entire code of my website [www.timondev.com](https://www.timondev.com) which includes my portfolio. The website was created with Angular and has an express backend (SEAN stack) and hosts my own cloud in the private area.

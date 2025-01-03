@@ -74,5 +74,15 @@ export default {
                 url: "#",
             } as Project
         ]
-    }
+    },
+    SITEMAP: {
+        // "URL": "SITENAME"
+        "/": "Home",
+        "/contact": "Kontakt",
+        "/about": "Über Mich",
+        "/projects": "Projekte",
+        "/imprint": "Impressum",
+        "/privacy": "Datenschutz",
+        "/admin": "Adminseite",
+    } as Record<string, string>,
 };

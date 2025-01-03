@@ -1,0 +1,65 @@
+@use "../../../styles/index" as *;
+
+$height-4: calc($footer-height / 4);
+
+footer {
+    --angle: 172deg;
+    width: 100%;
+    position: relative;
+    height: $footer-height;
+    background: linear-gradient(var(--angle), $accent-800 8%, $secondary-700 100%);
+    box-sizing: border-box;
+    padding-top: $height-4;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: $height-4;
+        background-color: $background-950;
+    }
+}
+
+.contact,
+.cc {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    height: calc($height-4 / 3 * 2);
+    margin: calc($height-4 / 10) $padding-side;
+    border-bottom: solid 1px $background-50;
+    gap: calc($footer-height / 35);
+}
+
+.cc {
+    border-bottom: none;
+}
+
+span {
+    display: grid;
+    place-items: center;
+    font-size: calc($footer-height / 25);
+    line-height: calc($footer-height / 25);
+}
+
+app-footer-element {
+    display: grid;
+    place-items: center;
+}
+
+.social {
+    height: $height-4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc($height-4 / 10);
+    padding: calc($height-4 / 10) $padding-side;
+    box-sizing: border-box;
+}
+
+app-socials-icon {
+    height: calc($footer-height / 10);
+    aspect-ratio: 1 / 1;
+}

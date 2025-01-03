@@ -1,0 +1,78 @@
+@use "../../../styles/index" as *;
+
+.wrapper {
+    --box-shadow-blur: 30px;
+    --box-shadow-spread: 2px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: calc($header-height / 2);
+    box-sizing: border-box;
+    padding: calc($header-height / 4);
+    box-shadow: 7px -5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    background-image: linear-gradient(222deg, $primary-950, $background-950);
+    text-decoration: none;
+    color: inherit;
+    animation: moveBoxShadow 5s infinite ease-in-out;
+    transition: box-shadow 0.5s ease;
+
+    // &:hover {
+    //     --box-shadow-blur: 40px;
+    //     --box-shadow-spread: 10px;
+    // }
+
+    &.even {
+        background-image: linear-gradient(138deg, $primary-950, $background-950);
+    }
+
+    .imageWrapper {
+        width: 100%;
+        height: 60%;
+        border-radius: calc($header-height / 4) calc($header-height / 4) 0 0;
+        transition: transform 0.3s ease-in-out;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    h2 {
+        text-align: center;
+        padding: 0 $padding-side;
+        font-size: calc($header-height / 2);
+        margin-bottom: 0;
+    }
+
+    p {
+        padding: 0 $padding-side;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        text-wrap: pretty;
+    }
+}
+
+@keyframes moveBoxShadow {
+    0% {
+        box-shadow: 7px -5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    }
+    25% {
+        box-shadow: 7px 5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    }
+    50% {
+        box-shadow: -7px 5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    }
+    75% {
+        box-shadow: -7px -5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    }
+    100% {
+        box-shadow: 7px -5px var(--box-shadow-blur) var(--box-shadow-spread) $primary-600;
+    }
+}

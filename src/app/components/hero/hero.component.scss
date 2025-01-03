@@ -1,0 +1,103 @@
+@use "../../../styles/index" as *;
+@use "../../../styles/layers.scss";
+
+$font-size: 1.3rem;
+
+.hero {
+    width: 100%;
+    // min-height: calc(100vh - $header-height);
+    display: grid;
+    grid-template-columns: 6fr 5fr;
+    grid-template-rows: 1fr;
+    gap: $padding-side;
+    padding: 0 calc($padding-side * 2);
+    padding-top: calc($header-height / 2);
+    box-sizing: border-box;
+}
+
+.left {
+    .greetings {
+        margin: 0;
+        font-size: $font-size;
+        color: $text-200;
+        margin-top: calc($font-size * 2);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: calc($font-size * 4);
+        color: $text-50;
+        line-height: 1;
+        margin-top: calc($font-size / 3 * 2);
+
+        .space {
+            line-height: 1.4;
+        }
+    }
+
+    .subtitle {
+        color: $text-200;
+        margin: $font-size 0;
+        font-size: calc($font-size * 1.3);
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        text-wrap: balance;
+    }
+
+    .cta {
+        --size: calc(#{$font-size} * 3);
+        display: flex;
+        gap: calc(#{$font-size} * 1.5);
+        margin-top: calc($font-size * 3);
+    }
+}
+
+.right {
+    min-width: 500px;
+    margin-top: calc($font-size * 2);
+    aspect-ratio: 1 / 1;
+
+    div > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center top;
+    }
+
+    .layer__2 img {
+        background-color: $primary-500;
+        object-position: center calc($font-size * -5);
+        position: absolute;
+        width: 100%;
+        height: 200%;
+    }
+
+    .layer__2 {
+        -webkit-mask-image: url("/svg/hero_blob_layer2.svg");
+        mask-image: url("/svg/hero_blob_layer2.svg");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center top;
+        mask-position: center top;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .layer__3 {
+        .vertical {
+            position: absolute;
+            top: 40%;
+            left: 10%;
+        }
+
+        .horizontal {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            transform-origin: center;
+            transform: rotate(90deg);
+        }
+    }
+}

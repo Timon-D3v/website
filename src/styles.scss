@@ -1,0 +1,71 @@
+@use "./styles/index" as *;
+@use "sass:color";
+
+body {
+    font-family: $text;
+    color: $text-50;
+    background-color: $background-950;
+    margin: 0;
+}
+
+main {
+    min-height: calc(100vh - $footer-height);
+}
+
+main::before {
+    content: "";
+    display: block;
+    height: $header-height;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $title;
+}
+
+a {
+    color: $primary-500;
+
+    &:hover {
+        color: $primary-400;
+    }
+
+    &::selection {
+        background-color: rgba($secondary-800, 0.5);
+        color: $primary-300;
+    }
+}
+
+*::selection {
+    background-color: rgba($accent-400, 0.5);
+}
+
+img::selection {
+    background-color: transparent;
+}
+
+.special-effect:hover {
+    animation: special-effect 2s infinite linear;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes special-effect {
+    0% {
+        filter: invert(1) invert(49%) sepia(98%) saturate(2436%) hue-rotate(89deg) brightness(124%) contrast(122%) hue-rotate(0deg);
+    }
+
+    100% {
+        filter: invert(1) invert(49%) sepia(98%) saturate(2436%) hue-rotate(89deg) brightness(124%) contrast(122%) hue-rotate(360deg);
+    }
+}

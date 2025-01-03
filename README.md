@@ -1,31 +1,29 @@
-![Logo](https://ik.imagekit.io/timon/cdn/logo?updatedAt=1710793404927&tr=h-100,w-100)
+```txt
+  _______                            __         
+ /_  __(_)___ ___  ____  ____   ____/ /__ _   __
+  / / / / __ `__ \/ __ \/ __ \ / __  / _ \ | / /
+ / / / / / / / / / /_/ / / / // /_/ /  __/ |/ / 
+/_/ /_/_/ /_/ /_/\____/_/ /_(_)__,_/\___/|___/  
 
-# My portfolio website
+```
 
-## About Me:
-I'm Timon Fiedler, a 17-year-old student with a passion for web development and interest in volleyball. Born on December 22nd, 2006, I attend the KZN high school and stand at a height of 1.75m.
+<h1>
+    <a href="https://www.timondev.com" style="color: black; text-decoration: none; font-weight: bold; cursor: pointer;">Timon.dev's Portfolio</a>
+</h1>
+<br>
 
+##### Welcome, stranger
+## Need a new website? Timon is already ready!
+I'm a web developer from Zurich and I'll help you bring your ideas into the digital world.
 
-## Skills:
-As a full stack web developer, I'm well-versed in HTML, CSS, and JavaScript for front-end development, while also proficient in back-end technologies. I can code in Node.js, enabling me to create dynamic and functional web applications.
+<br>
 
+## About me
+### Timon Fiedler - Fullstack Developer
+Hi, I'm Timon, 18 years old and one of my hobbies is programming. I taught myself web development through learning-by-doing and have already successfully completed several projects. These include developing the website for the ‘zurich meets tanzania’ charity project, as well as some smaller projects. Because programming is my hobby, I am fast and cheap and always try to achieve the best result. Another advantage of my interest in technology is that I have my own server and can therefore host your website myself, which can save a lot of annual costs. To get more impressions about my work, have a look at my projects below or contact me directly. I look forward to hearing from you :]
 
-## License
+<br>
 
-[Mozilla Public License Version 2.0](http://mozilla.org/MPL/2.0/)
+## About this Website
 
-
-## Author
-
-- [Timon Fiedler](https://github.com/Timon-D3v)
-
-
-## 🔗 Links
-
-- [My Portfolio](https://timondev.com)
-
-- [My Instagram](https://www.instagram.com/timon.dev/)
-
-- [My Discord](https://discordapp.com/users/560914605145325596)
-
-- [Mail me](mailto:timon.dev.main@gmail.com)
+This repository contains the entire code of my website [www.timondev.com](https://www.timondev.com) which includes my portfolio. The website was created with Angular and has an express backend (SEAN stack) and hosts my own cloud in the private area.

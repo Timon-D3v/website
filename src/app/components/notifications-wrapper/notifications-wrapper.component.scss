@@ -1,0 +1,16 @@
+div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: max(3vh, 1rem);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: max(3vh, 1rem);
+    z-index: 500;
+    box-sizing: border-box;
+    pointer-events: none;
+}

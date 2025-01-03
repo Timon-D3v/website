@@ -1,0 +1,61 @@
+@use "../../../styles/index" as *;
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: calc($padding-side);
+    padding: $header-height $padding-side;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 70vh;
+}
+
+app-about-me-canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.right {
+    padding: calc($header-height / 2) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+        font-size: calc($header-height / 3 * 2);
+        margin: 0;
+        width: 100%;
+    }
+
+    h3 {
+        font-size: calc($header-height / 3);
+        margin: calc($header-height / 3) 0;
+        width: 100%;
+    }
+
+    p {
+        margin: 0;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        text-wrap: pretty;
+    }
+
+    .socials {
+        display: flex;
+        justify-content: center;
+        gap: calc($padding-side / 3 * 2);
+        height: calc($header-height / 2);
+        width: 100%;
+        margin-top: calc($header-height / 2);
+
+        & > * {
+            transition: all 0.3s ease-in-out;
+        }
+
+        & > :hover {
+            transform: scale(1.15);
+        }
+    }
+}

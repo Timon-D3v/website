@@ -1,0 +1,7 @@
+<a class="wrapper {{ evenOdd() }}" #animateBoxShadow [href]="url()" target="_blank" (mouseover)="boxShadowEaseIn()" (mouseout)="boxShadowEaseOut()" [id]="wrapperId()">
+    <div class="imageWrapper">
+        <img [src]="image()" alt="Vorschau für {{ title() }}" />
+    </div>
+    <h2>{{ title() }}</h2>
+    <p>{{ description() }}</p>
+</a>

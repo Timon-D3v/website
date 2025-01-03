@@ -1,0 +1,3 @@
+@function kathete($kathete2, $winkel) {
+    @return ($kathete2 / cos($winkel)) * sin($winkel);
+}

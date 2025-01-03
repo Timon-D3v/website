@@ -1,0 +1,9 @@
+@use "../../../styles/index" as *;
+
+span {
+    background: linear-gradient(var(--angle, 120deg), var(--color1, $primary-400), var(--color2, $primary-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}

@@ -1,0 +1,24 @@
+@use "../../../styles/index" as *;
+
+.bold {
+    font-weight: bold;
+    font-family: $title;
+    font-size: calc($footer-height / 20);
+    line-height: calc($footer-height / 20);
+    transform: translateY(2px);
+}
+
+a {
+    font-size: calc($footer-height / 25);
+    line-height: calc($footer-height / 25);
+    color: $text-50;
+
+    &:hover {
+        color: $text-50;
+    }
+
+    &::selection {
+        background-color: rgba($accent-400, 0.5);
+        color: $text-50;
+    }
+}

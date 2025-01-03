@@ -1,0 +1,18 @@
+<header>
+    <a class="logo-link" routerLink="/">
+        <div class="logo-wrapper">
+            <img src="/svg/logo.svg" alt="Timon.dev Logo" class="times-clicked-{{ homeClicked() }} special-effect" (click)="increaseHomeCounter()" />
+            <div class="particles"></div>
+        </div>
+        <span>Timon.dev</span>
+    </a>
+
+    <div class="header-buttons">
+        <app-primary-button [text]="'Kontaktieren'" [title]="'Kontaktiere mich!'" routerLink="/contact"></app-primary-button>
+        @if (authService.isLoggedIn()) {
+            <app-profile-button></app-profile-button>
+        } @else {
+            <app-login-button></app-login-button>
+        }
+    </div>
+</header>

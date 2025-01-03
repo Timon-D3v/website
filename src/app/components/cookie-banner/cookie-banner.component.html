@@ -1,0 +1,8 @@
+<div class="wrapper {{ hidden() ? 'hidden' : '' }}">
+    <p>
+        <span>Diese Webseite verwendet Cookies, um dir das bestmögliche Erlebnis zu bieten. Wenn du die Cookies akzeptierst, hilfst du mit die Seite besser zu machen. </span>
+        <a [routerLink]="'/privacy'">Mehr erfahren</a>
+    </p>
+    <button type="button" class="accept" (click)="acceptCookies()">Verstanden</button>
+    <button type="button" class="reject" (click)="rejectCookies()">Ablehnen</button>
+</div>

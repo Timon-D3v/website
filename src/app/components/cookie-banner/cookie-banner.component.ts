@@ -3,8 +3,6 @@ import { CookieConsentService } from "../../services/cookie-consent.service";
 import { isPlatformBrowser } from "@angular/common";
 import { RouterLink } from "@angular/router";
 
-
-
 @Component({
     selector: "app-cookie-banner",
     imports: [RouterLink],

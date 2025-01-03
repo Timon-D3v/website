@@ -6,6 +6,7 @@ import { ContactEmail } from "../shared/template.email";
 import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
 import { EmailResponse } from "../@types/emailResponse.type";
+import getAllProjects from "../shared/get.allProjects.database";
 
 // Router Serves under /api/public
 const router = Router();
@@ -69,6 +70,29 @@ router.post("/submitContactForm", async (req: Request, res: Response) => {
         console.error(error);
         res.json({
             message: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+            error: true,
+        });
+    }
+});
+
+router.get("/getAllProjects", async (_req: Request, res: Response) => {
+    try {
+        const projects = await getAllProjects();
+
+        if (projects instanceof Error) throw projects;
+
+        if (projects.length === 0) throw new Error("No Projects Found.");
+
+        res.json({
+            projects: JSON.stringify(projects),
+            message: "Retrieved Projects",
+            error: false,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            projects: JSON.stringify([]),
+            message: "Failed to Retrieve Projects",
             error: true,
         });
     }

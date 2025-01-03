@@ -1,8 +1,11 @@
-import { AfterViewInit, Component, inject, OnDestroy, PLATFORM_ID } from "@angular/core";
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, PLATFORM_ID } from "@angular/core";
 import { ProjectComponent } from "../project/project.component";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { isPlatformBrowser } from "@angular/common";
+import { Project, ProjectApiResponse } from "../../../@types/project.type";
+import { ProjectsService } from "../../services/projects.service";
+import publicConfig from "../../../public.config";
 
 @Component({
     selector: "app-projects-wrapper",
@@ -10,73 +13,11 @@ import { isPlatformBrowser } from "@angular/common";
     templateUrl: "./projects-wrapper.component.html",
     styleUrl: "./projects-wrapper.component.scss",
 })
-export class ProjectsWrapperComponent implements OnDestroy, AfterViewInit {
-    elements = [
-        {
-            id: 0,
-            title: "Project 1",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#FF0000",
-        },
-        {
-            id: 1,
-            title: "Project 1",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#00FF00",
-        },
-        {
-            id: 2,
-            title: "Project 2",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#0000FF",
-        },
-        {
-            id: 3,
-            title: "Project 3",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#FFFF00",
-        },
-        {
-            id: 4,
-            title: "Project 4",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#FF00FF",
-        },
-        {
-            id: 5,
-            title: "Project 5",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#00FFFF",
-        },
-        {
-            id: 6,
-            title: "Project 6",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#FFFFFF",
-        },
-        {
-            id: 7,
-            title: "Project 7",
-            description:
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            image: "https://picsum.photos/4000/2000",
-            color: "#000000",
-        },
-    ];
+export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    elements: Project[] = publicConfig.FALLBACKS.PROJECTS;
+
+    projectsService = inject(ProjectsService);
 
     platformId = inject(PLATFORM_ID);
 
@@ -89,6 +30,21 @@ export class ProjectsWrapperComponent implements OnDestroy, AfterViewInit {
     ngAfterViewInit(): void {
         setTimeout(() => this.initScrollTrigger(), 100);
     }
+
+    ngOnInit(): void {
+        const request = this.projectsService.getAllProjects()
+
+        request.subscribe((response: ProjectApiResponse) => {
+            if (response.error) return console.error(response.message);
+
+            const projects = JSON.parse(response.projects);
+
+            if (projects.length === 0) return console.error("No Projects Found.");
+                
+            this.elements = projects;
+        });
+    }
+
 
     initScrollTrigger(): void {
         if (!isPlatformBrowser(this.platformId)) return;

@@ -12,20 +12,12 @@ You are on https://www.timondev.com
 -->
     <head>
         <meta charset="utf-8" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-E0BP9PGK6H"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-E0BP9PGK6H");
-        </script>
         <title>Timon.dev</title>
         <base href="/" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google" content="nositelinkssearchbox" />
         <meta name="robots" content="index,follow" />
+        <meta name="theme-color" content="#2046DF" />
         <meta property="og:title" content="Timon.dev" />
         <meta property="og:url" content="https://www.timondev.com/" />
         <meta property="og:description" content="" />
@@ -33,6 +25,27 @@ You are on https://www.timondev.com
         <meta property="og:image:type" content="image/jpeg" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                window.dataLayer.push(arguments);
+            }
+
+            gtag("js", new Date());
+            gtag("config", "G-E0BP9PGK6H");
+            gtag("consent", "default", {
+                ad_storage: "denied",
+                analytics_storage: "denied",
+                personalization_storage: "denied",
+                functionality_storage: "granted",
+                security_storage: "granted",
+            });
+
+            document.addEventListener("cookie_consent_updated", () => {
+                gtag("consent", "update", JSON.parse(localStorage.getItem("cookie_consent_mode")));
+            });
+        </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-E0BP9PGK6H"></script>
     </head>
     <body>
         <app-root></app-root>

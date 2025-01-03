@@ -81,10 +81,9 @@ export class ProjectsWrapperComponent implements OnDestroy, AfterViewInit {
     platformId = inject(PLATFORM_ID);
 
     ngOnDestroy(): void {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-        if (isPlatformBrowser(this.platformId)) gsap.killTweensOf('*');
-
+        if (isPlatformBrowser(this.platformId)) gsap.killTweensOf("*");
     }
 
     ngAfterViewInit(): void {

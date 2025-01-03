@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ImprintComponent } from "./imprint.component";
+import { CookieBannerComponent } from "./cookie-banner.component";
 
-describe("ImprintComponent", () => {
-    let component: ImprintComponent;
-    let fixture: ComponentFixture<ImprintComponent>;
+describe("CookieBannerComponent", () => {
+    let component: CookieBannerComponent;
+    let fixture: ComponentFixture<CookieBannerComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ImprintComponent],
+            imports: [CookieBannerComponent],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(ImprintComponent);
+        fixture = TestBed.createComponent(CookieBannerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

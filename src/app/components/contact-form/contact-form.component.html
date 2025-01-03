@@ -7,15 +7,15 @@
     </div>
     <div class="container">
         <label for="name">Name</label>
-        <input type="text" id="name" title="Dein Name" formControlName="nameControl" required />
+        <input type="text" id="name" title="Dein Name" formControlName="nameControl" required autocomplete="given-name" />
     </div>
     <div class="container">
         <label for="family_name">Nachname</label>
-        <input type="text" id="family_name" title="Dein Nachname" formControlName="familyNameControl" required />
+        <input type="text" id="family_name" title="Dein Nachname" formControlName="familyNameControl" required autocomplete="family-name" />
     </div>
     <div class="container full">
         <label for="email">E-Mail</label>
-        <input type="email" id="email" title="Deine E-Mail-Adresse" formControlName="emailControl" required />
+        <input type="email" id="email" title="Deine E-Mail-Adresse" formControlName="emailControl" required autocomplete="email" />
     </div>
     <div class="container full">
         <label for="message">Nachricht</label>

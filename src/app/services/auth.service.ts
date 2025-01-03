@@ -15,15 +15,12 @@ export class AuthService {
             return token ? token : "";
         }
 
-        console.warn("Local storage is not available");
         return "";
     }
 
     isLoggedIn(): boolean {
-        if (this.getLocalStorage() !== "") {
-            return true;
-        } else {
-            return false;
-        }
+        // This is not a secure way to check if a user is logged in.
+        // Routes are protected on the server side, this is only for visual elements.
+        return this.getLocalStorage() !== "";
     }
 }

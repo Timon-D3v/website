@@ -16,7 +16,7 @@ header {
     width: 100%;
     height: $header-height;
     background-color: $background-950;
-    box-shadow: 0 2px 5px rgb(115, 131, 140, 0.5);
+    box-shadow: 0 2px 5px rgb($secondary-500, 0.5);
     z-index: 1000;
 
     > a {

@@ -9,6 +9,9 @@
 
     <div class="header-buttons">
         <app-primary-button [text]="'Kontaktieren'" [title]="'Kontaktiere mich!'" routerLink="/contact"></app-primary-button>
+        <button type="button" class="contact-button-small" title="Kontaktiere mich!" routerLink="/contact">
+            <img alt="Kontakt" src="/svg/mail.svg" class="contact-button-small-image" />
+        </button>
         @if (authService.isLoggedIn()) {
             <app-profile-button></app-profile-button>
         } @else {

@@ -63,3 +63,38 @@ app-socials-icon {
     height: calc($footer-height / 10);
     aspect-ratio: 1 / 1;
 }
+
+@media screen and (max-width: 630px) {
+    .cc {
+        flex-direction: column;
+
+        span {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .contact {
+        flex-direction: column;
+
+        span {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            order: 10;
+        }
+    }
+
+    footer {
+        padding-top: calc($height-4 / 2);
+
+        &::before {
+            height: $height-4 / 2;
+        }
+    }
+
+    app-socials-icon {
+        height: calc($footer-height / 12);
+    }
+}

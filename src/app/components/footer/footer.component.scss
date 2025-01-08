@@ -90,7 +90,7 @@ app-socials-icon {
         padding-top: calc($height-4 / 2);
 
         &::before {
-            height: $height-4 / 2;
+            height: calc($height-4 / 2);
         }
     }
 

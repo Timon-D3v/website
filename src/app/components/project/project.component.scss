@@ -16,11 +16,6 @@
     animation: moveBoxShadow 5s infinite ease-in-out;
     transition: box-shadow 0.5s ease;
 
-    // &:hover {
-    //     --box-shadow-blur: 40px;
-    //     --box-shadow-spread: 10px;
-    // }
-
     &.even {
         background-image: linear-gradient(138deg, $primary-950, $background-950);
     }
@@ -32,14 +27,21 @@
         transition: transform 0.3s ease-in-out;
         overflow: hidden;
 
-        img {
+        picture {
+            display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease-in-out;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
 
-        img:hover {
+        picture:hover {
             transform: scale(1.1);
         }
     }
@@ -56,6 +58,24 @@
         -webkit-hyphens: auto;
         hyphens: auto;
         text-wrap: pretty;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .wrapper .imageWrapper {
+        height: 50%;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .wrapper {
+        h2 {
+            font-size: calc($header-height / 3);
+        }
+
+        p {
+            font-size: calc(1.5rem / 2);
+        }
     }
 }
 

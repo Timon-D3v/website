@@ -16,7 +16,7 @@ export class ProjectsService {
             catchError((error) => {
                 console.error(error);
                 return error;
-            })
+            }),
         );
 
         return request;

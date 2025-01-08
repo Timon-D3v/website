@@ -69,3 +69,20 @@
         z-index: 3;
     }
 }
+
+@media screen and (max-width: 900px) {
+    .wrapper {
+        padding: calc($header-height / 2) calc($padding-side * 2);
+
+        .carousel__item app-project {
+            padding: 0 calc($padding-side * 2);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .wrapper h2 {
+        font-size: calc($header-height / 2);
+    }
+}

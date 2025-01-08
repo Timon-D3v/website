@@ -14,7 +14,6 @@ import publicConfig from "../../../public.config";
     styleUrl: "./projects-wrapper.component.scss",
 })
 export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewInit {
-
     elements: Project[] = publicConfig.FALLBACKS.PROJECTS;
 
     projectsService = inject(ProjectsService);
@@ -32,7 +31,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     ngOnInit(): void {
-        const request = this.projectsService.getAllProjects()
+        const request = this.projectsService.getAllProjects();
 
         request.subscribe((response: ProjectApiResponse) => {
             if (response.error) return console.error(response.message);
@@ -40,11 +39,10 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
             const projects = JSON.parse(response.projects);
 
             if (projects.length === 0) return console.error("No Projects Found.");
-                
+
             this.elements = projects;
         });
     }
-
 
     initScrollTrigger(): void {
         if (!isPlatformBrowser(this.platformId)) return;

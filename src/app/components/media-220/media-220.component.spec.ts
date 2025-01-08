@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { Media220Component } from './media-220.component';
+import { Media220Component } from "./media-220.component";
 
-describe('Media220Component', () => {
-  let component: Media220Component;
-  let fixture: ComponentFixture<Media220Component>;
+describe("Media220Component", () => {
+    let component: Media220Component;
+    let fixture: ComponentFixture<Media220Component>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Media220Component]
-    })
-    .compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [Media220Component],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(Media220Component);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(Media220Component);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -8,6 +8,12 @@ import { catchError, Observable } from "rxjs";
 export class GetShaderService {
     http = inject(HttpClient);
 
+    /**
+     * Fetches the shader code from the given URL.
+     *
+     * @param {string} url - The URL of the shader code to fetch.
+     * @returns {Observable<string>} An Observable that emits the shader code as a string.
+     */
     getShader(url: string): Observable<string> {
         const request = this.http.get(url, { responseType: "text" });
 

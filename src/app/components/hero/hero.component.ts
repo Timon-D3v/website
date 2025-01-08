@@ -12,11 +12,25 @@ import { scrollToQuery } from "timonjs";
     styleUrl: "./hero.component.scss",
 })
 export class HeroComponent {
-    scrollToAbout() {
+    /**
+     * Scrolls the page to the "About Me" section.
+     * This method uses the `scrollToQuery` function to locate the element
+     * with the tag name "app-about-me" and scrolls the page to its position.
+     * 
+     * @returns {void}
+     */
+    scrollToAbout(): void {
         scrollToQuery("app-about-me");
     }
 
-    scrollToContact() {
+    /**
+     * Scrolls the page to the contact form component.
+     * Utilizes the `scrollToQuery` function to locate the element with the query selector "app-contact-form"
+     * and smoothly scrolls the viewport to it.
+     * 
+     * @returns {void}
+     */
+    scrollToContact(): void {
         scrollToQuery("app-contact-form");
     }
 }

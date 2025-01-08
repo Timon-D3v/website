@@ -36,7 +36,23 @@ export class ContactFormComponent {
 
     notificationService = inject(NotificationService);
 
-    onSubmit() {
+    /**
+     * Handles the form submission event.
+     * 
+     * This method validates the form data using the `contactService.validateData` method.
+     * If the data is valid, it sends the data using the `contactService.sendData` method.
+     * 
+     * The method updates the UI to reflect the submission status:
+     * - Adds validation classes to the email input element.
+     * - Disables the submit button and changes its text to "Wird gesendet..." while the request is in progress.
+     * 
+     * Upon receiving a response:
+     * - If there is an error, it displays an error notification and re-enables the submit button.
+     * - If the submission is successful, it displays a success notification and updates the submit button text to "Verschickt".
+     * 
+     * @returns {void}
+     */
+    onSubmit(): void {
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");
 
         data.email.valid ? getElm("email").addClass("ng-valid") : getElm("email").addClass("ng-invalid");

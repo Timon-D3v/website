@@ -42,6 +42,16 @@ export class NotificationComponent implements OnInit {
         },
     };
 
+    /**
+     * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+     * This method sets the icon source and alternative text based on the notification type.
+     * 
+     * It switches over the possible notification types ("neutral", "success", "error", "warn", "info")
+     * and sets the corresponding icon source and alternative text for each type.
+     * If the type is not recognized, it defaults to the "neutral" type.
+     * 
+     * @returns {void}
+     */
     ngOnInit(): void {
         switch (this.type()) {
             case "neutral":
@@ -71,6 +81,12 @@ export class NotificationComponent implements OnInit {
         }
     }
 
+    /**
+     * Emits the closeEvent to notify that the notification should be closed.
+     * This method can be called to programmatically close the notification.
+     * 
+     * @returns {void}
+     */
     close(): void {
         this.closeEvent.emit();
     }

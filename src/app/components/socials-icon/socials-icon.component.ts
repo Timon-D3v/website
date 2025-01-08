@@ -13,7 +13,13 @@ export class SocialsIconComponent implements OnInit {
     type = input("LinkedIn");
     social: SocialsIconInfo = publicConfig.SOCIALS.ICONS[this.type()];
 
-    ngOnInit() {
+    /**
+     * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+     * Initializes the social icon based on the type provided.
+     * 
+     * @returns {void}
+     */
+    ngOnInit(): void {
         this.social = publicConfig.SOCIALS.ICONS[this.type()];
     }
 }

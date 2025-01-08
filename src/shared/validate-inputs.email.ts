@@ -1,5 +1,17 @@
 import { ContactValidation } from "../@types/contactValidation.type";
 
+/**
+ * Validates the provided contact data including name, family name, email, and message.
+ *
+ * @param {string} name - The first name of the contact.
+ * @param {string} familyName - The family name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} message - The message from the contact.
+ * @returns {[boolean, ContactValidation, { title: string; message: string }]} A tuple containing:
+ *  - A boolean indicating whether the data is valid.
+ *  - An object representing the validation status of each field.
+ *  - An error object containing a title and message if validation fails.
+ */
 export function validateData(name: string, familyName: string, email: string, message: string): [boolean, ContactValidation, { title: string; message: string }] {
     const error = {
         title: "",

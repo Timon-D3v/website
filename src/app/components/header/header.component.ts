@@ -18,10 +18,28 @@ export class HeaderComponent implements OnInit {
     homeCountService = inject(HomeCounterService);
     authService = inject(AuthService);
 
+    /**
+     * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+     * This is called once the component is initialized.
+     * 
+     * In this implementation, it calls the `getHomeCount` method to retrieve the home count data.
+     * 
+     * @returns {void}
+     */
     ngOnInit(): void {
         this.getHomeCount();
     }
 
+    /**
+     * Fetches the current home count from the homeCountService and updates the homeClicked state.
+     * 
+     * This method makes a request to the homeCountService to get the current count of homes.
+     * If an error occurs during the request, it logs the error to the console.
+     * If the request is successful but the response contains an error, it logs the error message to the console.
+     * Otherwise, it updates the homeClicked state with the retrieved count.
+     * 
+     * @returns {void}
+     */
     getHomeCount(): void {
         const request = this.homeCountService.getCurrentCount();
 
@@ -39,7 +57,16 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    increaseHomeCounter() {
+    /**
+     * Increases the home counter by making a request to the homeCountService.
+     * 
+     * This method sends a request to increment the home counter and handles the response.
+     * If the request is successful, it updates the homeClicked observable with the new count.
+     * If there is an error, it logs the error to the console.
+     * 
+     * @returns {void}
+     */
+    increaseHomeCounter(): void {
         const request = this.homeCountService.incrementCount();
 
         request.pipe(

@@ -4,6 +4,7 @@ export type Project = {
     description: string;
     url: string;
     image_url: string;
+    portrait_image_url: string;
 };
 
 export type ProjectApiResponse = {

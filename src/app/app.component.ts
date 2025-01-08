@@ -8,10 +8,11 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { SiteTitleService } from "./services/site-title.service";
 import { GsapService } from "./services/gsap.service";
 import { CookieBannerComponent } from "./components/cookie-banner/cookie-banner.component";
+import { Media220Component } from "./components/media-220/media-220.component";
 
 @Component({
     selector: "app-root",
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, NotificationsWrapperComponent, CookieBannerComponent],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, NotificationsWrapperComponent, CookieBannerComponent, Media220Component],
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.scss",
 })

@@ -1,10 +1,9 @@
 @use "../../../styles/index" as *;
-@use "../../../styles/mixins.scss" as mixins;
 @use "sass:color" as color;
 
 input,
 textarea {
-    @include mixins.main-input(calc($header-height / 2), 100%, $valid-color: $success-500, $error-color: $error-500, $text-color: $text-50, $bg-color: $background-950);
+    @include main-input(calc($header-height / 2), 100%, $valid-color: $success-500, $error-color: $error-500, $text-color: $text-50, $bg-color: $background-950);
     background-color: color.adjust($background-950, $lightness: 10%);
 
     &:hover,
@@ -73,4 +72,33 @@ p {
     --size: calc(#{$header-height} / 3 * 2);
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 380px) {
+    h1 {
+        font-size: calc($header-height / 2);
+    }
+
+    p {
+        font-size: calc(1.5rem / 2);
+    }
+
+    input,
+    textarea {
+        @include main-input(calc($header-height / 2.5), 100%, $valid-color: $success-500, $error-color: $error-500, $text-color: $text-50, $bg-color: $background-950);
+    }
+
+    label {
+        font-size: calc($header-height / 5);
+    }
+
+    .container.center {
+        --size: calc(1.5rem * 3 / 2);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    form {
+        padding: calc($header-height / 2) calc($padding-side * 2);
+    }
 }

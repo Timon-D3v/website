@@ -65,15 +65,18 @@ export default {
                 title: "Es ist ein Fehler aufgetreten",
                 description: "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
                 image_url: "https://picsum.photos/4000/2000",
+                portrait_image_url: "https://picsum.photos/2000/1000",
                 url: "#",
-            } as Project, {
+            } as Project,
+            {
                 id: 1,
                 title: "Es ist ein Fehler aufgetreten",
                 description: "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
                 image_url: "https://picsum.photos/4000/2000",
+                portrait_image_url: "https://picsum.photos/2000/1000",
                 url: "#",
-            } as Project
-        ]
+            } as Project,
+        ],
     },
     SITEMAP: {
         // "URL": "SITENAME"

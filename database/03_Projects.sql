@@ -4,6 +4,7 @@ CREATE TABLE `main`.`projects` (
   `description` TEXT NOT NULL,
   `url` VARCHAR(512) NOT NULL,
   `image_url` VARCHAR(512) NOT NULL,
+  `portrait_image_url` VARCHAR(512) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idnew_table_UNIQUE` (`id` ASC) VISIBLE)
 COMMENT = 'This table holds all my projects to display on my portfolio.';

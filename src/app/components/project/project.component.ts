@@ -10,7 +10,8 @@ import { randomString } from "timonjs";
 })
 export class ProjectComponent {
     description = input("Description");
-    image = input("https://via.placeholder.com/150");
+    image = input("#");
+    portrait_image = input("#");
     id = input(0);
     title = input("Title");
     url = input("#");

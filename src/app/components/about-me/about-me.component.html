@@ -1,11 +1,16 @@
 <div class="wrapper">
+    <h2 class="title-small">Über mich</h2>
     <div class="left">
         <app-about-me-canvas></app-about-me-canvas>
+        <div class="me">
+            <img src="/me.min.png" alt="Timon" />
+        </div>
     </div>
     <div class="right">
         <h2>Über mich</h2>
         <h3>
-            <app-gradient-text [text]="'Timon Fiedler - Fullstack Developer'"></app-gradient-text>
+            <app-gradient-text class="subtitle-big" [text]="'Timon Fiedler - Fullstack Developer'"></app-gradient-text>
+            <span class="subtitle-small">Timon Fiedler - Fullstack Developer</span>
         </h3>
         <p>{{ text }}</p>
         <div class="socials">

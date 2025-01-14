@@ -31,11 +31,6 @@ img {
 
 .closable .close {
     display: block;
-    height: 1rem;
-    width: 1rem;
-    aspect-ratio: 1 / 1;
-    padding-left: 1.25rem;
-    cursor: pointer;
 }
 
 h2 {
@@ -72,10 +67,12 @@ p {
 }
 
 svg {
-    width: 100%;
-    height: 100%;
+    height: 1rem;
+    width: 1rem;
     aspect-ratio: 1 / 1;
+    padding-left: 1.25rem;
     fill: $secondary-500;
+    cursor: pointer;
 
     &.info:hover {
         fill: $primary-500;

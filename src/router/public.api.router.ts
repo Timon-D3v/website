@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import publicAuthApiRouter from "./auth.public.api.router";
 import incrementHomeCounter from "../shared/increment.homeCounter.database";
 import getCurrentHomeCounter from "../shared/get.homeCounter.database";
 import { validateData } from "../shared/validate-inputs.email";
@@ -11,7 +12,9 @@ import getAllProjects from "../shared/get.allProjects.database";
 // Router Serves under /api/public
 const router = Router();
 
-router.get("/getCurrentHomeCounter", async (_req: Request, res: Response) => {
+router.use("/auth", publicAuthApiRouter);
+
+router.get("/getCurrentHomeCounter", async (_req: Request, res: Response): Promise<void> => {
     const result = await getCurrentHomeCounter();
     res.json({
         count: typeof result === "number" ? result : 0,
@@ -20,7 +23,7 @@ router.get("/getCurrentHomeCounter", async (_req: Request, res: Response) => {
     });
 });
 
-router.post("/incrementHomeCounter", async (_req: Request, res: Response) => {
+router.post("/incrementHomeCounter", async (_req: Request, res: Response): Promise<void> => {
     const response = await incrementHomeCounter();
     res.json({
         message: response === "Success" ? "Incremented Home Counter" : "Failed to Increment Home Counter",
@@ -28,7 +31,7 @@ router.post("/incrementHomeCounter", async (_req: Request, res: Response) => {
     });
 });
 
-router.post("/submitContactForm", async (req: Request, res: Response) => {
+router.post("/submitContactForm", async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, familyName, email, message } = req.body;
 
@@ -75,7 +78,7 @@ router.post("/submitContactForm", async (req: Request, res: Response) => {
     }
 });
 
-router.get("/getAllProjects", async (_req: Request, res: Response) => {
+router.get("/getAllProjects", async (_req: Request, res: Response): Promise<void> => {
     try {
         const projects = await getAllProjects();
 

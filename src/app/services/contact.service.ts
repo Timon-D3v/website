@@ -27,7 +27,15 @@ export class ContactService {
             message: "",
         };
 
-        const setError = (title: string, message: string) => {
+        /**
+         * Sets the error title and message if they are currently empty.
+         *
+         * @param title - The title to set if the current error title is empty.
+         * @param message - The message to set if the current error message is empty.
+         *
+         * @returns {void}
+         */
+        const setError = (title: string, message: string): void => {
             if (error.title === "") error.title = title;
             if (error.message === "") error.message = message;
         };

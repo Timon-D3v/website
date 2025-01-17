@@ -1,1 +1,16 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+    <div class="container full">
+        <h1>Einloggen</h1>
+    </div>
+    <div class="container middle">
+        <label for="email">E-Mail:</label>
+        <input type="email" id="email" autocomplete="email" title="Deine E-Mail-Adresse" formControlName="emailControl" required />
+    </div>
+    <div class="container middle">
+        <label for="name">Passwort:</label>
+        <input type="password" id="password" autocomplete="current-password" title="Dein Passwort" formControlName="passwordControl" required />
+    </div>
+    <div class="container full center">
+        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Einloggen'" [disabled]="disabledButton()"></app-primary-button>
+    </div>
+</form>

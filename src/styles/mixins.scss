@@ -84,6 +84,10 @@
         border-bottom-color: $valid-color !important;
     }
 
+    &.ng-valid.ng-invalid {
+        border-bottom-color: $error-color !important;
+    }
+
     &:focus {
         border-bottom-color: $valid-color;
         outline: none;

@@ -1,9 +1,11 @@
 import { AngularNodeAppEngine, createNodeRequestHandler, isMainModule, writeResponseToNodeResponse } from "@angular/ssr/node";
 import express from "express";
+import session from "express-session";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import CONFIG from "./config";
 import apiRouter from "./router/api.router";
+import filesRouter from "./router/files.router";
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, "../browser");
@@ -22,7 +24,27 @@ app.use(
     }),
 );
 
+/**
+ * Use express-session for session management
+ */
+app.use(
+    session({
+        secret: CONFIG.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false,
+            httpOnly: false,
+            maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+        },
+    }),
+);
+
+/**
+ * Use routers for request handling
+ */
 app.use("/api", apiRouter);
+app.use("/files", filesRouter);
 
 /**
  * Handle all other requests by rendering the Angular application.

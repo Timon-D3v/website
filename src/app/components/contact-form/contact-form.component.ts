@@ -55,6 +55,7 @@ export class ContactFormComponent {
     onSubmit(): void {
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");
 
+        getElm("email").removeClass("ng-valid", "ng-invalid");
         data.email.valid ? getElm("email").addClass("ng-valid") : getElm("email").addClass("ng-invalid");
         if (!valid) return this.notificationService.error(error.title, error.message);
 

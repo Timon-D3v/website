@@ -87,5 +87,6 @@ export default {
         "/imprint": "Impressum",
         "/privacy": "Datenschutz",
         "/admin": "Adminseite",
+        "/login": "Login",
     } as Record<string, string>,
 };

@@ -92,7 +92,7 @@ export class ContactService {
      *   email: { value: 'john.doe@example.com' },
      *   message: { value: 'Hello, this is a message.' }
      * };
-     * 
+     *
      * contactService.sendData(contactData).subscribe(response => {
      *   console.log('Form submitted successfully', response);
      * }, error => {

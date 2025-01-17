@@ -31,14 +31,14 @@ export class SiteTitleService {
 
     /**
      * Sets the document title and Open Graph meta tags based on the provided route.
-     * 
+     *
      * @param {string} route - The route for which the title should be set.
-     * 
+     *
      * This method updates the document's title and the Open Graph meta tags for 'og:title' and 'og:url'.
      * It only performs these updates if the code is running in a browser environment.
-     * 
+     *
      * The title is retrieved using the `getTitleFromRoute` method.
-     * 
+     *
      * @returns {void}
      */
     setTitleForRoute(route: string): void {

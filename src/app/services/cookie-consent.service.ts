@@ -12,7 +12,7 @@ export class CookieConsentService {
     /**
      * Accepts the cookie consent by setting the appropriate values in localStorage.
      * This method should only be called in a browser environment.
-     * 
+     *
      * - Sets "cookie_consent" to "true" in localStorage.
      * - Sets "cookie_consent_mode" in localStorage with the following granted permissions:
      *   - ad_storage
@@ -20,9 +20,9 @@ export class CookieConsentService {
      *   - functionality_storage
      *   - personalization_storage
      *   - security_storage
-     * 
+     *
      * Finally, dispatches a consent event to notify other parts of the application.
-     * 
+     *
      * @returns {void}
      */
     acceptCookies(): void {
@@ -44,7 +44,7 @@ export class CookieConsentService {
 
     /**
      * Rejects cookies by setting the appropriate values in localStorage.
-     * 
+     *
      * This method performs the following actions:
      * - Checks if the code is running in a browser environment.
      * - Sets the "cookie_consent" item in localStorage to "false".
@@ -52,7 +52,7 @@ export class CookieConsentService {
      *   that denies ad, analytics, and personalization storage, but grants
      *   functionality and security storage.
      * - Dispatches a consent event to notify other parts of the application.
-     * 
+     *
      * @returns {void}
      */
     rejectCookies(): void {
@@ -97,13 +97,13 @@ export class CookieConsentService {
 
     /**
      * Initializes the cookie consent settings for the application.
-     * 
+     *
      * This method checks if the platform is a browser and if the user has already accepted cookies.
      * If the user has not accepted cookies, it sets the default cookie consent mode in localStorage.
-     * 
+     *
      * The default consent mode denies storage for ads, analytics, and personalization,
      * while granting storage for functionality and security.
-     * 
+     *
      * @returns {void}
      */
     init(): void {

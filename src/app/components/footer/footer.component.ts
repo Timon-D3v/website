@@ -26,14 +26,14 @@ export class FooterComponent implements OnInit {
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
      * Initializes the component by setting up event listeners and manipulating the DOM.
-     * 
+     *
      * - Creates a style element and appends it to the footer element.
      * - Sets the initial screen width and updates it on window resize.
      * - Tracks mouse movements to update the current X position, clip box path, and gradient rotation.
      * - Retrieves and sets the maximum height of the footer's pseudo-element.
-     * 
+     *
      * This method only runs in a browser environment.
-     * 
+     *
      * @returns {void}
      */
     ngOnInit(): void {
@@ -66,14 +66,14 @@ export class FooterComponent implements OnInit {
     /**
      * Adjusts the gradient rotation of the footer element based on the current X position of the cursor.
      * The rotation is calculated using an exponential easing function to provide a smooth transition.
-     * 
+     *
      * The rotation angle is determined by a base value and an offset that is influenced by the cursor's
      * X position as a percentage of the screen width.
-     * 
+     *
      * The calculated rotation angle is then applied to the CSS custom property `--angle` of the footer element.
-     * 
+     *
      * This method should only be executed in a browser environment.
-     * 
+     *
      * @returns {void}
      */
     setGradientRotation(): void {
@@ -163,12 +163,12 @@ export class FooterComponent implements OnInit {
 
     /**
      * Adjusts the clip-path of the footer element based on the current mouse position.
-     * 
+     *
      * This method calculates the percentage of the distance from the center of the screen
      * to the current mouse position, applies a reverse exponential easing function to it,
      * and then uses this value to determine the angle and height of a triangular clip-path.
      * The clip-path is then applied to the footer element's ::before pseudo-element.
-     * 
+     *
      * @returns {void}
      */
     clipBoxPath(): void {

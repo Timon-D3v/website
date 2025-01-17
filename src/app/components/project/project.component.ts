@@ -33,7 +33,7 @@ export class ProjectComponent {
      *
      * @remarks
      * This method uses the GSAP library to perform the animation.
-     * 
+     *
      * @returns {void}
      */
     boxShadowEaseIn(): void {
@@ -64,7 +64,7 @@ export class ProjectComponent {
      * ```typescript
      * this.boxShadowEaseOut();
      * ```
-     * 
+     *
      * @returns {void}
      */
     boxShadowEaseOut(): void {

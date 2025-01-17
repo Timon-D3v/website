@@ -25,11 +25,11 @@ export class AuthService {
 
     /**
      * Checks if the user is logged in by verifying the presence of a value in local storage.
-     * 
+     *
      * @remarks
      * This method is not a secure way to check if a user is logged in. It is intended only for controlling visual elements.
      * Server-side routes should be protected to ensure security.
-     * 
+     *
      * @returns {boolean} Returns `true` if a value is found in local storage, otherwise `false`.
      */
     isLoggedIn(): boolean {

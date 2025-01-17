@@ -17,12 +17,12 @@ export class CookieBannerComponent implements OnInit {
 
     /**
      * Angular lifecycle hook that is called after the component's view has been fully initialized.
-     * 
+     *
      * This method performs the following actions:
      * 1. Checks if the code is running in a browser environment. If not, it returns early.
      * 2. Initializes the cookie consent service.
      * 3. If cookies have already been accepted, it re-applies the acceptance.
-     * 
+     *
      * @returns {void}
      */
     ngOnInit(): void {
@@ -35,11 +35,11 @@ export class CookieBannerComponent implements OnInit {
 
     /**
      * Accepts the cookies by calling the cookie consent service and hides the cookie banner.
-     * 
+     *
      * This method performs the following actions:
      * 1. Calls the `acceptCookies` method of the `cookieConsentService` to register the user's consent.
      * 2. Sets the `hidden` property to `true` to hide the cookie banner.
-     * 
+     *
      * @returns {void}
      */
     acceptCookies(): void {

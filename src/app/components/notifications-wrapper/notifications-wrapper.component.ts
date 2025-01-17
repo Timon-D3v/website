@@ -23,7 +23,7 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
      * This method is used to preload a notification to prevent an error when notifications are called via the notificationService.
      * It also subscribes to the notificationObservable of the notificationService to display notifications.
-     * 
+     *
      * @remarks
      * - Preload a notification to prevent an error when notifications are called via the notificationService.
      *
@@ -49,12 +49,12 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
 
     /**
      * Lifecycle hook that is called when the component is destroyed.
-     * 
+     *
      * This method performs cleanup by unsubscribing from the subscription
      * if it is not null. This helps to prevent memory leaks by ensuring
      * that the subscription is properly disposed of when the component
      * is no longer in use.
-     * 
+     *
      * @returns {void}
      */
     ngOnDestroy(): void {
@@ -65,7 +65,7 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
 
     /**
      * Creates and returns a component reference for the NotificationComponent.
-     * 
+     *
      * @returns {ComponentRef<NotificationComponent> | undefined} A reference to the created NotificationComponent, or undefined if the view component is not available.
      */
     createComponent(): ComponentRef<NotificationComponent> | undefined {
@@ -129,7 +129,7 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
      *
      * @param {Notification} input - The notification object containing the details to be displayed.
      * @param {boolean} [preloader=false] - Optional boolean to indicate if a preloader should be shown. Defaults to false.
-     * 
+     *
      * @returns {void}
      */
     showWithObjectInput(input: Notification, preloader: boolean = false): void {

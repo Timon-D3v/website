@@ -16,7 +16,7 @@ export class SocialsIconComponent implements OnInit {
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
      * Initializes the social icon based on the type provided.
-     * 
+     *
      * @returns {void}
      */
     ngOnInit(): void {

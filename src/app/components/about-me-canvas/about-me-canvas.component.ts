@@ -39,11 +39,11 @@ export class AboutMeCanvasComponent implements OnInit {
     /**
      * Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
      * This method is used to perform initialization tasks for the component.
-     * 
+     *
      * In this implementation, it checks if the platform is a browser and then makes multiple asynchronous
      * requests to fetch images and shaders using the `imageService` and `shaderService`. Once all requests
      * are completed, it processes the responses to initialize shaders and points, and then sets up the scene.
-     * 
+     *
      * @returns {void}
      */
     ngOnInit(): void {
@@ -70,14 +70,14 @@ export class AboutMeCanvasComponent implements OnInit {
     }
 
     /**
-     * Initializes the 3D scene, including setting up the renderer, camera, loaders, GPU computation renderer, 
-     * materials, geometries, and event listeners. This method configures the scene with various textures, 
+     * Initializes the 3D scene, including setting up the renderer, camera, loaders, GPU computation renderer,
+     * materials, geometries, and event listeners. This method configures the scene with various textures,
      * shaders, and attributes, and sets up the rendering loop.
-     * 
+     *
      * @remarks
      * This method uses THREE.js for 3D rendering and GPUComputationRenderer for GPU-based computations.
      * It also sets up event listeners for user interactions such as clicks and mouse events.
-     * 
+     *
      * @returns {void}
      */
     initScene(): void {
@@ -295,7 +295,7 @@ export class AboutMeCanvasComponent implements OnInit {
 
     /**
      * Calculates the size for the canvas based on the window dimensions.
-     * 
+     *
      * @returns {number} The size of the canvas, which is the smaller value between
      * the window's inner width and the window's inner height minus 80 pixels.
      */
@@ -311,7 +311,7 @@ export class AboutMeCanvasComponent implements OnInit {
      *
      * The function maps the x and y coordinates of each point to the range [-1, 1] and assigns them to the texture's data array.
      * The z coordinate is set to 0, and the third value from each point is assigned to the alpha channel of the texture.
-     * 
+     *
      * @returns {void}
      */
     fillPositionTextureFromPoints(texture: THREE.DataTexture, points: Point[]): void {
@@ -332,7 +332,7 @@ export class AboutMeCanvasComponent implements OnInit {
      * The texture's image data is expected to be a flat array where each pixel is represented by four consecutive values (RGBA).
      * The red and green channels (array[i] and array[i + 1]) are set to small random values between -0.005 and 0.005,
      * the blue channel (array[i + 2]) is set to 0, and the alpha channel (array[i + 3]) is set to 1.
-     * 
+     *
      * @returns {void}
      */
     fillVelocityTexture(texture: THREE.DataTexture): void {
@@ -357,13 +357,13 @@ export class AboutMeCanvasComponent implements OnInit {
      * @param {THREE.Scene} scene - The Scene to be rendered.
      * @param {THREE.PerspectiveCamera} camera - The PerspectiveCamera used for rendering the scene.
      * @param {THREE.WebGLRenderer} renderer - The WebGLRenderer used to render the scene.
-     * 
+     *
      * This method updates the time uniform for the position and velocity shaders, computes the GPU-based calculations,
      * and updates the position and velocity uniforms for the shader material. It then requests an animation frame
      * to continue the rendering loop.
-     * 
+     *
      * @returns {void}
-     * 
+     *
      * @remarks
      * This method uses requestAnimationFrame to create a loop that continuously updates the scene and renders it.
      * It also updates the time uniform for the shaders to create animations based on time.

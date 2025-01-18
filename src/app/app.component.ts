@@ -9,6 +9,7 @@ import { SiteTitleService } from "./services/site-title.service";
 import { GsapService } from "./services/gsap.service";
 import { CookieBannerComponent } from "./components/cookie-banner/cookie-banner.component";
 import { Media220Component } from "./components/media-220/media-220.component";
+import { AuthService } from "./services/auth.service";
 
 @Component({
     selector: "app-root",
@@ -18,20 +19,22 @@ import { Media220Component } from "./components/media-220/media-220.component";
 })
 export class AppComponent implements OnInit {
     router = inject(Router);
+
     siteTitleService = inject(SiteTitleService);
     gsapService = inject(GsapService);
+    authService = inject(AuthService);
 
     ngOnInit(): void {
         timonjs_message();
 
         this.gsapService.init();
 
-        const events = this.router.events;
-
-        const pipe = events.pipe(filter((event) => event instanceof NavigationEnd));
+        const pipe = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
 
         pipe.subscribe(() => {
+            // The part below is called every time the route changes.
             this.siteTitleService.setTitleForRoute(this.router.url);
+            this.authService.updateLoginState();
         });
     }
 }

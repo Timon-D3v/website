@@ -21,7 +21,7 @@ export class AuthService {
      */
     logIn(token: string): void {
         if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem("authToken", token);
+            window.localStorage.setItem("authToken", token);
         }
     }
 
@@ -33,7 +33,7 @@ export class AuthService {
      */
     logOut(): void {
         if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem("authToken");
+            window.localStorage.removeItem("authToken");
         }
     }
 
@@ -44,7 +44,7 @@ export class AuthService {
      */
     getLocalStorage(): string {
         if (isPlatformBrowser(this.platformId)) {
-            const token = localStorage.getItem("authToken");
+            const token = window.localStorage.getItem("authToken");
             return token ? token : "";
         }
 
@@ -160,5 +160,35 @@ export class AuthService {
         );
 
         return request;
+    }
+
+    /**
+     * Updates the login state of the user by making an HTTP GET request to check if the user is logged in.
+     * If the user is logged in, it logs the user in with the provided token.
+     * If the user is not logged in, it logs the user out.
+     *
+     * The method handles any errors that occur during the HTTP request by logging them to the console.
+     *
+     * @returns {void}
+     */
+    updateLoginState(): void {
+        const request = this.http.post("/api/public/auth/isLoggedIn", {
+            token: this.getLocalStorage(),
+        });
+
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        request.subscribe((response: any) => {
+            if (response.valid) {
+                this.logIn(response.token);
+            } else {
+                this.logOut();
+            }
+        });
     }
 }

@@ -51,4 +51,32 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
     }
 });
 
+router.post("/isLoggedIn", (req: Request, res: Response): void => {
+    try {
+        const token = req.body.token;
+
+        if (typeof token === "undefined") throw new Error("Bad Request.");
+
+        const email = req.session?.user?.email;
+
+        res.json({
+            message: typeof email === "string" ? "Session Valid." : "Session Invalid.",
+            token: req.sessionID,
+            error: false,
+            valid: typeof email === "string",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+            token: "",
+            error: true,
+            valid: false,
+        });
+    }
+});
+
 export default router;

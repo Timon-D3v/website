@@ -3,6 +3,10 @@ import _session from "express-session";
 import bcrypt from "bcryptjs";
 import getAccount from "../shared/get.account.database";
 import { Account } from "../@types/auth.type";
+import { LoginConfirmationEmail } from "../shared/template.email";
+import { sendMail } from "../shared/send.email";
+import publicConfig from "../public.config";
+import { EmailResponse } from "../@types/emailResponse.type";
 
 // Router Serves under /api/public/auth
 const router = Router();
@@ -31,7 +35,15 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
 
         if (!compare) throw new Error("Das eingegebene Passwort ist falsch. Bitte versuchen Sie es erneut.");
 
-        req.session.user = account as Account;
+        const { template } = new LoginConfirmationEmail(`Erfolgreich eingeloggt mit ID: ${req.sessionID}`)
+
+        const response: EmailResponse = await sendMail(account.email, publicConfig.EMAIL, "Timon.dev", "Server", template.TEXT, template.HTML);
+
+        if (!response.success) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+
+        if (typeof response.data !== "string" && response.data.response.status !== 200) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+
+        req.session.user = account;
         req.session.resetMaxAge();
 
         res.json({

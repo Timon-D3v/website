@@ -6,7 +6,7 @@ export default {
     NAME: "Timon.dev",
     EMAIL: "info@timondev.com",
     CONTACT_EMAIL: "fiedlertimon@gmail.com",
-    COPYRIGHT: "© 2024 Timon Fiedler",
+    COPYRIGHT: "© 2025 Timon Fiedler",
     SOCIALS: {
         ICONS: {
             GitHub: {
@@ -54,6 +54,9 @@ export default {
                 LINKEDIN: "/email/linkedin.jpg",
                 WEBSITE: "/email/website.jpg",
             },
+        },
+        LOGIN_CONFIRMATION_EMAIL: {
+            TITLE: "Login-Bestätigung",
         },
         ABOUT_ME_TEXT:
             "Hallo, ich bin Timon, 18 Jahre alt und eins meiner Hobbies ist das Programmieren. Dabei habe ich mir durch Learning-by-Doing die Webentwicklung selbst beigebracht und auch schon einige Projekte erfolgreich hinter mir. Dazu gehört unter anderem die Entwicklung der Webseite für das Wohltätigkeitsprojekt „zurich meets tanzania“, aber auch etwas kleinere Projekte. Weil das Programmieren mein Hobby ist, bin ich schnell und billig und versuche immer das beste Resultat zu erreichen. Ein weiterer Vorteil meiner Interesse an Technik ist, dass ich meinen eigenen Server habe und somit auch deine Webseite selbst hosten kann, was einiges an jährlichen Kosten sparen kann. Um weitere Eindrücke über meine Arbeit zu erhalten, sieh dir meine Projekte weiter unten an oder kontaktiere mich direkt. Ich freue mich auf deine Nachricht :] ",

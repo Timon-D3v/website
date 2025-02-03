@@ -1,1 +1,37 @@
-<p>dropdown-menu works!</p>
+<div class="wrapper">
+    <div class="card" id="profile-dropdown-menu">
+        <ul class="list">
+            <li class="element profile">
+                <img [src]="authService.currentUser()?.picture" [alt]="authService.currentUser()?.name + '\'s Profilbild'" class="profile-picture" title="Dein Profilbild" />
+                <p>{{ authService.currentUser()?.name }} {{ authService.currentUser()?.familyName }}</p>
+            </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="list">
+            <li class="element" [routerLink]="'/settings'">
+                <img src="/svg/settings.svg" alt="Einstellungen" />
+                <p>Einstellungen</p>
+            </li>
+            @if (authService.isAdmin()) {
+                <li class="element" [routerLink]="'/admin'">
+                    <img src="/svg/business.svg" alt="Verwaltung" />
+                    <p>Verwaltung</p>
+                </li>
+            }
+        </ul>
+        <div class="separator"></div>
+        <ul class="list">
+            <li class="element cloud" [routerLink]="'/storage'">
+                <img src="/svg/cloud.svg" alt="Eine Wolke" />
+                <p>Dateien</p>
+            </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="list">
+            <li class="element logout" [routerLink]="'/logout'">
+                <img src="/svg/logout.svg" alt="Abmelden" />
+                <p>Abmelden</p>
+            </li>
+        </ul>
+    </div>
+</div>

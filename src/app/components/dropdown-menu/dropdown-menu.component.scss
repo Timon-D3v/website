@@ -1,0 +1,107 @@
+@use "../../../styles/index" as *;
+
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: $header-height $padding-side;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    z-index: -1;
+}
+
+.card {
+    --angle: 45deg;
+    background-color: $background-950;
+    border-radius: calc($header-height / 10);
+    margin-top: calc($header-height / 5);
+    padding: calc($padding-side / 3) 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: calc($header-height / 4);
+    box-shadow: 0 2px 5px -1px rgba(115, 131, 140, 0.5);
+    pointer-events: all;
+    border: 1.5px solid $secondary-500;
+}
+
+.separator {
+    border-top: 1.5px solid $secondary-500;
+}
+
+.list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: calc($header-height / 10);
+    padding: 0 calc($padding-side / 3);
+    margin: 0;
+}
+
+.element {
+    display: flex;
+    align-items: center;
+    color: $text-50;
+    gap: calc($header-height / 10);
+    transition: all 0.3s ease-out;
+    padding: calc($header-height / 15) calc($header-height / 10);
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary-700;
+        transform: translate(1px, -1px);
+    }
+
+    &:active {
+        transform: translate(1px, -1px) scale(0.95);
+    }
+
+    &.cloud:hover {
+        background-color: $accent-700;
+    }
+
+    &.logout:hover {
+        background-color: $error-700;
+    }
+
+    &.profile {
+        cursor: default;
+
+        &:hover {
+            background-color: $background-950;
+            transform: none;
+        }
+
+        &:active {
+            transform: none;
+        }
+
+        p {
+            margin: 0;
+            cursor: text;
+        }
+    }
+
+    img {
+        width: calc($header-height / 4);
+        height: calc($header-height / 4);
+        transition: all 0.3s ease-out;
+        filter: invert(83%) sepia(5%) saturate(547%) hue-rotate(71deg) brightness(125%) contrast(91%); // Makes the image the same color as $text-50
+    }
+
+    p {
+        margin: calc($header-height / 10) 0;
+    }
+
+    .profile-picture {
+        filter: none;
+    }
+}

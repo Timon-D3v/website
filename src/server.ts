@@ -4,8 +4,11 @@ import session from "express-session";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import CONFIG from "./config";
+import rootRouter from "./router/root.router";
 import apiRouter from "./router/api.router";
 import filesRouter from "./router/files.router";
+import publicConfig from "./public.config";
+import { canAccessAdminRoutes, canAccessSecuredRoutes } from "./shared/auth.middleware";
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, "../browser");
@@ -43,8 +46,19 @@ app.use(
 /**
  * Use routers for request handling
  */
+app.use("/", rootRouter);
 app.use("/api", apiRouter);
 app.use("/files", filesRouter);
+
+/**
+ * Secure routes that not everyone should have access
+ */
+for (const route of publicConfig.SECURED_ROUTES) {
+    app.use(route, canAccessSecuredRoutes);
+}
+for (const route of publicConfig.ADMIN_ROUTES) {
+    app.use(route, canAccessAdminRoutes);
+}
 
 /**
  * Handle all other requests by rendering the Angular application.

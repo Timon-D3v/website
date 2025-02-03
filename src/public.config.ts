@@ -92,4 +92,6 @@ export default {
         "/admin": "Adminseite",
         "/login": "Login",
     } as Record<string, string>,
+    SECURED_ROUTES: ["/admin"],
+    ADMIN_ROUTES: ["/admin"],
 };

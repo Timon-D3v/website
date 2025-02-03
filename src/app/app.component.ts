@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { Router, RouterOutlet, NavigationEnd } from "@angular/router";
+import { Router, RouterOutlet, NavigationEnd, NavigationStart } from "@angular/router";
 import { timonjs_message } from "timonjs";
 import { filter } from "rxjs";
 import { NotificationsWrapperComponent } from "./components/notifications-wrapper/notifications-wrapper.component";
@@ -29,11 +29,16 @@ export class AppComponent implements OnInit {
 
         this.gsapService.init();
 
-        const pipe = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+        const navigationEndPipe = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+        const navigationStartPipe = this.router.events.pipe(filter((event) => event instanceof NavigationStart));
 
-        pipe.subscribe(() => {
+        navigationEndPipe.subscribe(() => {
             // The part below is called every time the route changes.
             this.siteTitleService.setTitleForRoute(this.router.url);
+        });
+
+        navigationStartPipe.subscribe(() => {
+            // The part below is called every time the route could change.
             this.authService.updateLoginState();
         });
     }

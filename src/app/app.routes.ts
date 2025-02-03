@@ -35,6 +35,13 @@ export const routes: Routes = [
         canActivate: [notAuthGuard],
     },
     {
+        path: "logout",
+        loadComponent: async () => {
+            const component = await import("./auth/logout/logout.component");
+            return component.LogoutComponent;
+        },
+    },
+    {
         path: "imprint",
         loadComponent: async () => {
             const component = await import("./imprint/imprint.component");

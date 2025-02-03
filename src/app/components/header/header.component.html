@@ -12,9 +12,10 @@
         <button type="button" class="contact-button-small" title="Kontaktiere mich!" routerLink="/contact">
             <img alt="Kontakt" src="/svg/mail.svg" class="contact-button-small-image" />
         </button>
-        @if (authService.isLoggedIn()) {
+        @if (authService.currentUser() !== null) {
             <app-profile-button></app-profile-button>
-        } @else {
+        }
+        @if (authService.currentUser() === null) {
             <app-login-button></app-login-button>
         }
     </div>

@@ -1,0 +1,29 @@
+@use "../../../styles/index" as *;
+
+.wrapper {
+    width: 100%;
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, $primary-500 94%, $background-950) top / 8px 8px no-repeat,
+        conic-gradient($background-950 30%, $primary-500);
+    -webkit-mask: radial-gradient(farthest-side, rgba($background-950, 0) calc(100% - 8px), $background-950 0);
+    mask: radial-gradient(farthest-side, rgba($background-950, 0) calc(100% - 8px), $background-950 0);
+    animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}

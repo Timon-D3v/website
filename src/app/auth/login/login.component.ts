@@ -54,6 +54,7 @@ export class LoginComponent {
             } else {
                 this.notificationService.success("Erfolg", "Erfolgreich eingeloggt.");
                 this.authService.logIn(response.token);
+                this.authService.setUser(response.user);
                 this.router.navigate(["/admin"]);
             }
         });

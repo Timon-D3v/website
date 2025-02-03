@@ -16,3 +16,10 @@ export interface Account {
     family_name: string;
     picture: string;
 }
+
+export interface PublicUser {
+    email: string;
+    name: string;
+    familyName: string;
+    picture: string;
+}

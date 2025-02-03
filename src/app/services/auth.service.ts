@@ -1,8 +1,9 @@
 import { isPlatformBrowser } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { inject, Injectable, PLATFORM_ID, signal, WritableSignal } from "@angular/core";
 import { catchError, Observable } from "rxjs";
-import { LoginValidation } from "../../@types/auth.type";
+import { LoginValidation, PublicUser } from "../../@types/auth.type";
+import publicConfig from "../../public.config";
 
 @Injectable({
     providedIn: "root",
@@ -11,11 +12,14 @@ export class AuthService {
     http = inject(HttpClient);
     platformId = inject(PLATFORM_ID);
 
+    currentUser: WritableSignal<null | PublicUser> = signal(null);
+    isAdmin = signal(false);
+
     /**
      * Logs in the user by storing the provided authentication token in the local storage.
      * This operation is only performed if the code is running in a browser environment.
      *
-     * @param token - The authentication token to be stored.
+     * @param {string} token - The authentication token to be stored.
      *
      * @returns {void}
      */
@@ -23,6 +27,10 @@ export class AuthService {
         if (isPlatformBrowser(this.platformId)) {
             window.localStorage.setItem("authToken", token);
         }
+
+        if (this.currentUser() === null) return;
+
+        this.isAdmin.set(this.currentUser()?.email === publicConfig.CONTACT_EMAIL);
     }
 
     /**
@@ -86,8 +94,8 @@ export class AuthService {
         /**
          * Sets the error title and message if they are currently empty.
          *
-         * @param title - The title to set if the current error title is empty.
-         * @param message - The message to set if the current error message is empty.
+         * @param {string} title - The title to set if the current error title is empty.
+         * @param {string} message - The message to set if the current error message is empty.
          *
          * @returns {void}
          */
@@ -132,6 +140,7 @@ export class AuthService {
      * Sends login data to the authentication API.
      *
      * @param {LoginValidation} data - The login validation data containing email and password.
+     *
      * @returns {Observable<any>} An observable that emits the server response.
      *
      * @example
@@ -163,6 +172,36 @@ export class AuthService {
     }
 
     /**
+     * Sends a logout request to the authentication API.
+     *
+     * @returns {Observable<any>} An observable that emits the server response.
+     *
+     * @example
+     * ```typescript
+     * authService.logOutServerSide().subscribe(response => {
+     *   console.log(response);
+     * });
+     * ```
+     */
+    logOutServerSide(): Observable<any> {
+        const request = this.http.post("/api/public/auth/logout", {
+            token: this.getLocalStorage(),
+        });
+
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        this.currentUser.set(null);
+        this.isAdmin.set(false);
+
+        return request;
+    }
+
+    /**
      * Updates the login state of the user by making an HTTP GET request to check if the user is logged in.
      * If the user is logged in, it logs the user in with the provided token.
      * If the user is not logged in, it logs the user out.
@@ -186,9 +225,28 @@ export class AuthService {
         request.subscribe((response: any) => {
             if (response.valid) {
                 this.logIn(response.token);
+
+                const rawUser = window.localStorage.getItem("user");
+
+                if (rawUser) {
+                    this.setUser(JSON.parse(rawUser));
+                }
             } else {
                 this.logOut();
             }
         });
+    }
+
+    /**
+     * Sets the current user and updates the local storage and admin status.
+     *
+     * @param {PublicUser} user - The user object to set as the current user.
+     *
+     * @returns {void}
+     */
+    setUser(user: PublicUser): void {
+        this.currentUser.set(user);
+        window.localStorage.setItem("user", JSON.stringify(user));
+        this.isAdmin.set(user.email === publicConfig.CONTACT_EMAIL);
     }
 }

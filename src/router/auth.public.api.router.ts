@@ -7,6 +7,7 @@ import { LoginConfirmationEmail } from "../shared/template.email";
 import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
 import { EmailResponse } from "../@types/emailResponse.type";
+import config from "../config";
 
 // Router Serves under /api/public/auth
 const router = Router();
@@ -35,13 +36,15 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
 
         if (!compare) throw new Error("Das eingegebene Passwort ist falsch. Bitte versuchen Sie es erneut.");
 
-        const { template } = new LoginConfirmationEmail(`Erfolgreich eingeloggt mit ID: ${req.sessionID}`)
+        if (config.ENV === "prod") {
+            const { template } = new LoginConfirmationEmail(`Erfolgreich eingeloggt mit ID: ${req.sessionID}`);
 
-        const response: EmailResponse = await sendMail(account.email, publicConfig.EMAIL, "Timon.dev", "Server", template.TEXT, template.HTML);
+            const response: EmailResponse = await sendMail(account.email, publicConfig.EMAIL, "Timon.dev", "Login-Bestätigung", template.TEXT, template.HTML);
 
-        if (!response.success) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+            if (!response.success) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
 
-        if (typeof response.data !== "string" && response.data.response.status !== 200) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+            if (typeof response.data !== "string" && response.data.response.status !== 200) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+        }
 
         req.session.user = account;
         req.session.resetMaxAge();
@@ -51,6 +54,12 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
             token: req.sessionID,
             error: false,
             valid: true,
+            user: {
+                email: account.email,
+                name: account.name,
+                familyName: account.family_name,
+                picture: account.picture,
+            },
         });
     } catch (error) {
         console.error(error);
@@ -59,6 +68,7 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
             token: "",
             error: true,
             valid: false,
+            user: {},
         });
     }
 });
@@ -85,6 +95,34 @@ router.post("/isLoggedIn", (req: Request, res: Response): void => {
         res.json({
             message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
             token: "",
+            error: true,
+            valid: false,
+        });
+    }
+});
+
+router.post("/logout", (req: Request, res: Response): void => {
+    try {
+        const token = req.body.token;
+
+        if (typeof token === "undefined") throw new Error("Bad Request.");
+
+        req.session.destroy((error) => {
+            if (error instanceof Error) throw error;
+
+            res.json({
+                message: "Logout Successful.",
+                error: false,
+                valid: true,
+            });
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
             error: true,
             valid: false,
         });

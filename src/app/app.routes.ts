@@ -55,4 +55,18 @@ export const routes: Routes = [
             return component.PrivacyComponent;
         },
     },
+    {
+        path: "settings",
+        loadComponent: async () => {
+            const component = await import("./settings/settings.component");
+            return component.SettingsComponent;
+        },
+    },
+    {
+        path: "files",
+        loadComponent: async () => {
+            const component = await import("./files/files.component");
+            return component.FilesComponent;
+        },
+    },
 ];

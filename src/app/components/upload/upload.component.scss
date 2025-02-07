@@ -1,0 +1,10 @@
+@use "../../../styles/index" as *;
+
+label {
+    @include main-button($primary-500);
+    align-content: center;
+}
+
+input {
+    display: none;
+}

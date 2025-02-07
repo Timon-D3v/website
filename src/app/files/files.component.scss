@@ -1,0 +1,19 @@
+@use "../../styles/index" as *;
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $padding-side;
+    width: 100%;
+    height: $header-height;
+    padding: calc($header-height / 10) $padding-side;
+    box-sizing: border-box;
+}
+
+.upload {
+    display: flex;
+    gap: calc($padding-side / 2);
+    align-items: center;
+    justify-content: flex-end;
+}

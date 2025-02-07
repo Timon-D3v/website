@@ -1,0 +1,6 @@
+@use "../../../styles/index" as *;
+
+button {
+    @include main-button($secondary-600);
+    align-content: center;
+}

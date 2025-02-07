@@ -48,7 +48,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
      * @returns {void}
      */
     ngAfterViewInit(): void {
-        setTimeout(() => this.initScrollTrigger(), 100);
+        setTimeout(() => this.initScrollTrigger(), 1000);
     }
 
     /**

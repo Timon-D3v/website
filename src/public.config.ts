@@ -91,7 +91,10 @@ export default {
         "/privacy": "Datenschutz",
         "/admin": "Adminseite",
         "/login": "Login",
+        "/settings": "Einstellungen",
+        "/logout": "Logout",
+        "/files": "Dateien",
     } as Record<string, string>,
-    SECURED_ROUTES: ["/admin"],
+    SECURED_ROUTES: ["/admin", "/settings", "/files"],
     ADMIN_ROUTES: ["/admin"],
 };

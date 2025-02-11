@@ -47,26 +47,26 @@ export class AboutMeCanvasComponent implements OnInit {
      * @returns {void}
      */
     ngOnInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            const imageRequest = this.imageService.getImage("/DiskSampling.jpg");
-            const secondaryImageRequest = this.imageService.getImage("/logo_timondev_text.png");
-            const fragmentRequest = this.shaderService.getShader("/shader/fragment.glsl");
-            const vertexRequest = this.shaderService.getShader("/shader/vertexParticles.glsl");
-            const fragmentShaderPositionRequest = this.shaderService.getShader("/shader/fragmentShaderPosition.glsl");
-            const fragmentShaderVelocityRequest = this.shaderService.getShader("/shader/fragmentShaderVelocity.glsl");
+        if (!isPlatformBrowser(this.platformId)) return;
 
-            forkJoin([imageRequest, secondaryImageRequest, fragmentRequest, vertexRequest, fragmentShaderPositionRequest, fragmentShaderVelocityRequest]).subscribe((res) => {
-                this.fragment = res[2];
-                this.vertex = res[3];
-                this.fragmentShaderPosition = res[4];
-                this.fragmentShaderVelocity = res[5];
+        const imageRequest = this.imageService.getImage("/DiskSampling.jpg");
+        const secondaryImageRequest = this.imageService.getImage("/logo_timondev_text.png");
+        const fragmentRequest = this.shaderService.getShader("/shader/fragment.glsl");
+        const vertexRequest = this.shaderService.getShader("/shader/vertexParticles.glsl");
+        const fragmentShaderPositionRequest = this.shaderService.getShader("/shader/fragmentShaderPosition.glsl");
+        const fragmentShaderVelocityRequest = this.shaderService.getShader("/shader/fragmentShaderVelocity.glsl");
 
-                this.getAllPoints([res[0], res[1]]).then((result) => {
-                    this.POINTS = result;
-                    this.initScene();
-                });
+        forkJoin([imageRequest, secondaryImageRequest, fragmentRequest, vertexRequest, fragmentShaderPositionRequest, fragmentShaderVelocityRequest]).subscribe((res) => {
+            this.fragment = res[2];
+            this.vertex = res[3];
+            this.fragmentShaderPosition = res[4];
+            this.fragmentShaderVelocity = res[5];
+
+            this.getAllPoints([res[0], res[1]]).then((result) => {
+                this.POINTS = result;
+                this.initScene();
             });
-        }
+        });
     }
 
     /**

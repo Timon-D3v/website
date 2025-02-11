@@ -37,29 +37,29 @@ export class FooterComponent implements OnInit {
      * @returns {void}
      */
     ngOnInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            this.styleElement = document.createElement("style");
+        if (!isPlatformBrowser(this.platformId)) return;
 
+        this.styleElement = document.createElement("style");
+
+        this.screenWith.set(window.innerWidth);
+
+        window.addEventListener("resize", () => {
             this.screenWith.set(window.innerWidth);
+        });
 
-            window.addEventListener("resize", () => {
-                this.screenWith.set(window.innerWidth);
-            });
+        window.addEventListener("mousemove", (event) => {
+            this.currentX.set(event.clientX);
+            this.clipBoxPath();
+            this.setGradientRotation();
+        });
 
-            window.addEventListener("mousemove", (event) => {
-                this.currentX.set(event.clientX);
-                this.clipBoxPath();
-                this.setGradientRotation();
-            });
+        const footer = document.querySelector("footer");
 
-            const footer = document.querySelector("footer");
+        if (footer) {
+            const pseudo = window.getComputedStyle(footer, ":before");
+            this.maxHeight.set(Number(pseudo.height.replace("px", "")));
 
-            if (footer) {
-                const pseudo = window.getComputedStyle(footer, ":before");
-                this.maxHeight.set(Number(pseudo.height.replace("px", "")));
-
-                footer.appendChild(this.styleElement);
-            }
+            footer.appendChild(this.styleElement);
         }
     }
 

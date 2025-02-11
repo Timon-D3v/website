@@ -1,1 +1,1 @@
-INSERT INTO `main`.`user` (`email`, `password`, `name`, `family_name`, `picture`) VALUES ('fiedlertimon@gmail.com', '$2b$10$sMeDSIBMqR4K8K1c.zt9SeUt8AdYn3DHKOhwFRsJ8LoIuC.SyTDRW', 'Timon', 'Fiedler', '/files/public/pictures/Timon_Fiedler_randomString.jpg');
+INSERT INTO `main`.`user` (`email`, `password`, `name`, `family_name`, `picture`) VALUES ('fiedlertimon@gmail.com', '$2b$10$sMeDSIBMqR4K8K1c.zt9SeUt8AdYn3DHKOhwFRsJ8LoIuC.SyTDRW', 'Timon', 'Fiedler', '/files/public/pictures/ID_1.jpg');

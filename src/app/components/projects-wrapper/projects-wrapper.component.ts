@@ -63,6 +63,8 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
      * @returns {void}
      */
     ngOnInit(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const request = this.projectsService.getAllProjects();
 
         request.subscribe((response: ProjectApiResponse) => {

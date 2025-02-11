@@ -1,6 +1,7 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, PLATFORM_ID } from "@angular/core";
 import { UploadService } from "../../services/upload.service";
 import { MetaDataUpload } from "../../../@types/metaData.type";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-upload",
@@ -10,8 +11,11 @@ import { MetaDataUpload } from "../../../@types/metaData.type";
 })
 export class UploadComponent {
     uploadService = inject(UploadService);
+    platformId = inject(PLATFORM_ID);
 
     onFileChange(event: any) {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const file = event.target.files[0];
         const meta: MetaDataUpload = {
             size: file.size,

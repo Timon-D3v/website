@@ -1,10 +1,11 @@
-import { Component, forwardRef, inject, signal } from "@angular/core";
+import { Component, forwardRef, inject, PLATFORM_ID, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
 import { ContactService } from "../../services/contact.service";
 import { NotificationService } from "../../services/notification.service";
 import { getElm } from "timonjs";
 import publicConfig from "../../../public.config";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-contact-form",
@@ -33,8 +34,8 @@ export class ContactFormComponent {
     disabledButton = signal(false);
 
     contactService = inject(ContactService);
-
     notificationService = inject(NotificationService);
+    platformId = inject(PLATFORM_ID);
 
     /**
      * Handles the form submission event.
@@ -53,6 +54,8 @@ export class ContactFormComponent {
      * @returns {void}
      */
     onSubmit(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");
 
         getElm("email").removeClass("ng-valid", "ng-invalid");

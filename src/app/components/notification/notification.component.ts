@@ -1,5 +1,6 @@
-import { Component, input, InputSignal, OnInit, output, signal } from "@angular/core";
+import { Component, inject, input, InputSignal, OnInit, output, PLATFORM_ID, signal } from "@angular/core";
 import { NotificationTypes } from "../../../@types/notification.type";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-notification",
@@ -42,6 +43,8 @@ export class NotificationComponent implements OnInit {
         },
     };
 
+    platformId = inject(PLATFORM_ID);
+
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
      * This method sets the icon source and alternative text based on the notification type.
@@ -53,6 +56,8 @@ export class NotificationComponent implements OnInit {
      * @returns {void}
      */
     ngOnInit(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         switch (this.type()) {
             case "neutral":
                 this.iconSrc.set(this.modes.neutral.iconSrc);

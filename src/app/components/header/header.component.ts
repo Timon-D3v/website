@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from "@angular/core";
+import { Component, inject, OnInit, PLATFORM_ID, signal } from "@angular/core";
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
 import { LoginButtonComponent } from "../login-button/login-button.component";
 import { HomeCounterService } from "../../services/home-counter.service";
@@ -6,6 +6,7 @@ import { catchError } from "rxjs";
 import { RouterLink } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ProfileButtonComponent } from "../profile-button/profile-button.component";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-header",
@@ -15,8 +16,10 @@ import { ProfileButtonComponent } from "../profile-button/profile-button.compone
 })
 export class HeaderComponent implements OnInit {
     homeClicked = signal(0);
+
     homeCountService = inject(HomeCounterService);
     authService = inject(AuthService);
+    platformId = inject(PLATFORM_ID);
 
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -27,6 +30,8 @@ export class HeaderComponent implements OnInit {
      * @returns {void}
      */
     ngOnInit(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         this.getHomeCount();
     }
 
@@ -41,6 +46,8 @@ export class HeaderComponent implements OnInit {
      * @returns {void}
      */
     getHomeCount(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const request = this.homeCountService.getCurrentCount();
 
         request.pipe(
@@ -67,6 +74,8 @@ export class HeaderComponent implements OnInit {
      * @returns {void}
      */
     increaseHomeCounter(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const request = this.homeCountService.incrementCount();
 
         request.pipe(

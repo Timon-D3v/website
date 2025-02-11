@@ -1,4 +1,4 @@
-import { Component, ComponentRef, inject, OnDestroy, OnInit, PLATFORM_ID, viewChild, ViewContainerRef } from "@angular/core";
+import { Component, ComponentRef, inject, OnDestroy, OnInit, viewChild, ViewContainerRef } from "@angular/core";
 import { NotificationComponent } from "../notification/notification.component";
 import { Notification, NotificationTypes } from "../../../@types/notification.type";
 import { NotificationService } from "../../services/notification.service";
@@ -11,7 +11,6 @@ import { Subscription } from "rxjs";
     styleUrl: "./notifications-wrapper.component.scss",
 })
 export class NotificationsWrapperComponent implements OnInit, OnDestroy {
-    platformId = inject(PLATFORM_ID);
     viewComponent = viewChild("anchor", {
         read: ViewContainerRef,
     });

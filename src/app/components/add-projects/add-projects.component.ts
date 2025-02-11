@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, PLATFORM_ID, signal } from "@angular/core";
 import { PrimaryButtonComponent } from "../primary-button/primary-button.component";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { NotificationService } from "../../services/notification.service";
@@ -6,6 +6,7 @@ import { FileInputComponent } from "../file-input/file-input.component";
 import { toBase64 } from "timonjs";
 import { ProjectsService } from "../../services/projects.service";
 import { ApiResponse } from "../../../@types/apiResponse.type";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-add-projects",
@@ -33,8 +34,11 @@ export class AddProjectsComponent {
 
     notificationService = inject(NotificationService);
     projectsService = inject(ProjectsService);
+    platformId = inject(PLATFORM_ID);
 
     async onFileSelected(event: Event, controlName: "imageControl" | "portraitImageControl"): Promise<void> {
+        if (!isPlatformBrowser(this.platformId)) return;
+
         const input = event.target as HTMLInputElement;
 
         if (input.files && input.files.length > 0) {
@@ -113,10 +117,17 @@ export class AddProjectsComponent {
     }
 
     onSubmit(): void {
+        if (!isPlatformBrowser(this.platformId)) return;
+
+        this.disabledButton.set(true);
+        this.submitButtonText.set("Wird hinzugefügt...");
+
         const validationResult = this.validateForm();
 
         if (!validationResult.valid) {
             this.notificationService.error("Fehler beim Ausfüllen:", validationResult.message);
+            this.disabledButton.set(false);
+            this.submitButtonText.set("Hinzufügen");
             return;
         }
 
@@ -137,6 +148,9 @@ export class AddProjectsComponent {
         const request = this.projectsService.addProject(formData);
 
         request.subscribe((response: ApiResponse) => {
+            this.disabledButton.set(false);
+            this.submitButtonText.set("Hinzufügen");
+
             if (response.error) return this.notificationService.error("Fehler: ", response.message);
 
             this.notificationService.success("Projekt hinzugefügt:", response.message);

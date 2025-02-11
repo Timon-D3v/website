@@ -12,3 +12,8 @@ export type ProjectApiResponse = {
     message: string;
     error: boolean;
 };
+
+export type ProjectFilesUpload = {
+    image: Express.Multer.File[];
+    portraitImage: Express.Multer.File[];
+};

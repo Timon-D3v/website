@@ -1,0 +1,28 @@
+<form [formGroup]="addProjectForm" (submit)="onSubmit()">
+    <div class="container full">
+        <h1>Projekte hinzufügen</h1>
+    </div>
+    <div class="container">
+        <label for="add_project_title">Titel:</label>
+        <input type="text" id="add_project_title" title="Der Titel des Projekts" formControlName="titleControl" required />
+    </div>
+    <div class="container">
+        <label for="add_project_link">Link:</label>
+        <input type="text" id="add_project_link" title="Der Link zum Projekt" formControlName="urlControl" required />
+    </div>
+    <div class="container full">
+        <label for="add_project_description">Beschreibung:</label>
+        <textarea id="add_project_description" title="Die Beschreibung des Projekts" formControlName="descriptionControl" required></textarea>
+    </div>
+    <div class="container">
+        <app-file-input [text]="'Querformat Bild'" [title]="'Das Querformat Bild des Projekts'" [for]="'add_project_image'" [valid]="imageIsValid()" [src]="picture()" [fileName]="pictureFileName()"></app-file-input>
+        <input type="file" accept="image/*" id="add_project_image" title="Das Querformat Bild des Projekts" (change)="onFileSelected($event, 'imageControl')" required class="hidden" />
+    </div>
+    <div class="container">
+        <app-file-input [text]="'Hochformat Bild'" [title]="'Das Hochformat Bild des Projekts'" [for]="'add_project_image_portrait'" [valid]="portraitImageIsValid()" [src]="portraitPicture()" [fileName]="portraitPictureFileName()"></app-file-input>
+        <input type="file" accept="image/*" id="add_project_image_portrait" title="Das Hochformat Bild des Projekts" (change)="onFileSelected($event, 'portraitImageControl')" required class="hidden" />
+    </div>
+    <div class="container full center">
+        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Projekt hinzufügen'" [disabled]="disabledButton()"></app-primary-button>
+    </div>
+</form>

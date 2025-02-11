@@ -1,0 +1,43 @@
+@use "../../../styles/index" as *;
+@use "sass:color" as color;
+
+label {
+    @include main-input(calc($header-height), 100%, $valid-color: $success-500, $error-color: $error-500, $text-color: $text-50, $bg-color: $background-950);
+
+    background-color: $background-950;
+    padding: calc($header-height / 8) calc($header-height / 6);
+    cursor: pointer;
+    margin-bottom: calc($header-height / 12);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: calc($header-height / 4);
+    font-size: calc($header-height / 4);
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: color.adjust($background-950, $lightness: 5%);
+    }
+
+    &.invalid {
+        border-bottom-color: $error-500;
+    }
+
+    &.valid {
+        border-bottom-color: $success-500;
+    }
+
+    &.neutral {
+        border-bottom-color: $text-50;
+    }
+}
+
+img {
+    height: 100%;
+    width: auto;
+
+    &[src="/svg/cloud.svg"] {
+        filter: invert(1);
+    }
+}

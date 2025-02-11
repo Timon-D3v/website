@@ -7,8 +7,20 @@ export function canAccessSecuredRoutes(req: Request, res: Response, next: NextFu
     return res.status(401).redirect("/");
 }
 
+export function canAccessSecuredApi(req: Request, res: Response, next: NextFunction) {
+    if (typeof req.session?.user?.email === "string") return next();
+
+    return res.status(401).end();
+}
+
 export function canAccessAdminRoutes(req: Request, res: Response, next: NextFunction) {
     if (typeof req.session?.user?.email === "string" && req.session.user.email === publicConfig.CONTACT_EMAIL) return next();
 
     return res.status(401).redirect("/");
+}
+
+export function canAccessAdminApi(req: Request, res: Response, next: NextFunction) {
+    if (typeof req.session?.user?.email === "string" && req.session.user.email === publicConfig.CONTACT_EMAIL) return next();
+
+    return res.status(401).end();
 }

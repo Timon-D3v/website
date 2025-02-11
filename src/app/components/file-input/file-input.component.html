@@ -1,0 +1,4 @@
+<label [for]="for()" [title]="title()" class="{{ valid() === true || valid() === 1 ? 'valid' : '' }} {{ valid() === false || valid() === 0 ? 'invalid' : '' }} {{ valid() === 2 ? 'neutral' : '' }}">
+    <img [src]="src()" alt="Dein Bild" />
+    <div>{{ text() }}{{ fileName() === "" ? "" : ": " + fileName() }}</div>
+</label>

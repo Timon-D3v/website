@@ -1,0 +1,20 @@
+<form [formGroup]="addUserForm" (submit)="onSubmit()">
+    <div class="container full">
+        <h1>Benutzer hinzufügen</h1>
+    </div>
+    <div class="container full">
+        <label for="add_user_email">E-Mail:</label>
+        <input type="email" id="add_user_email" autocomplete="email" title="Die E-Mail-Adresse des Benutzers" formControlName="emailControl" required />
+    </div>
+    <div class="container">
+        <label for="add_user_name">Vorname:</label>
+        <input type="text" id="add_user_name" autocomplete="given-name" title="Der Name des Benutzers" formControlName="nameControl" required />
+    </div>
+    <div class="container">
+        <label for="add_user_family_name">Nachname:</label>
+        <input type="text" id="add_user_family_name" autocomplete="family-name" title="Der Nachname des Benutzers" formControlName="familyNameControl" required />
+    </div>
+    <div class="container full center">
+        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Benutzer hinzufügen'" [disabled]="disabledButton()"></app-primary-button>
+    </div>
+</form>

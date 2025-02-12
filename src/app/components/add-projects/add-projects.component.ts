@@ -154,6 +154,7 @@ export class AddProjectsComponent {
             if (response.error) return this.notificationService.error("Fehler: ", response.message);
 
             this.notificationService.success("Projekt hinzugefügt:", response.message);
+            this.addProjectForm.reset();
         });
     }
 }

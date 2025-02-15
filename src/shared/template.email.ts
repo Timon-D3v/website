@@ -235,24 +235,24 @@ export class LoginConfirmationEmail {
 }
 
 export class PasswordEmail {
-  messageEnd = "";
-  template = {
-      TEXT: "",
-      HTML: "",
-  };
-  inputs = {
-      message: "",
-  };
-  date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    messageEnd = "";
+    template = {
+        TEXT: "",
+        HTML: "",
+    };
+    inputs = {
+        message: "",
+    };
+    date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
-  constructor(name: string, familyName: string, generatedPassword: string) {
-      this.inputs.message = `Liebe/r ${name} ${familyName}\n\nDu wurdest erfolgreich auf timon.dev registriert.\nDein automatisch generiertes Passwort lautet: ${generatedPassword}\nBitte ändere dein Passwort nach dem ersten Login.\n\nViel Spaß auf timon.dev!\nTimon Fiedler`;
+    constructor(name: string, familyName: string, generatedPassword: string) {
+        this.inputs.message = `Liebe/r ${name} ${familyName}\n\nDu wurdest erfolgreich auf timon.dev registriert.\nDein automatisch generiertes Passwort lautet: ${generatedPassword}\nBitte ändere dein Passwort nach dem ersten Login.\n\nViel Spaß auf timon.dev!\nTimon Fiedler`;
 
-      this.messageEnd = `\n\nDiese Nachricht wurde am ${this.date} automatisch verschickt, weil diese E-Mail-Adresse genutzt wurde um sich auf timondev.com zu registrieren.\nFalls Sie sich nicht registriert haben, sollten sie sich umgehend bei Timon Fiedler unter info@timondev.com melden.`;
+        this.messageEnd = `\n\nDiese Nachricht wurde am ${this.date} automatisch verschickt, weil diese E-Mail-Adresse genutzt wurde um sich auf timondev.com zu registrieren.\nFalls Sie sich nicht registriert haben, sollten sie sich umgehend bei Timon Fiedler unter info@timondev.com melden.`;
 
-      this.template = {
-          TEXT: `${publicConfig.TEMPLATES.LOGIN_CONFIRMATION_EMAIL.TITLE}\n\n${this.inputs.message}\n\n${publicConfig.TEMPLATES.EMAIL.FOOTER}\n${publicConfig.TEMPLATES.EMAIL.FOOTER_2}`,
-          HTML: `<div style="background:#f5f5f5">
+        this.template = {
+            TEXT: `${publicConfig.TEMPLATES.LOGIN_CONFIRMATION_EMAIL.TITLE}\n\n${this.inputs.message}\n\n${publicConfig.TEMPLATES.EMAIL.FOOTER}\n${publicConfig.TEMPLATES.EMAIL.FOOTER_2}`,
+            HTML: `<div style="background:#f5f5f5">
 <div style="background-color:#f5f5f5;padding-top:80px">
   <div style="margin:0 auto;max-width:600px;background:#ffffff">
     <table cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:#ffffff;border-top:3px solid ${publicConfig.TEMPLATES.EMAIL.COLOR}" align="center" border="0">
@@ -343,6 +343,6 @@ export class PasswordEmail {
   </div>
 </div>
 </div>`,
-      };
-  }
+        };
+    }
 }

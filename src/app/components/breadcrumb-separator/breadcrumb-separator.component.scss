@@ -1,0 +1,8 @@
+@use "../../../styles/index" as *;
+
+img {
+    height: calc($header-height / 3.2); // 25px
+    width: calc($header-height / 3.2);
+    aspect-ratio: 1 / 1;
+    filter: invert(1) brightness(0.75);
+}

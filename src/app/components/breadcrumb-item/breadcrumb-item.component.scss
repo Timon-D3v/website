@@ -1,0 +1,21 @@
+@use "../../../styles/index" as *;
+
+a {
+    font-size: calc($header-height / 4);
+    line-height: 1;
+    text-decoration: none;
+    color: $primary-400;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.lastItem {
+    color: $secondary-500;
+}
+
+.root img {
+    width: calc($header-height / 2.5);
+    height: calc($header-height / 2.5);
+    filter: invert(1) brightness(0.75);
+}

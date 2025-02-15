@@ -8,7 +8,6 @@ import bcrypt from "bcryptjs";
 import { addUser } from "../shared/add.user.database";
 import { PasswordEmail } from "../shared/template.email";
 import { sendMail } from "../shared/send.email";
-import config from "../config";
 import publicConfig from "../public.config";
 import { addNewMetaFile } from "../shared/add.meta";
 

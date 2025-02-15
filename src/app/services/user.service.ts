@@ -23,6 +23,6 @@ export class UserService {
             }),
         );
 
-        return request
+        return request;
     }
 }

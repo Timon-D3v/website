@@ -1,0 +1,6 @@
+@for (child of children(); track $index) {
+    @if ($index > 0) {
+        <app-breadcrumb-separator></app-breadcrumb-separator>
+    }
+    <app-breadcrumb-item [name]="child.name" [url]="child.url" [isRoot]="child.isRoot" [isLastItem]="child.isLastItem"></app-breadcrumb-item>
+}

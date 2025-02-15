@@ -22,3 +22,23 @@ export interface MetaDataUpload {
     uploadedAt: number;
     currentPath: string;
 }
+
+export interface MetaFile {
+    id: number;
+    email: string;
+    name: string;
+    familyName: string;
+    picture: string;
+    fileSystem: MetaFileSystem;
+}
+
+export interface MetaFileSystem {
+    [root: string]: MetaFolder;
+    [key: `root/${string}`]: MetaFolder;
+}
+
+export interface MetaFolder {
+    name: string;
+    files: MetaData[];
+    folders: string[];
+}

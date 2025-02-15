@@ -1,12 +1,14 @@
 import { isPlatformBrowser } from "@angular/common";
 import { inject, Injectable, PLATFORM_ID } from "@angular/core";
 import publicConfig from "../../public.config";
+import { FileService } from "./file.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class SiteTitleService {
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
+    private fileService = inject(FileService);
 
     /**
      * Retrieves the title for a given route from the public configuration.
@@ -18,13 +20,22 @@ export class SiteTitleService {
      */
     getTitleFromRoute(route: string): string {
         try {
-            const title = publicConfig.SITEMAP[route];
+            let title = "";
+
+            title = publicConfig.SITEMAP[route];
+
+            if (typeof title === "undefined") title = "";
+
+            title = this.getSiteTitleForFolder(title, route);
 
             if (!title || title === "") throw new Error("No title found for route.");
 
             return title + " | Timon.dev";
         } catch (error) {
-            console.error("Error getting title from route:", error);
+            if (error instanceof Error) {
+                console.error("Error getting title from route:", error.message);
+            }
+
             return "Timon.dev";
         }
     }
@@ -50,5 +61,23 @@ export class SiteTitleService {
         document.querySelector("meta[property='og:title']")?.setAttribute("content", title);
         document.querySelector("meta[property='og:url']")?.setAttribute("content", window.location.origin + route);
         console.log("Title set to:", title);
+    }
+
+    getSiteTitleForFolder(title: string, route: string): string {
+        if (title !== "" && title !== publicConfig.SITEMAP["/files"]) return title;
+
+        if (!isPlatformBrowser(this.platformId)) return title;
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const path = searchParams.get("path") as string;
+        const fileSystem = this.fileService.fileSystem();
+
+        if (fileSystem === null) return title;
+
+        const folder = fileSystem[path];
+
+        if (folder === undefined) return title;
+
+        return folder.name;
     }
 }

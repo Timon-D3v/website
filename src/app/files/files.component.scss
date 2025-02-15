@@ -17,3 +17,14 @@
     align-items: center;
     justify-content: flex-end;
 }
+
+app-breadcrumb {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    gap: calc($header-height / 5);
+    height: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}

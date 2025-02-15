@@ -25,7 +25,7 @@ export class AddUserComponent {
     userService = inject(UserService);
     notificationService = inject(NotificationService);
 
-    validateData(): { valid: boolean, message: string } {
+    validateData(): { valid: boolean; message: string } {
         const response = {
             valid: true,
             message: "",

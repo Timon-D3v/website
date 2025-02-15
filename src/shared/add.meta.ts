@@ -1,7 +1,6 @@
 import getAccount from "./get.account.database";
 import fs from "fs/promises";
 
-
 export async function addNewMetaFile(email: string): Promise<boolean> {
     const account = await getAccount(email);
 
@@ -20,10 +19,10 @@ export async function addNewMetaFile(email: string): Promise<boolean> {
         picture: account.picture,
         fileSystem: {
             root: {
-                name: "Home",
-                files: []
-            }
-        }
+                name: "Dateien",
+                files: [],
+            },
+        },
     };
 
     try {

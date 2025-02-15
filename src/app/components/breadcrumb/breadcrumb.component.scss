@@ -1,0 +1,10 @@
+app-breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+app-breadcrumb-item {
+    display: grid;
+    place-items: center;
+}

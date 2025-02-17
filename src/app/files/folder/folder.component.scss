@@ -1,0 +1,33 @@
+@use "../../../styles/index" as *;
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    border: 1px solid $primary-700;
+    border-radius: calc(var(--width, $header-height) / 15);
+    padding: calc(var(--width, $header-height) / 10);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+img {
+    height: calc(var(--width, $header-height) / 10 * 5.5);
+    aspect-ratio: 1 / 1;
+    margin-bottom: calc(var(--width, $header-height) / 10);
+    filter: invert(13%) sepia(72%) saturate(2955%) hue-rotate(224deg) brightness(93%) contrast(103%);
+}
+
+h4 {
+    width: 100%;
+    margin: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: calc(var(--width, $header-height) / 10);
+    height: calc(var(--width, $header-height) / 10 * 1.5);
+    font-family: $text;
+}

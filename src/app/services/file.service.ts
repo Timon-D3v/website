@@ -3,12 +3,14 @@ import { inject, Injectable, signal } from "@angular/core";
 import { catchError, Observable } from "rxjs";
 import { GetAllRoutesApiResponse } from "../../@types/apiResponse.type";
 import { MetaFileSystem } from "../../@types/metaData.type";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: "root",
 })
 export class FileService {
     private http = inject(HttpClient);
+    private router = inject(Router);
 
     fileSystem = signal<MetaFileSystem | null>(null);
 
@@ -73,5 +75,16 @@ export class FileService {
         });
 
         return displayPath;
+    }
+
+    getCurrentPath(): string {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        if (!searchParams.has("path") || searchParams.get("path") === null || !searchParams.get("path")?.startsWith("root")) {
+            this.router.navigate(["/files"], { queryParams: { path: "root" } });
+            return "root";
+        }
+
+        return searchParams.get("path") as string;
     }
 }

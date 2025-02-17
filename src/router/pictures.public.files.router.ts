@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { promises as fs } from "fs";
+import fs from "fs/promises";
 import path from "path";
 
 // Router Serves under /files/public/pictures

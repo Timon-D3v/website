@@ -1,6 +1,9 @@
 @use "../../styles/index" as *;
 
 .topbar {
+    position: fixed;
+    top: $header-height;
+    left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,6 +12,8 @@
     height: $header-height;
     padding: calc($header-height / 10) $padding-side;
     box-sizing: border-box;
+    background-color: $background-950;
+    box-shadow: 0 0px 5px rgba($secondary-500, 0.5);
 }
 
 .upload {
@@ -27,4 +32,31 @@ app-breadcrumb {
     height: 100%;
     overflow-x: auto;
     white-space: nowrap;
+}
+
+.spacer {
+    height: $header-height;
+}
+
+.main {
+    --width: 200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--width), 1fr));
+    grid-template-rows: repeat(auto-fill, var(--width));
+    justify-content: space-between;
+    gap: calc($header-height / 3);
+    padding: calc($header-height / 3) $padding-side;
+    box-sizing: border-box;
+    place-items: center;
+
+    > app-file,
+    > app-folder {
+        width: 100%;
+        height: var(--width);
+    }
+
+    > app-file {
+        border-color: $secondary-500;
+    }
 }

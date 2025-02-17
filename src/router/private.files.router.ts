@@ -1,8 +1,11 @@
 import { Request, Response, Router } from "express";
 import { getMetaFileWithId } from "../shared/get.meta";
+import privateFileFilesRouter from "./file.private.files.router";
 
 // Router Serves under /files/private
 const router = Router();
+
+router.use("/file", privateFileFilesRouter);
 
 router.get("/getAllRoutes", async (req: Request, res: Response): Promise<void> => {
     try {

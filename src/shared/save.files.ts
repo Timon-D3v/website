@@ -1,8 +1,10 @@
 import { Account } from "../@types/auth.type";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 import fs from "fs/promises";
+import { updateMetaDataForId } from "./update.meta";
+import { ApiResponse } from "../@types/apiResponse.type";
 
-export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<{ valid: boolean; message: string }> {
+export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<ApiResponse> {
     try {
         await fs.access(`./uploads/meta/ID_${user.id}.json`);
     } catch (error) {
@@ -11,8 +13,8 @@ export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Expres
         }
 
         return {
-            valid: false,
-            message: "User Meta File not found",
+            error: true,
+            message: "Deine Metadaten wurden nicht gefunden.",
         };
     }
 
@@ -43,26 +45,26 @@ export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Expres
         }
 
         return {
-            valid: false,
-            message: "Path not found",
+            error: true,
+            message: "Der angegebene Pfad existiert nicht.",
         };
     }
 
     try {
-        await fs.writeFile(`./uploads/meta/ID_${user.id}.json`, JSON.stringify(metaData, null, 4), "utf-8");
+        updateMetaDataForId(user.id, metaData);
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
         }
 
         return {
-            valid: false,
-            message: "Error saving file",
+            error: true,
+            message: "Beim Speichern der Metadaten ist ein Fehler aufgetreten.",
         };
     }
 
     return {
-        valid: true,
-        message: "File saved",
+        error: false,
+        message: "Die Datei wurde erfolgreich gespeichert.",
     };
 }

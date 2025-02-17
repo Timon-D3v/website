@@ -5,3 +5,12 @@
         <app-upload></app-upload>
     </div>
 </div>
+<div class="spacer"></div>
+<div class="main">
+    @for (folder of folderArray(); track $index) {
+        <app-folder [folder]="folder" [urlParams]="{ path: folderUrlArray()[$index] }"></app-folder>
+    }
+    @for (file of fileArray(); track $index) {
+        <app-file [file]="file"></app-file>
+    }
+</div>

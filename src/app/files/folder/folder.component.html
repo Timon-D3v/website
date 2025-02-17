@@ -1,0 +1,4 @@
+<div class="wrapper" [routerLink]="'/files'" [queryParams]="urlParams()">
+    <img src="/svg/folder.svg" alt="Ein Ordner" />
+    <h4 [title]="folder()?.name">{{ folder()?.name }}</h4>
+</div>

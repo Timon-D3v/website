@@ -8,10 +8,13 @@ import { SiteTitleService } from "../services/site-title.service";
 import { BreadcrumbComponent } from "../components/breadcrumb/breadcrumb.component";
 import { BreadcrumbItem } from "../../@types/breadcrumb.type";
 import { filter } from "rxjs";
+import { MetaData, MetaFile, MetaFolder } from "../../@types/metaData.type";
+import { FolderComponent } from "./folder/folder.component";
+import { FileComponent } from "./file/file.component";
 
 @Component({
     selector: "app-files",
-    imports: [BreadcrumbComponent, UploadComponent, CreateFolderComponent],
+    imports: [BreadcrumbComponent, UploadComponent, CreateFolderComponent, FolderComponent, FileComponent],
     templateUrl: "./files.component.html",
     styleUrl: "./files.component.scss",
 })
@@ -25,6 +28,9 @@ export class FilesComponent implements OnInit {
     currentPath = signal("root");
 
     breadcrumbPathArray = signal<BreadcrumbItem[]>([]);
+    folderArray = signal<MetaFolder[]>([]);
+    fileArray = signal<MetaData[]>([]);
+    folderUrlArray = signal<string[]>([]);
 
     constructor() {
         effect(() => {
@@ -34,6 +40,10 @@ export class FilesComponent implements OnInit {
 
             const displayPath = this.fileService.setPath(this.currentPath());
             this.displayPathToBreadcrumb(displayPath);
+
+            this.updateFolderArray();
+            this.updateFileArray();
+            this.updateFolderUrlArray();
         });
     }
 
@@ -51,18 +61,16 @@ export class FilesComponent implements OnInit {
     }
 
     init(): void {
-        this.searchParams = new URLSearchParams(window.location.search);
-
-        if (!this.searchParams.has("path") || this.searchParams.get("path") === null || !this.searchParams.get("path")?.startsWith("root")) {
-            this.router.navigate(["/files"], { queryParams: { path: "root" } });
-        }
-
-        this.currentPath.set(this.searchParams.get("path") as string);
+        this.currentPath.set(this.fileService.getCurrentPath());
 
         this.fileService.updateFileSystem();
 
         const displayPath = this.fileService.setPath(this.currentPath());
         this.displayPathToBreadcrumb(displayPath);
+
+        this.updateFolderArray();
+        this.updateFileArray();
+        this.updateFolderUrlArray();
     }
 
     displayPathToBreadcrumb(path: string): void {
@@ -87,5 +95,49 @@ export class FilesComponent implements OnInit {
                 return oldArray;
             });
         }
+    }
+
+    updateFolderArray(): void {
+        const fileSystem = this.fileService.fileSystem();
+
+        if (fileSystem === null) return;
+
+        const currentFolder = this.fileService.fileSystem()?.[this.currentPath()];
+
+        if (currentFolder === undefined) return;
+
+        this.folderArray.set([]);
+
+        currentFolder.folders.forEach((folder) => {
+            this.folderArray.update((oldArray): MetaFolder[] => {
+                oldArray.push(fileSystem[folder]);
+
+                return oldArray;
+            });
+        });
+    }
+
+    updateFileArray(): void {
+        const fileSystem = this.fileService.fileSystem();
+
+        if (fileSystem === null) return;
+
+        const currentFolder = this.fileService.fileSystem()?.[this.currentPath()];
+
+        if (currentFolder === undefined) return;
+
+        this.fileArray.set(currentFolder.files);
+    }
+
+    updateFolderUrlArray(): void {
+        const fileSystem = this.fileService.fileSystem();
+
+        if (fileSystem === null) return;
+
+        const currentFolder = this.fileService.fileSystem()?.[this.currentPath()];
+
+        if (currentFolder === undefined) return;
+
+        this.folderUrlArray.set(currentFolder.folders);
     }
 }

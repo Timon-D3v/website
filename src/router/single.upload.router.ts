@@ -10,15 +10,15 @@ const router = Router();
 router.post("/small", multerInstance.single("file"), async (req: Request, res: Response): Promise<any> => {
     if (typeof req.file === "undefined") {
         return res.json({
-            valid: false,
-            message: "No File Uploaded",
+            error: true,
+            message: "Du hast keine Datei hochgeladen.",
         });
     }
 
     if (typeof req.body.meta === "undefined" || req.body.meta === "" || req.body.meta === null) {
         return res.json({
-            valid: false,
-            message: "No Metadata sent",
+            error: true,
+            message: "Du hast keine Metadaten mitgeschickt.",
         });
     }
 
@@ -26,8 +26,8 @@ router.post("/small", multerInstance.single("file"), async (req: Request, res: R
 
     if (typeof meta.size !== "number" || meta.size < 1 || typeof meta.type !== "string" || meta.type === "" || typeof meta.lastModified !== "number" || meta.lastModified < 0 || typeof meta.originalName !== "string" || meta.originalName === "" || typeof meta.uploadedAt !== "number" || meta.uploadedAt < 0 || typeof meta.currentPath !== "string" || meta.currentPath === "") {
         return res.json({
-            valid: false,
-            message: "Metadata is not valid",
+            error: true,
+            message: "Die Metadaten sind nicht vollständig.",
         });
     }
 

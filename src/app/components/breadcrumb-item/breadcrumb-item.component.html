@@ -3,5 +3,5 @@
         <img src="/svg/home.svg" alt="Home" />
     </a>
 } @else {
-    <a [class]="isLastItem() ? 'lastItem' : 'normal'" [routerLink]="url().split('?')[0]" [queryParams]="{ path: url().split('?')[1] }">{{ name() }}</a>
+    <a [class]="isLastItem() ? 'lastItem' : 'normal'" [routerLink]="url().split('?')[0]" [queryParams]="{ path: url().split('=')[1] }">{{ name() }}</a>
 }

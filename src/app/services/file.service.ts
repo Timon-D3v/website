@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
 import { catchError, Observable } from "rxjs";
-import { GetAllRoutesApiResponse } from "../../@types/apiResponse.type";
+import { ApiResponse, GetAllRoutesApiResponse } from "../../@types/apiResponse.type";
 import { MetaFileSystem } from "../../@types/metaData.type";
 import { Router } from "@angular/router";
 
@@ -86,5 +86,23 @@ export class FileService {
         }
 
         return searchParams.get("path") as string;
+    }
+
+    createFolder(folderName: string): Observable<ApiResponse> {
+        const currentPath = this.getCurrentPath();
+
+        const request = this.http.post<ApiResponse>("/api/private/createFolder", {
+            name: folderName,
+            path: currentPath,
+        });
+
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
     }
 }

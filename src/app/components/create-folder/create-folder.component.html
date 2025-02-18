@@ -1,1 +1,18 @@
 <button type="button" title="Ordner erstellen" (click)="createNewFolder()">Neuer Ordner</button>
+<div class="wrapper {{ isHidden() ? 'hidden' : '' }}" (click)="closePopup($event)">
+    <form class="popup" (click)="stopPropagation($event)" [formGroup]="folderForm" (submit)="onSubmit()">
+        <div class="close">
+            <img src="/svg/close.svg" alt="Schliessen" (click)="closePopup($event)" />
+        </div>
+        <div class="container full no-bottom-margin">
+            <h2>Neuer Ordner:</h2>
+        </div>
+        <div class="container full">
+            <label for="folderName">Name:</label>
+            <input type="text" id="folderName" [class]="inputClass()" title="Der Ordnername" formControlName="nameControl" required />
+        </div>
+        <div class="container full center">
+            <app-primary-button (click)="createNewFolder()" [type]="'submit'" [text]="buttonText()" [title]="'Neuen Ordner erstellen.'" [disabled]="buttonDisabled()"></app-primary-button>
+        </div>
+    </form>
+</div>

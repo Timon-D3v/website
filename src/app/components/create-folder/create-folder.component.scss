@@ -1,6 +1,60 @@
 @use "../../../styles/index" as *;
+@use "../../../styles/components/form.scss";
 
 button {
     @include main-button($secondary-600);
     align-content: center;
+}
+
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($background-950, 0.7);
+    display: grid;
+    place-items: center;
+    z-index: 10000;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.popup {
+    width: clamp(200px, 50%, 800px);
+    height: auto;
+    background-color: $background-900;
+    border-radius: calc($header-height / 5);
+    padding: calc($header-height / 5);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: calc($header-height / 5);
+    width: calc($header-height / 3);
+    height: calc($header-height / 3);
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        filter: invert(1);
+    }
+}
+
+h2 {
+    margin: 0;
+    text-align: center;
+    font-size: calc($header-height / 2);
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
 }

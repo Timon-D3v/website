@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { MetaDataUpload } from "../../@types/metaData.type";
 import { ApiResponse } from "../../@types/apiResponse.type";
-import { Observable } from "rxjs";
+import { lastValueFrom, Observable } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -15,7 +15,11 @@ export class UploadService {
         formData.append("file", file);
         formData.append("meta", JSON.stringify(meta));
 
-        return this.http.post("/api/private/upload/single/small", formData) as Observable<ApiResponse>;
+        return this.http.post<ApiResponse>("/api/private/upload/single/small", formData);
+    }
+
+    async uploadChunk(formData: FormData) {
+        return await lastValueFrom(this.http.post<ApiResponse>("/api/private/upload/single/big", formData));
     }
 
     uploadSingleFileLarge() {}

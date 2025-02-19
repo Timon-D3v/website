@@ -8,3 +8,36 @@ label {
 input {
     display: none;
 }
+
+progress {
+    position: absolute;
+    bottom: calc($header-height / -10);
+    left: 0;
+    width: 100%;
+    height: calc($header-height / 5);
+    background-color: $secondary-500;
+
+    &::-webkit-progress-bar {
+        background-color: $secondary-500;
+    }
+
+    &::-webkit-progress-value {
+        background-color: $primary-500;
+    }
+
+    &::-moz-progress-bar {
+        background-color: $secondary-500;
+    }
+
+    &::-moz-progress-value {
+        background-color: $primary-500;
+    }
+
+    &.visible {
+        display: initial;
+    }
+
+    &.hidden {
+        display: none;
+    }
+}

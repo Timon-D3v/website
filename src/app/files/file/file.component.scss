@@ -19,6 +19,10 @@ img {
     margin-bottom: calc(var(--width, $header-height) / 10);
     object-fit: cover;
     object-position: center;
+
+    &[alt$=".svg"] {
+        background-color: white;
+    }
 }
 
 h4 {

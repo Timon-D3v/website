@@ -10,19 +10,15 @@ import { lastValueFrom, Observable } from "rxjs";
 export class UploadService {
     http = inject(HttpClient);
 
-    uploadSingleFileSmall(file: File, meta: MetaDataUpload): Observable<ApiResponse> {
+    async uploadSingleFileSmall(file: File, meta: MetaDataUpload): Promise<ApiResponse> {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("meta", JSON.stringify(meta));
 
-        return this.http.post<ApiResponse>("/api/private/upload/single/small", formData);
+        return await lastValueFrom(this.http.post<ApiResponse>("/api/private/upload/single/small", formData));
     }
 
     async uploadChunk(formData: FormData) {
         return await lastValueFrom(this.http.post<ApiResponse>("/api/private/upload/single/big", formData));
     }
-
-    uploadSingleFileLarge() {}
-
-    uploadMultipleFiles() {}
 }

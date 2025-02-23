@@ -24,7 +24,21 @@ export class CreateFolderComponent {
     private notificationService = inject(NotificationService);
     private fileService = inject(FileService);
 
-    onSubmit() {
+    /**
+     * Handles the form submission for creating a new folder.
+     *
+     * This method performs the following steps:
+     * 1. Disables the submit button and updates its text to indicate the creation process.
+     * 2. Validates the form input.
+     * 3. If validation fails, displays an error notification, re-enables the button, and updates the input class.
+     * 4. If validation succeeds, calls the file service to create the folder.
+     * 5. Handles the response from the file service:
+     *    - If there's an error, displays an error notification, re-enables the button, and updates the input class.
+     *    - If successful, displays a success notification, updates the file system, hides the form, re-enables the button, resets the input class, and resets the form.
+     *
+     * @returns {void}
+     */
+    onSubmit(): void {
         this.buttonDisabled.set(true);
         this.buttonText.set("Erstellt...");
 
@@ -38,7 +52,7 @@ export class CreateFolderComponent {
             return;
         }
 
-        this.fileService.createFolder(this.folderForm.value.nameControl?.trim() as string).subscribe((response: ApiResponse) => {
+        this.fileService.createFolder(this.folderForm.value.nameControl?.trim() as string).subscribe((response: ApiResponse): void => {
             if (response.error) {
                 this.notificationService.error("Fehler beim Erstellen des Ordners:", response.message);
                 this.buttonDisabled.set(false);
@@ -57,7 +71,19 @@ export class CreateFolderComponent {
         });
     }
 
-    validateForm(): { error: boolean; message: string } {
+    /**
+     * Validates the form input for creating a folder.
+     *
+     * @returns {ApiResponse} An object containing an error flag and a message.
+     *          If the input is invalid, `error` will be `true` and `message` will contain the error message.
+     *          If the input is valid, `error` will be `false` and `message` will be an empty string.
+     *
+     * The validation checks the following:
+     * - The `nameControl` value must be a non-empty string.
+     * - The `nameControl` value must not be "root".
+     * - The `nameControl` value must not contain any of the following characters: / \ . : * ? " ' < > |
+     */
+    validateForm(): ApiResponse {
         if (typeof this.folderForm.value.nameControl !== "string" || this.folderForm.value.nameControl?.trim() === "") {
             return {
                 error: true,
@@ -78,16 +104,34 @@ export class CreateFolderComponent {
         };
     }
 
-    createNewFolder() {
+    /**
+     * Creates a new folder by setting the `isHidden` property to `false`.
+     * This method is typically used to reveal a folder creation UI component.
+     *
+     * @returns {void}
+     */
+    createNewFolder(): void {
         this.isHidden.set(false);
     }
 
-    closePopup(event: Event) {
+    /**
+     * Closes the popup by stopping the event propagation and setting the `isHidden` property to true.
+     *
+     * @param {Event} event - The event that triggered the close action.
+     * @returns {void}
+     */
+    closePopup(event: Event): void {
         event?.stopPropagation();
         this.isHidden.set(true);
     }
 
-    stopPropagation(event: Event) {
+    /**
+     * Stops the propagation of the given event.
+     *
+     * @param {Event} event - The event whose propagation should be stopped.
+     * @returns {void}
+     */
+    stopPropagation(event: Event): void {
         event.stopPropagation();
     }
 }

@@ -7,8 +7,17 @@ import { catchError, Observable } from "rxjs";
     providedIn: "root",
 })
 export class UserService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
+    /**
+     * Adds a new user with the provided email, name, and family name.
+     * Sends a POST request to the server to create the user.
+     *
+     * @param {string} email - The email address of the new user.
+     * @param {string} name - The first name of the new user.
+     * @param {string} familyName - The family name (surname) of the new user.
+     * @returns {Observable<ApiResponse>} An observable containing the server's response.
+     */
     addUser(email: string, name: string, familyName: string): Observable<ApiResponse> {
         const request = this.http.post<ApiResponse>("/api/private/admin/addUser", {
             email,
@@ -17,7 +26,7 @@ export class UserService {
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),

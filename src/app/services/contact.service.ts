@@ -2,12 +2,13 @@ import { inject, Injectable } from "@angular/core";
 import { ContactValidation } from "../../@types/contactValidation.type";
 import { HttpClient } from "@angular/common/http";
 import { catchError, Observable } from "rxjs";
+import { ApiResponse } from "../../@types/apiResponse.type";
 
 @Injectable({
     providedIn: "root",
 })
 export class ContactService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
     /**
      * Validates the provided contact data.
@@ -108,8 +109,8 @@ export class ContactService {
      * });
      * ```
      */
-    sendData(data: ContactValidation): Observable<any> {
-        const request = this.http.post("/api/public/submitContactForm", {
+    sendData(data: ContactValidation): Observable<ApiResponse> {
+        const request = this.http.post<ApiResponse>("/api/public/submitContactForm", {
             name: data["name"].value,
             familyName: data.familyName.value,
             email: data.email.value,

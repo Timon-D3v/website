@@ -22,9 +22,23 @@ export class AddUserComponent {
         familyNameControl: new FormControl(""),
     });
 
-    userService = inject(UserService);
-    notificationService = inject(NotificationService);
+    private userService = inject(UserService);
+    private notificationService = inject(NotificationService);
 
+    /**
+     * Validates the data in the addUserForm.
+     *
+     * @returns {{ valid: boolean; message: string }} An object containing a boolean `valid` indicating whether the data is valid,
+     * and a `message` string with an error message if the data is invalid.
+     *
+     * The validation checks the following fields:
+     * - `familyNameControl`: Must be a non-empty string.
+     * - `nameControl`: Must be a non-empty string.
+     * - `emailControl`: Must be a non-empty string.
+     *
+     * If any of these fields are invalid, `valid` will be set to `false` and `message` will contain
+     * an appropriate error message.
+     */
     validateData(): { valid: boolean; message: string } {
         const response = {
             valid: true,
@@ -49,6 +63,20 @@ export class AddUserComponent {
         return response;
     }
 
+    /**
+     * Handles the form submission for adding a new user.
+     *
+     * This method performs the following steps:
+     * 1. Disables the submit button and updates its text to indicate the submission is in progress.
+     * 2. Validates the form data.
+     * 3. If validation fails, displays an error notification, re-enables the submit button, and resets its text.
+     * 4. If validation succeeds, sends a request to add the user.
+     * 5. Handles the response from the add user request:
+     *    - If there is an error, displays an error notification.
+     *    - If the addition is successful, displays a success notification and resets the form.
+     *
+     * @returns {void}
+     */
     onSubmit(): void {
         this.disabledButton.set(true);
         this.submitButtonText.set("Wird hinzugefügt...");

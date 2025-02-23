@@ -6,7 +6,7 @@ import { catchError, Observable } from "rxjs";
     providedIn: "root",
 })
 export class GetShaderService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
     /**
      * Fetches the shader code from the given URL.
@@ -18,7 +18,7 @@ export class GetShaderService {
         const request = this.http.get(url, { responseType: "text" });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),

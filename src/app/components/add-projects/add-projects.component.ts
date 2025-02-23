@@ -32,10 +32,19 @@ export class AddProjectsComponent {
         portraitImageControl: new FormControl<File | null>(null),
     });
 
-    notificationService = inject(NotificationService);
-    projectsService = inject(ProjectsService);
-    platformId = inject(PLATFORM_ID);
+    private notificationService = inject(NotificationService);
+    private projectsService = inject(ProjectsService);
+    private platformId = inject(PLATFORM_ID);
 
+    /**
+     * Handles the file selection event for image and portrait image controls.
+     * Updates the form control with the selected file and sets the corresponding
+     * validity and preview image.
+     *
+     * @param {Event} event - The file input change event.
+     * @param {"imageControl" | "portraitImageControl"} controlName - The name of the form control to update. Can be either "imageControl" or "portraitImageControl".
+     * @returns {Promise<void>} A promise that resolves when the file processing is complete.
+     */
     async onFileSelected(event: Event, controlName: "imageControl" | "portraitImageControl"): Promise<void> {
         if (!isPlatformBrowser(this.platformId)) return;
 
@@ -82,6 +91,21 @@ export class AddProjectsComponent {
         }
     }
 
+    /**
+     * Validates the form fields of the add project form.
+     *
+     * @returns {{ valid: boolean; message: string }} An object containing a boolean `valid` indicating if the form is valid,
+     * and a `message` string with the validation error message if the form is invalid.
+     *
+     * The validation checks the following fields:
+     * - `portraitImageControl`: Must be defined, not null, and an instance of `File`.
+     * - `imageControl`: Must be defined, not null, and an instance of `File`.
+     * - `descriptionControl`: Must be a non-empty string.
+     * - `urlControl`: Must be a non-empty string.
+     * - `titleControl`: Must be a non-empty string.
+     *
+     * If any of these validations fail, `valid` will be set to `false` and `message` will contain the corresponding error message.
+     */
     validateForm(): { valid: boolean; message: string } {
         const response = {
             valid: true,
@@ -116,6 +140,22 @@ export class AddProjectsComponent {
         return response;
     }
 
+    /**
+     * Handles the form submission for adding a new project.
+     *
+     * This method performs the following steps:
+     * 1. Checks if the code is running in a browser environment.
+     * 2. Disables the submit button and updates its text to indicate the submission process.
+     * 3. Validates the form data.
+     * 4. If the form data is invalid, displays an error notification and re-enables the submit button.
+     * 5. If the form data is valid, creates a FormData object with the form values.
+     * 6. Sends a request to the projects service to add the new project.
+     * 7. Handles the response from the server:
+     *    - If there is an error, displays an error notification.
+     *    - If the project is added successfully, displays a success notification and resets the form.
+     *
+     * @returns {void}
+     */
     onSubmit(): void {
         if (!isPlatformBrowser(this.platformId)) return;
 

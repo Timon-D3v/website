@@ -14,7 +14,7 @@ export class SocialsIconComponent implements OnInit {
     type = input("LinkedIn");
     social: SocialsIconInfo = publicConfig.SOCIALS.ICONS[this.type()];
 
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -24,6 +24,7 @@ export class SocialsIconComponent implements OnInit {
      */
     ngOnInit(): void {
         if (!isPlatformBrowser(this.platformId)) return;
+
         this.social = publicConfig.SOCIALS.ICONS[this.type()];
     }
 }

@@ -15,7 +15,7 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
         read: ViewContainerRef,
     });
 
-    notificationService = inject(NotificationService);
+    private notificationService = inject(NotificationService);
     subscription: Subscription | null = null;
 
     /**
@@ -114,11 +114,11 @@ export class NotificationsWrapperComponent implements OnInit, OnDestroy {
         component.setInput("closable", closable);
         component.setInput("preloader", preloader);
 
-        component.instance.closeEvent.subscribe(() => {
+        component.instance.closeEvent.subscribe((): void => {
             this.destroyComponent(component);
         });
 
-        setTimeout(() => {
+        setTimeout((): void => {
             this.destroyComponent(component);
         }, 10000);
     }

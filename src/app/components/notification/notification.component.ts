@@ -43,7 +43,7 @@ export class NotificationComponent implements OnInit {
         },
     };
 
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.

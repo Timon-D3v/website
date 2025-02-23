@@ -1,6 +1,18 @@
+import { MetaFile } from "../@types/metaData.type";
 import getAccount from "./get.account.database";
 import fs from "fs/promises";
 
+/**
+ * Adds a new meta file for the given email.
+ *
+ * This function retrieves the account information associated with the provided email,
+ * constructs a meta file object, and writes it to the file system in JSON format.
+ *
+ * @param {string} email - The email address associated with the account.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the operation was successful.
+ *
+ * @throws Will log an error message and return false if the account retrieval fails or if there is an error writing the file.
+ */
 export async function addNewMetaFile(email: string): Promise<boolean> {
     const account = await getAccount(email);
 
@@ -11,7 +23,7 @@ export async function addNewMetaFile(email: string): Promise<boolean> {
 
     const filename = `ID_${account.id}.json`;
     const path = "./uploads/meta/";
-    const meta = {
+    const meta: MetaFile = {
         id: account.id,
         email: account.email,
         name: account.name,
@@ -21,6 +33,7 @@ export async function addNewMetaFile(email: string): Promise<boolean> {
             root: {
                 name: "Dateien",
                 files: [],
+                folders: [],
             },
         },
     };

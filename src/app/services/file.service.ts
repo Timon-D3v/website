@@ -14,17 +14,27 @@ export class FileService {
 
     fileSystem = signal<MetaFileSystem | null>(null);
 
+    /**
+     * Updates the file system by making an HTTP GET request to retrieve all routes.
+     *
+     * This method sends a request to the endpoint `/files/private/getAllRoutes` to fetch
+     * the file system routes. It handles any errors that occur during the request and logs
+     * them to the console. If the response contains an error, it logs the error message.
+     * Otherwise, it updates the file system with the retrieved data.
+     *
+     * @returns {void}
+     */
     updateFileSystem(): void {
         const request = this.http.get<GetAllRoutesApiResponse>("/files/private/getAllRoutes");
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
         );
 
-        request.subscribe((response: GetAllRoutesApiResponse) => {
+        request.subscribe((response: GetAllRoutesApiResponse): void => {
             if (response.error) {
                 console.error(response.message);
                 return;
@@ -34,11 +44,26 @@ export class FileService {
         });
     }
 
+    /**
+     * Retrieves all routes from the server.
+     *
+     * @returns {Observable<GetAllRoutesApiResponse>} An observable that emits the response containing all routes.
+     *
+     * @example
+     * this.fileService.getAllRoutes().subscribe(
+     *   (response) => {
+     *     console.log(response);
+     *   },
+     *   (error) => {
+     *     console.error(error);
+     *   }
+     * );
+     */
     getAllRoutes(): Observable<GetAllRoutesApiResponse> {
         const request = this.http.get<GetAllRoutesApiResponse>("/files/private/getAllRoutes");
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
@@ -47,6 +72,14 @@ export class FileService {
         return request;
     }
 
+    /**
+     * Sets the current path in the file system and returns a display-friendly version of the path.
+     *
+     * @param {string} currentPath - The path to set in the file system.
+     * @returns {string} The display-friendly version of the path.
+     *
+     * @throws Will log an error and return an empty string if the file system is null or if the path does not exist in the file system.
+     */
     setPath(currentPath: string): string {
         const fileSystem = this.fileSystem();
 
@@ -65,7 +98,7 @@ export class FileService {
         const pathArray = currentPath.split("/");
         let displayPath = "";
 
-        pathArray.forEach((path, index) => {
+        pathArray.forEach((path: string, index: number) => {
             if (index === 0) {
                 displayPath += "root";
             } else {
@@ -77,6 +110,13 @@ export class FileService {
         return displayPath;
     }
 
+    /**
+     * Retrieves the current path from the URL search parameters.
+     * If the "path" parameter is not present, is null, or does not start with "root",
+     * the method navigates to the "/files" route with "root" as the query parameter and returns "root".
+     *
+     * @returns {string} The current path from the URL search parameters or "root" if the path is invalid.
+     */
     getCurrentPath(): string {
         const searchParams = new URLSearchParams(window.location.search);
 
@@ -88,6 +128,21 @@ export class FileService {
         return searchParams.get("path") as string;
     }
 
+    /**
+     * Creates a new folder at the current path.
+     *
+     * @param {string} folderName - The name of the folder to be created.
+     * @returns {Observable<ApiResponse>} An Observable of ApiResponse indicating the result of the folder creation.
+     *
+     * @example
+     * ```typescript
+     * this.fileService.createFolder('newFolder').subscribe(response => {
+     *   console.log('Folder created successfully', response);
+     * }, error => {
+     *   console.error('Error creating folder', error);
+     * });
+     * ```
+     */
     createFolder(folderName: string): Observable<ApiResponse> {
         const currentPath = this.getCurrentPath();
 
@@ -97,7 +152,7 @@ export class FileService {
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
@@ -106,13 +161,26 @@ export class FileService {
         return request;
     }
 
+    /**
+     * Downloads a file from the server.
+     *
+     * @param {string} fileName - The name of the file to be downloaded.
+     * @returns {Observable<Blob>} An Observable that emits the file as a Blob.
+     *
+     * @example
+     * ```typescript
+     * this.fileService.downloadFile('example.txt').subscribe((blob) => {
+     *   // Handle the downloaded file blob
+     * });
+     * ```
+     */
     downloadFile(fileName: string): Observable<Blob> {
         const request = this.http.get(`/files/private/file/${fileName}`, {
             responseType: "blob",
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),

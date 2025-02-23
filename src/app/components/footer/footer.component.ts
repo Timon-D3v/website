@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from "@angular/common";
-import { Component, inject, Inject, OnInit, PLATFORM_ID, signal } from "@angular/core";
+import { Component, inject, OnInit, PLATFORM_ID, signal } from "@angular/core";
 import { FooterElementComponent } from "../footer-element/footer-element.component";
 import publicConfig from "../../../public.config";
 import { RouterLink } from "@angular/router";
@@ -12,9 +12,9 @@ import { SocialsIconComponent } from "../socials-icon/socials-icon.component";
     styleUrl: "./footer.component.scss",
 })
 export class FooterComponent implements OnInit {
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
-    screenWith = signal(0);
+    screenWidth = signal(0);
     currentX = signal(0);
     maxHeight = signal(0);
     clipPathStart = "polygon(0 0, 100% 0, 100% ";
@@ -41,13 +41,13 @@ export class FooterComponent implements OnInit {
 
         this.styleElement = document.createElement("style");
 
-        this.screenWith.set(window.innerWidth);
+        this.screenWidth.set(window.innerWidth);
 
-        window.addEventListener("resize", () => {
-            this.screenWith.set(window.innerWidth);
+        window.addEventListener("resize", (): void => {
+            this.screenWidth.set(window.innerWidth);
         });
 
-        window.addEventListener("mousemove", (event) => {
+        window.addEventListener("mousemove", (event: MouseEvent): void => {
             this.currentX.set(event.clientX);
             this.clipBoxPath();
             this.setGradientRotation();
@@ -80,7 +80,7 @@ export class FooterComponent implements OnInit {
         const base = 200;
         const offset = 40;
 
-        let percentage = this.currentX() / this.screenWith();
+        let percentage = this.currentX() / this.screenWidth();
         percentage = this.exponentialEase(percentage, 1.5);
 
         const rotation = base - offset * percentage;
@@ -100,7 +100,7 @@ export class FooterComponent implements OnInit {
      * @returns {boolean} True if the mouse cursor is on the left side of the screen, false otherwise.
      */
     isMouseLeft(): boolean {
-        return this.currentX() < this.screenWith() / 2;
+        return this.currentX() < this.screenWidth() / 2;
     }
 
     /**
@@ -113,7 +113,7 @@ export class FooterComponent implements OnInit {
      * @returns {number} - The height of the triangle.
      */
     triangleHeight(angle: number): number {
-        return (this.screenWith() / Math.cos(this.degreeToRadian(angle))) * Math.sin(this.degreeToRadian(angle));
+        return (this.screenWidth() / Math.cos(this.degreeToRadian(angle))) * Math.sin(this.degreeToRadian(angle));
     }
 
     /**
@@ -133,8 +133,8 @@ export class FooterComponent implements OnInit {
      * @returns {number} The maximum angle in degrees.
      */
     maxAngle(): number {
-        const hypotenuse = Math.sqrt(Math.pow(this.screenWith(), 2) + Math.pow(this.maxHeight(), 2));
-        const scale = this.screenWith() / hypotenuse;
+        const hypotenuse = Math.sqrt(Math.pow(this.screenWidth(), 2) + Math.pow(this.maxHeight(), 2));
+        const scale = this.screenWidth() / hypotenuse;
         const rad = Math.acos(scale);
         return (rad * 180) / Math.PI;
     }
@@ -173,27 +173,30 @@ export class FooterComponent implements OnInit {
      */
     clipBoxPath(): void {
         const isLeft = this.isMouseLeft();
-        const pxFromCenter = isLeft ? this.screenWith() / 2 - this.currentX() : this.currentX() - this.screenWith() / 2;
+        const pxFromCenter = isLeft ? this.screenWidth() / 2 - this.currentX() : this.currentX() - this.screenWidth() / 2;
 
-        let percentage = pxFromCenter / (this.screenWith() / 2);
+        let percentage = pxFromCenter / (this.screenWidth() / 2);
         percentage = this.reverseExponentialEase(percentage, 2);
 
         const angle = percentage * this.maxAngle();
         const height = this.triangleHeight(angle);
         const clipPercentage = ((this.maxHeight() - height) / this.maxHeight()) * 100;
 
-        if (isPlatformBrowser(this.platformId)) {
-            let clipPath = this.clipPathStart;
+        if (!isPlatformBrowser(this.platformId)) return;
 
-            if (isLeft) clipPath += `${clipPercentage}%, 0% 100%)`;
-            else clipPath += `100%, 0% ${clipPercentage}%)`;
+        let clipPath = this.clipPathStart;
 
-            if (this.styleElement !== null) {
-                this.styleElement.innerHTML = `footer::before {
-                    clip-path: ${clipPath};
-                    transform: translateY(${-clipPercentage / 2}px);
-                }`;
-            }
+        if (isLeft) {
+            clipPath += `${clipPercentage}%, 0% 100%)`;
+        } else {
+            clipPath += `100%, 0% ${clipPercentage}%)`;
         }
+
+        if (this.styleElement === null) return;
+
+        this.styleElement.innerHTML = `footer::before {
+            clip-path: ${clipPath};
+            transform: translateY(${-clipPercentage / 2}px);
+        }`;
     }
 }

@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable, PLATFORM_ID, signal, WritableSignal } from "@angular/core";
+import { inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 import { catchError, Observable } from "rxjs";
 import { LoginValidation, PublicUser } from "../../@types/auth.type";
 import publicConfig from "../../public.config";
@@ -9,10 +9,10 @@ import publicConfig from "../../public.config";
     providedIn: "root",
 })
 export class AuthService {
-    http = inject(HttpClient);
-    platformId = inject(PLATFORM_ID);
+    private http = inject(HttpClient);
+    private platformId = inject(PLATFORM_ID);
 
-    currentUser: WritableSignal<null | PublicUser> = signal(null);
+    currentUser = signal<PublicUser | null>(null);
     isAdmin = signal(false);
 
     /**
@@ -141,7 +141,7 @@ export class AuthService {
      *
      * @param {LoginValidation} data - The login validation data containing email and password.
      *
-     * @returns {Observable<any>} An observable that emits the server response.
+     * @returns {Observable<{ message: string; token: string; error: boolean; valid: boolean; user: PublicUser }>} An observable that emits the server response.
      *
      * @example
      * ```typescript
@@ -155,14 +155,14 @@ export class AuthService {
      * });
      * ```
      */
-    sendData(data: LoginValidation): Observable<any> {
-        const request = this.http.post("/api/public/auth/login", {
+    sendData(data: LoginValidation): Observable<{ message: string; token: string; error: boolean; valid: boolean; user: PublicUser }> {
+        const request = this.http.post<{ message: string; token: string; error: boolean; valid: boolean; user: PublicUser }>("/api/public/auth/login", {
             email: data["email"].value,
             password: data.password.value,
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
@@ -174,7 +174,7 @@ export class AuthService {
     /**
      * Sends a logout request to the authentication API.
      *
-     * @returns {Observable<any>} An observable that emits the server response.
+     * @returns {Observable<{ message: string; valid: boolean; error: boolean }>} An observable that emits the server response.
      *
      * @example
      * ```typescript
@@ -183,13 +183,13 @@ export class AuthService {
      * });
      * ```
      */
-    logOutServerSide(): Observable<any> {
-        const request = this.http.post("/api/public/auth/logout", {
+    logOutServerSide(): Observable<{ message: string; valid: boolean; error: boolean }> {
+        const request = this.http.post<{ message: string; valid: boolean; error: boolean }>("/api/public/auth/logout", {
             token: this.getLocalStorage(),
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
@@ -211,18 +211,18 @@ export class AuthService {
      * @returns {void}
      */
     updateLoginState(): void {
-        const request = this.http.post("/api/public/auth/isLoggedIn", {
+        const request = this.http.post<{ message: string; token: string; valid: boolean; error: boolean }>("/api/public/auth/isLoggedIn", {
             token: this.getLocalStorage(),
         });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
         );
 
-        request.subscribe((response: any) => {
+        request.subscribe((response: { message: string; token: string; valid: boolean; error: boolean }): void => {
             if (response.valid) {
                 this.logIn(response.token);
 

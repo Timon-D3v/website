@@ -5,7 +5,7 @@ import { inject, Injectable, PLATFORM_ID } from "@angular/core";
     providedIn: "root",
 })
 export class CookieConsentService {
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
     consentEvent = new Event("cookie_consent_updated");
 

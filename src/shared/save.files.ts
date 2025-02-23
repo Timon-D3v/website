@@ -4,6 +4,18 @@ import fs from "fs/promises";
 import { updateMetaDataForId } from "./update.meta";
 import { ApiResponse } from "../@types/apiResponse.type";
 
+/**
+ * Saves a single file's metadata and updates the user's metadata file.
+ *
+ * @param {MetaDataUpload} publicMetaData - The metadata of the file to be uploaded.
+ * @param {Express.Multer.File} file - The file object provided by Multer.
+ * @param {Account} user - The account of the user uploading the file.
+ * @returns {Promise<ApiResponse>} A promise that resolves to an ApiResponse indicating success or failure.
+ *
+ * @throws Will return an error response if the user's metadata file is not found.
+ * @throws Will return an error response if the specified path does not exist in the metadata.
+ * @throws Will return an error response if there is an error saving the metadata.
+ */
 export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<ApiResponse> {
     try {
         await fs.access(`./uploads/meta/ID_${user.id}.json`);

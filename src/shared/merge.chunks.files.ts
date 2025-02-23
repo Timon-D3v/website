@@ -6,6 +6,20 @@ import { Account } from "../@types/auth.type";
 import { randomString } from "timonjs";
 import { updateMetaDataForId } from "./update.meta";
 
+/**
+ * Merges file chunks into a single file and updates metadata.
+ *
+ * @param {string} chunkId - The unique identifier for the chunks.
+ * @param {number} totalChunks - The total number of chunks to merge.
+ * @param {MetaDataUpload} publicMetaData - The metadata associated with the upload.
+ * @param {Account} user - The user account performing the upload.
+ * @returns {Promise<ApiResponse>} - The result of the merge operation.
+ *
+ * @throws {Error} - If the metadata file cannot be accessed or read.
+ * @throws {Error} - If a chunk cannot be processed.
+ * @throws {Error} - If the specified path does not exist in the metadata.
+ * @throws {Error} - If there is an error saving the updated metadata.
+ */
 export async function mergeChunks(chunkId: string, totalChunks: number, publicMetaData: MetaDataUpload, user: Account): Promise<ApiResponse> {
     try {
         await fs.access(`./uploads/meta/ID_${user.id}.json`);

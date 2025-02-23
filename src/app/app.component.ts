@@ -18,26 +18,40 @@ import { AuthService } from "./services/auth.service";
     styleUrl: "./app.component.scss",
 })
 export class AppComponent implements OnInit {
-    router = inject(Router);
+    private router = inject(Router);
 
-    siteTitleService = inject(SiteTitleService);
-    gsapService = inject(GsapService);
-    authService = inject(AuthService);
+    private siteTitleService = inject(SiteTitleService);
+    private gsapService = inject(GsapService);
+    private authService = inject(AuthService);
 
+    /**
+     * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+     * This is where you should put initialization logic for the component.
+     *
+     * In this implementation:
+     * - `timonjs_message()` is called.
+     * - `gsapService` is initialized.
+     * - Subscriptions to router events are set up to handle navigation start and end events.
+     *
+     * The `navigationEndPipe` subscription updates the site title based on the current route.
+     * The `navigationStartPipe` subscription updates the login state before the route changes.
+     *
+     * @returns {void}
+     */
     ngOnInit(): void {
         timonjs_message();
 
         this.gsapService.init();
 
-        const navigationEndPipe = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
-        const navigationStartPipe = this.router.events.pipe(filter((event) => event instanceof NavigationStart));
+        const navigationEndPipe = this.router.events.pipe(filter((event): boolean => event instanceof NavigationEnd));
+        const navigationStartPipe = this.router.events.pipe(filter((event): boolean => event instanceof NavigationStart));
 
-        navigationEndPipe.subscribe(() => {
+        navigationEndPipe.subscribe((): void => {
             // The part below is called every time the route changes.
             this.siteTitleService.setTitleForRoute(this.router.url);
         });
 
-        navigationStartPipe.subscribe(() => {
+        navigationStartPipe.subscribe((): void => {
             // The part below is called every time the route could change.
             this.authService.updateLoginState();
         });

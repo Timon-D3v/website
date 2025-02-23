@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
     providedIn: "root",
 })
 export class HomeCounterService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
     /**
      * Retrieves the current home counter value from the server.

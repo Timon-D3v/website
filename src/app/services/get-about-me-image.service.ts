@@ -6,7 +6,7 @@ import { catchError, Observable } from "rxjs";
     providedIn: "root",
 })
 export class GetAboutMeImageService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
     /**
      * Fetches an image from the specified URL and returns it as an Observable of Blob.
@@ -18,7 +18,7 @@ export class GetAboutMeImageService {
         const request = this.http.get(url, { responseType: "blob" });
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),

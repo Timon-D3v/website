@@ -8,7 +8,7 @@ import { ApiResponse } from "../../@types/apiResponse.type";
     providedIn: "root",
 })
 export class ProjectsService {
-    http = inject(HttpClient);
+    private http = inject(HttpClient);
 
     /**
      * Fetches all projects from the API.
@@ -34,7 +34,7 @@ export class ProjectsService {
         const request = this.http.get<ProjectApiResponse>("/api/public/getAllProjects");
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),
@@ -68,7 +68,7 @@ export class ProjectsService {
         const request = this.http.post<ApiResponse>("/api/private/admin/uploadProject", projectData);
 
         request.pipe(
-            catchError((error) => {
+            catchError((error): any => {
                 console.error(error);
                 return error;
             }),

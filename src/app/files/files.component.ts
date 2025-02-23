@@ -32,8 +32,19 @@ export class FilesComponent implements OnInit {
     fileArray = signal<MetaData[]>([]);
     folderUrlArray = signal<string[]>([]);
 
+    /**
+     * Initializes the FilesComponent.
+     *
+     * The constructor sets up an effect that:
+     * - Logs the current file system state using the fileService.
+     * - Sets the site title based on the current route using the siteTitleService.
+     * - Updates the display path and converts it to a breadcrumb format.
+     * - Updates the folder array, file array, and folder URL array.
+     *
+     * @constructor
+     */
     constructor() {
-        effect(() => {
+        effect((): void => {
             console.info(this.fileService.fileSystem());
 
             this.siteTitleService.setTitleForRoute(this.router.url);
@@ -47,19 +58,36 @@ export class FilesComponent implements OnInit {
         });
     }
 
+    /**
+     * Angular lifecycle hook that is called after the component's view has been fully initialized.
+     *
+     * This method performs the following actions:
+     * 1. Checks if the platform is a server. If true, it returns early.
+     * 2. Calls the `init` method to perform initial setup.
+     * 3. Subscribes to the router's `NavigationEnd` events to reinitialize the component
+     *    every time the route changes.
+     *
+     * @returns {void}
+     */
     ngOnInit(): void {
         if (isPlatformServer(this.platformId)) return;
 
         this.init();
 
-        const navigationEndPipe = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+        const navigationEndPipe = this.router.events.pipe(filter((event): boolean => event instanceof NavigationEnd));
 
-        navigationEndPipe.subscribe(() => {
+        navigationEndPipe.subscribe((): void => {
             // The part below is called every time the route changes.
             this.init();
         });
     }
 
+    /**
+     * Initializes the file component by setting the current path, updating the file system,
+     * and updating the display path, folder array, file array, and folder URL array.
+     *
+     * @returns {void}
+     */
     init(): void {
         this.currentPath.set(this.fileService.getCurrentPath());
 
@@ -73,13 +101,21 @@ export class FilesComponent implements OnInit {
         this.updateFolderUrlArray();
     }
 
+    /**
+     * Converts a given file path into a breadcrumb array and updates the breadcrumbPathArray.
+     * Each breadcrumb item represents a part of the path with its name, URL, and flags indicating
+     * if it is the root or the last item in the path.
+     *
+     * @param {string} path - The file path to be converted into breadcrumb items.
+     * @returns {void}
+     */
     displayPathToBreadcrumb(path: string): void {
         const pathArray = path.split("/");
 
         this.breadcrumbPathArray.set([]);
 
         for (let i = 0; i < pathArray.length; i++) {
-            this.breadcrumbPathArray.update((oldArray): BreadcrumbItem[] => {
+            this.breadcrumbPathArray.update((oldArray: BreadcrumbItem[]): BreadcrumbItem[] => {
                 oldArray.push({
                     name: pathArray[i],
                     url:
@@ -97,6 +133,18 @@ export class FilesComponent implements OnInit {
         }
     }
 
+    /**
+     * Updates the folderArray with the folders from the current path in the file system.
+     *
+     * This method retrieves the file system from the fileService and checks if it is not null.
+     * It then gets the current folder based on the current path. If the current folder is undefined,
+     * the method returns early.
+     *
+     * The folderArray is reset to an empty array, and then each folder in the current folder is added
+     * to the folderArray by updating it with the corresponding folder from the file system.
+     *
+     * @returns {void}
+     */
     updateFolderArray(): void {
         const fileSystem = this.fileService.fileSystem();
 
@@ -108,8 +156,8 @@ export class FilesComponent implements OnInit {
 
         this.folderArray.set([]);
 
-        currentFolder.folders.forEach((folder) => {
-            this.folderArray.update((oldArray): MetaFolder[] => {
+        currentFolder.folders.forEach((folder: string): void => {
+            this.folderArray.update((oldArray: MetaFolder[]): MetaFolder[] => {
                 oldArray.push(fileSystem[folder]);
 
                 return oldArray;
@@ -117,6 +165,16 @@ export class FilesComponent implements OnInit {
         });
     }
 
+    /**
+     * Updates the file array with the files from the current folder in the file system.
+     *
+     * This method retrieves the file system from the file service. If the file system is null,
+     * the method returns early. It then gets the current folder based on the current path.
+     * If the current folder is undefined, the method returns early. Finally, it sets the
+     * file array with the files from the current folder.
+     *
+     * @returns {void}
+     */
     updateFileArray(): void {
         const fileSystem = this.fileService.fileSystem();
 
@@ -129,6 +187,16 @@ export class FilesComponent implements OnInit {
         this.fileArray.set(currentFolder.files);
     }
 
+    /**
+     * Updates the folder URL array with the folders from the current path in the file system.
+     *
+     * This method retrieves the file system from the file service. If the file system is null,
+     * the method returns early. It then gets the current folder from the file system using the
+     * current path. If the current folder is undefined, the method returns early. Finally, it
+     * sets the folder URL array with the folders from the current folder.
+     *
+     * @returns {void}
+     */
     updateFolderUrlArray(): void {
         const fileSystem = this.fileService.fileSystem();
 

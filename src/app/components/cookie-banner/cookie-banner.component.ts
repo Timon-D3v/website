@@ -10,8 +10,8 @@ import { RouterLink } from "@angular/router";
     styleUrl: "./cookie-banner.component.scss",
 })
 export class CookieBannerComponent implements OnInit {
-    cookieConsentService = inject(CookieConsentService);
-    platformId = inject(PLATFORM_ID);
+    private cookieConsentService = inject(CookieConsentService);
+    private platformId = inject(PLATFORM_ID);
 
     hidden = signal(this.cookieConsentService.hasAcceptedCookies() || this.cookieConsentService.hasRejectedCookies());
 

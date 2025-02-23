@@ -14,6 +14,16 @@ export class ContactEmail {
     };
     date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
+    /**
+     * Constructs an instance of the email template with the provided user details and message.
+     *
+     * @param {string} name - The first name of the user.
+     * @param {string} familyName - The family name of the user.
+     * @param {string} email - The email address of the user.
+     * @param {string} message - The message content to be included in the email.
+     *
+     * @constructor
+     */
     constructor(name: string, familyName: string, email: string, message: string) {
         this.inputs.name = name;
         this.inputs.familyName = familyName;
@@ -132,6 +142,20 @@ export class LoginConfirmationEmail {
     };
     date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
+    /**
+     * Constructs an instance of the email template with the provided message.
+     *
+     * @param {string} message - The message to be included in the email template.
+     *
+     * @constructor
+     *
+     * This constructor initializes the email template with both text and HTML formats.
+     * It sets the message and constructs the email body with the provided message and
+     * additional information such as the date and contact details.
+     *
+     * The HTML template includes styles and structure for a visually appealing email,
+     * including headers, footers, and social media links.
+     */
     constructor(message: string) {
         this.inputs.message = message;
 
@@ -245,6 +269,15 @@ export class PasswordEmail {
     };
     date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
+    /**
+     * Constructs an instance of the email template with the provided user details.
+     *
+     * @param {string} name - The first name of the user.
+     * @param {string} familyName - The family name of the user.
+     * @param {string} generatedPassword - The automatically generated password for the user.
+     *
+     * @constructor
+     */
     constructor(name: string, familyName: string, generatedPassword: string) {
         this.inputs.message = `Liebe/r ${name} ${familyName}\n\nDu wurdest erfolgreich auf timon.dev registriert.\nDein automatisch generiertes Passwort lautet: ${generatedPassword}\nBitte ändere dein Passwort nach dem ersten Login.\n\nViel Spaß auf timon.dev!\nTimon Fiedler`;
 

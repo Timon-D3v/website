@@ -26,7 +26,7 @@ export class SiteTitleService {
 
             if (typeof title === "undefined") title = "";
 
-            title = this.getSiteTitleForFolder(title, route);
+            title = this.getSiteTitleForFolder(title);
 
             if (!title || title === "") throw new Error("No title found for route.");
 
@@ -63,7 +63,23 @@ export class SiteTitleService {
         console.log("Title set to:", title);
     }
 
-    getSiteTitleForFolder(title: string, route: string): string {
+    /**
+     * Retrieves the site title for a given folder based on the provided title and route.
+     *
+     * @param {string} title - The current title of the site.
+     * @returns {string} The site title for the folder, or the provided title if certain conditions are met.
+     *
+     * The function performs the following steps:
+     * 1. If the title is not empty and does not match the public configuration sitemap entry for "/files", it returns the title.
+     * 2. If the platform is not a browser, it returns the title.
+     * 3. It retrieves the "path" search parameter from the current window location.
+     * 4. It fetches the file system using the file service.
+     * 5. If the file system is null, it returns the title.
+     * 6. It retrieves the folder from the file system using the path.
+     * 7. If the folder is undefined, it returns the title.
+     * 8. Finally, it returns the name of the folder.
+     */
+    getSiteTitleForFolder(title: string): string {
         if (title !== "" && title !== publicConfig.SITEMAP["/files"]) return title;
 
         if (!isPlatformBrowser(this.platformId)) return title;

@@ -18,7 +18,13 @@ export function validateData(name: string, familyName: string, email: string, me
         message: "",
     };
 
-    const setError = (title: string, message: string) => {
+    /**
+     * Sets the error title and message if they are currently empty.
+     *
+     * @param {string} title - The title to set for the error.
+     * @param {string} message - The message to set for the error.
+     */
+    const setError = (title: string, message: string): void => {
         if (error.title === "") error.title = title;
         if (error.message === "") error.message = message;
     };

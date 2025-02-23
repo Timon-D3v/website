@@ -18,9 +18,9 @@ import { Point } from "../../../@types/PoissonDiskSamplingPoint.type";
     styleUrl: "./about-me-canvas.component.scss",
 })
 export class AboutMeCanvasComponent implements OnInit {
-    platformId = inject(PLATFORM_ID);
-    shaderService = inject(GetShaderService);
-    imageService = inject(GetAboutMeImageService);
+    private platformId = inject(PLATFORM_ID);
+    private shaderService = inject(GetShaderService);
+    private imageService = inject(GetAboutMeImageService);
 
     fragment: string = "";
     vertex: string = "";

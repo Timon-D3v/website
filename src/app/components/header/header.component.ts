@@ -7,6 +7,7 @@ import { RouterLink } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ProfileButtonComponent } from "../profile-button/profile-button.component";
 import { isPlatformBrowser } from "@angular/common";
+import { ApiResponse } from "../../../@types/apiResponse.type";
 
 @Component({
     selector: "app-header",
@@ -17,9 +18,9 @@ import { isPlatformBrowser } from "@angular/common";
 export class HeaderComponent implements OnInit {
     homeClicked = signal(0);
 
-    homeCountService = inject(HomeCounterService);
+    private homeCountService = inject(HomeCounterService);
     authService = inject(AuthService);
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
     /**
      * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -57,7 +58,7 @@ export class HeaderComponent implements OnInit {
             }),
         );
 
-        request.subscribe((data: any) => {
+        request.subscribe((data: { count: number; message: string; error: boolean }): void => {
             if (data.error) return console.error(data.message);
 
             this.homeClicked.set(data.count);
@@ -85,10 +86,10 @@ export class HeaderComponent implements OnInit {
             }),
         );
 
-        request.subscribe((data: any) => {
-            if (data?.error) return console.error(data?.message);
+        request.subscribe((data: ApiResponse): void => {
+            if (data.error) return console.error(data?.message);
 
-            this.homeClicked.update((value) => value + 1);
+            this.homeClicked.update((value: number): number => value + 1);
             console.log(`The Home Counter has already been clicked ${this.homeClicked()} times.`);
         });
     }

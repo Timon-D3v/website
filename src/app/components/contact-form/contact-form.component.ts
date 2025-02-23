@@ -33,9 +33,9 @@ export class ContactFormComponent {
     submitButtonText = signal("Abschicken");
     disabledButton = signal(false);
 
-    contactService = inject(ContactService);
-    notificationService = inject(NotificationService);
-    platformId = inject(PLATFORM_ID);
+    private contactService = inject(ContactService);
+    private notificationService = inject(NotificationService);
+    private platformId = inject(PLATFORM_ID);
 
     /**
      * Handles the form submission event.

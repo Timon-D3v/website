@@ -16,9 +16,9 @@ import publicConfig from "../../../public.config";
 export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewInit {
     elements: Project[] = publicConfig.FALLBACKS.PROJECTS;
 
-    projectsService = inject(ProjectsService);
+    private projectsService = inject(ProjectsService);
 
-    platformId = inject(PLATFORM_ID);
+    private platformId = inject(PLATFORM_ID);
 
     /**
      * Lifecycle hook that is called when the component is destroyed.
@@ -32,7 +32,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
      * @returns {void}
      */
     ngOnDestroy(): void {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        ScrollTrigger.getAll().forEach((trigger: ScrollTrigger): void => trigger.kill());
 
         if (isPlatformBrowser(this.platformId)) gsap.killTweensOf("*");
     }
@@ -48,7 +48,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
      * @returns {void}
      */
     ngAfterViewInit(): void {
-        setTimeout(() => this.initScrollTrigger(), 1000);
+        setTimeout((): void => this.initScrollTrigger(), 1000);
     }
 
     /**
@@ -67,7 +67,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
 
         const request = this.projectsService.getAllProjects();
 
-        request.subscribe((response: ProjectApiResponse) => {
+        request.subscribe((response: ProjectApiResponse): void => {
             if (response.error) return console.error(response.message);
 
             const projects = JSON.parse(response.projects);
@@ -117,7 +117,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
             },
         });
 
-        sections.forEach((section) => {
+        sections.forEach((section: HTMLElement): void => {
             gsap.from(section.querySelectorAll(":is(h2, p)"), {
                 y: "-30%",
                 opacity: 0,

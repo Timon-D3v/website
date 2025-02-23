@@ -21,10 +21,10 @@ export class LoginComponent {
         passwordControl: new FormControl(""),
     });
 
-    authService = inject(AuthService);
-    notificationService = inject(NotificationService);
+    private authService = inject(AuthService);
+    private notificationService = inject(NotificationService);
 
-    router = inject(Router);
+    private router = inject(Router);
 
     /**
      * Handles the form submission for the login component.

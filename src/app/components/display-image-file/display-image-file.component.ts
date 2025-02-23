@@ -12,19 +12,37 @@ export class DisplayImageFileComponent {
     open = input(0);
 
     isVisible = signal(false);
-    
+
+    /**
+     * Constructor for the DisplayImageFileComponent.
+     *
+     * Initializes the component by invoking the `open` method and setting the `isVisible` property to `true`.
+     *
+     * @constructor
+     */
     constructor() {
-        effect(() => {
+        effect((): void => {
             this.open();
             this.isVisible.set(true);
         });
     }
 
-    close() {
+    /**
+     * Closes the display image file component by setting its visibility to false.
+     *
+     * @returns {void}
+     */
+    close(): void {
         this.isVisible.set(false);
     }
 
-    stopPropagation(event: Event) {
+    /**
+     * Prevents the event from propagating (bubbling) up the DOM tree.
+     *
+     * @param {Event} event - The event object that triggered the handler.
+     * @returns {void}
+     */
+    stopPropagation(event: Event): void {
         event.stopPropagation();
     }
 }

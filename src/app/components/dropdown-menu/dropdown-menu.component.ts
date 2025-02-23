@@ -9,7 +9,5 @@ import { AuthService } from "../../services/auth.service";
     styleUrl: "./dropdown-menu.component.scss",
 })
 export class DropdownMenuComponent {
-    platformId = inject(PLATFORM_ID);
-
     authService = inject(AuthService);
 }

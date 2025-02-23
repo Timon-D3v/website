@@ -1,6 +1,6 @@
 <div class="wrapper {{ isVisible() ? 'visible' : 'hidden' }} {{ open() }}" (contextmenu)="close()" (click)="close()">
     <button type="button" title="Schliessen" (click)="close()">
-        <img src="/svg/close.svg" alt="Schliessen">
+        <img src="/svg/close.svg" alt="Schliessen" />
     </button>
     <p title="{{ file()?.originalName }}" (click)="stopPropagation($event)" [innerHTML]="text().replaceAll('\n', '\<br>')"></p>
 </div>

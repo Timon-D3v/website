@@ -17,29 +17,50 @@ export class DisplayVideoFileComponent {
 
     id = randomString(11);
 
-    platformId = inject(PLATFORM_ID);
-    
+    private platformId = inject(PLATFORM_ID);
+
+    /**
+     * Initializes the DisplayVideoFileComponent.
+     *
+     * The constructor sets up an effect that performs the following actions:
+     * - Calls the `open` method to initialize or open the video file.
+     * - Sets the `isVisible` property to `true` to indicate that the video file is visible.
+     *
+     * @constructor
+     */
     constructor() {
-        effect(() => {
+        effect((): void => {
             this.open();
             this.isVisible.set(true);
         });
     }
 
-    close() {
+    /**
+     * Closes the video display by setting its visibility to false.
+     * If the platform is a browser, it pauses the video element with the given ID.
+     *
+     * @returns {void}
+     */
+    close(): void {
         this.isVisible.set(false);
 
-        if (!isPlatformBrowser(this.platformId)) {
-            return;
-        }
+        if (!isPlatformBrowser(this.platformId)) return;
 
         const video = document.getElementById(this.id) as HTMLVideoElement;
 
         video?.pause();
     }
 
-    stopPropagation(event: Event) {
+    /**
+     * Stops the propagation of the given event.
+     *
+     * This method prevents the event from bubbling up the DOM tree,
+     * preventing any parent handlers from being notified of the event.
+     *
+     * @param {Event} event - The event whose propagation is to be stopped.
+     * @returns {void}
+     */
+    stopPropagation(event: Event): void {
         event.stopPropagation();
     }
 }
-

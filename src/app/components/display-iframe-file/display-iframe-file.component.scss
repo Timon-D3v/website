@@ -1,0 +1,9 @@
+@use "../../../styles/components/filePreview.scss";
+@use "../../../styles/_index.scss" as *;
+
+iframe {
+    width: calc(100% - $header-height);
+    height: 100%;
+    outline: none;
+    border: none;
+}

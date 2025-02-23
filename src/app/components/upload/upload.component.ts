@@ -71,13 +71,13 @@ export class UploadComponent {
     }
 
     async singleSmallFileUpload(file: File, meta: MetaDataUpload): Promise<ApiResponse> {
-        const response = await this.uploadService.uploadSingleFileSmall(file, meta)
+        const response = await this.uploadService.uploadSingleFileSmall(file, meta);
 
         if (response.error) {
             return response;
         }
 
-        this.progressValue.update(value => value + 1);
+        this.progressValue.update((value) => value + 1);
 
         return {
             error: false,
@@ -111,7 +111,7 @@ export class UploadComponent {
                 return this.retryChunkUpload(chunk, CHUNK_ID, index, totalChunks, meta);
             }
 
-            this.progressValue.update(value => value + 1 / totalChunks);
+            this.progressValue.update((value) => value + 1 / totalChunks);
         }
 
         return {

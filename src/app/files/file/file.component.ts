@@ -1,9 +1,10 @@
 import { Component, input, OnChanges, OnInit, signal } from "@angular/core";
 import { MetaData } from "../../../@types/metaData.type";
+import { ContextMenuFileComponent } from "../../components/context-menu-file/context-menu-file.component";
 
 @Component({
     selector: "app-file",
-    imports: [],
+    imports: [ContextMenuFileComponent],
     templateUrl: "./file.component.html",
     styleUrl: "./file.component.scss",
 })
@@ -12,12 +13,22 @@ export class FileComponent implements OnInit, OnChanges {
     pictureUrl = signal("/svg/symbols/template.svg");
     pictureAlt = signal("Unbekannter Dateityp");
 
+    contextX = signal(0);
+    contextY = signal(0);
+
     ngOnInit(): void {
         this.setPicture();
     }
 
     ngOnChanges(): void {
         this.setPicture();
+    }
+
+    rightClick(event: MouseEvent): void {
+        event.preventDefault();
+
+        this.contextX.set(event.clientX);
+        this.contextY.set(event.clientY);
     }
 
     setPicture(): void {

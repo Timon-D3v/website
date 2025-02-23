@@ -1,0 +1,13 @@
+@use "../../../styles/components/filePreview.scss";
+@use "../../../styles/_index.scss" as *;
+
+p {
+    width: 100%;
+    height: calc(100% - $header-height);
+    overflow: auto;
+    padding: calc($header-height / 2) $padding-side;
+    margin: 0;
+    background-color: $background-950;
+    box-sizing: border-box;
+    border-radius: calc($header-height / 15);
+}

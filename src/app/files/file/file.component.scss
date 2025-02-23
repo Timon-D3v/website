@@ -30,9 +30,19 @@ h4 {
     margin: 0;
     flex: 1;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
     font-size: calc(var(--width, $header-height) / 10);
     height: calc(var(--width, $header-height) / 10 * 1.5);
     font-family: $text;
+}
+
+app-display-image-file,
+app-display-video-file,
+app-display-audio-file,
+app-display-text-file,
+app-display-iframe-file {
+    position: relative;
+    z-index: 1700;
 }

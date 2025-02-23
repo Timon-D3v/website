@@ -105,4 +105,19 @@ export class FileService {
 
         return request;
     }
+
+    downloadFile(fileName: string): Observable<Blob> {
+        const request = this.http.get(`/files/private/file/${fileName}`, {
+            responseType: "blob",
+        });
+
+        request.pipe(
+            catchError((error) => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
 }

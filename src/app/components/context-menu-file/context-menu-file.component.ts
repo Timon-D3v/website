@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from "@angular/core";
+import { Component, effect, inject, input, PLATFORM_ID, signal } from "@angular/core";
 import { MetaData } from "../../../@types/metaData.type";
 import { NotificationService } from "../../services/notification.service";
 import { FileService } from "../../services/file.service";
@@ -7,6 +7,7 @@ import { DisplayImageFileComponent } from "../display-image-file/display-image-f
 import { DisplayVideoFileComponent } from "../display-video-file/display-video-file.component";
 import { DisplayIframeFileComponent } from "../display-iframe-file/display-iframe-file.component";
 import { DisplayTextFileComponent } from "../display-text-file/display-text-file.component";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
     selector: "app-context-menu-file",
@@ -32,6 +33,8 @@ export class ContextMenuFileComponent {
 
     opener = signal(0);
 
+    private platformId = inject(PLATFORM_ID);
+
     constructor() {
         effect(() => {
             if (this.x() === 0 && this.y() === 0) return;
@@ -41,7 +44,7 @@ export class ContextMenuFileComponent {
     }
 
     openFile() {
-        if (this.file() === null) return;
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
 
         const file = this.file() as MetaData;
 
@@ -94,9 +97,43 @@ export class ContextMenuFileComponent {
 
     renameFile() {}
 
-    downloadFile() {}
+    downloadFile() {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
 
-    copyFile() {}
+        const file = this.file() as MetaData;
+
+        const a = document.createElement("a");
+        a.href = "/files/private/file/" + file.fileName;
+        a.target = "_blank";
+        a.download = file.originalName;
+
+        a.click();
+
+        this.isVisible.set(false);
+    }
+
+    copyFile() {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
+
+        const file = this.file() as MetaData;
+
+        const request = this.fileService.downloadFile(file.fileName);
+
+        request.subscribe((blob: Blob): void => {
+            const item = new ClipboardItem({ [blob.type]: blob });
+
+            navigator.clipboard.write([item])
+            .then(() => {
+                this.notificationService.success("Erfolg:", "Datei wurde in die Zwischenablage kopiert.");
+            })
+            .catch((error) => {
+                console.error(error);
+                this.notificationService.error("Fehler:", "Datei konnte nicht in die Zwischenablage kopiert werden.");
+            });
+        });
+
+        this.isVisible.set(false);
+    }
 
     shareFile() {}
 

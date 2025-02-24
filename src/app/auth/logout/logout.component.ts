@@ -29,14 +29,15 @@ export class LogoutComponent implements OnInit {
     ngOnInit(): void {
         const request = this.authService.logOutServerSide();
 
-        request.subscribe((response: any) => {
-            if (response?.valid) {
+        request.subscribe((response: { message: string; valid: boolean; error: boolean }) => {
+            if (response.valid) {
                 this.authService.logOut();
                 this.notificationService.neutral("Ausgeloggt", "Sie wurden erfolgreich ausgeloggt.");
             } else {
                 console.error(response);
                 this.notificationService.error("Fehler", "Beim Ausloggen ist ein Fehler passiert. Bitte versuchen Sie es später erneut.");
             }
+
             this.router.navigate(["/"]);
         });
     }

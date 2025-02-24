@@ -21,7 +21,7 @@ img {
     object-position: center;
 
     &[alt$=".svg"] {
-        background-color: white;
+        background-color: $background-50;
     }
 }
 

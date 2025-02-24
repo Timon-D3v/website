@@ -173,4 +173,9 @@ export class FileComponent implements OnInit, OnChanges {
             this.pictureAlt.set("Unbekannter Dateityp");
         }
     }
+
+    openFile(): void {
+        this.contextX.set(0.123);
+        this.contextY.set(0.123);
+    }
 }

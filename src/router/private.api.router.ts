@@ -38,7 +38,7 @@ router.post("/createFolder", async (req: Request, res: Response): Promise<void> 
         if (typeof meta.fileSystem?.[path] === "undefined") {
             res.json({
                 error: true,
-                message: "Der Pfad existiert nicht.",
+                message: "Der angegebene Pfad existiert nicht.",
             });
             return;
         }
@@ -48,7 +48,7 @@ router.post("/createFolder", async (req: Request, res: Response): Promise<void> 
         if (nameAlreadyExists) {
             res.json({
                 error: true,
-                message: "Ein Ordner mit diesem Namen existiert bereits.",
+                message: "Es existiert bereits ein Ordner mit diesem Namen.",
             });
             return;
         }
@@ -73,7 +73,7 @@ router.post("/createFolder", async (req: Request, res: Response): Promise<void> 
 
         res.json({
             error: false,
-            message: "Ordner wurde erfolgreich erstellt.",
+            message: "Der Ordner wurde erfolgreich erstellt.",
         });
     } catch (error) {
         if (error instanceof Error) {
@@ -83,6 +83,108 @@ router.post("/createFolder", async (req: Request, res: Response): Promise<void> 
         res.json({
             error: true,
             message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+    }
+});
+
+router.post("/renameFile", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const meta = await getMetaFileWithId(Number(req.session.user?.id));
+
+        if (meta instanceof Error) {
+            res.json({
+                api: {
+                    error: true,
+                    message: meta.message,
+                },
+                name: ""
+            });
+            return;
+        }
+
+        const { path, name, newName } = req.body;
+
+        if (typeof path !== "string" || path === "" || typeof name !== "string" || name === "" || typeof newName !== "string" || newName === "") {
+            res.json({
+                api: {
+                    error: true,
+                    message: "Der Pfad, Name oder der neue Name fehlt.",
+                },
+                name
+            });
+            return;
+        }
+
+        if (typeof meta.fileSystem[path] === "undefined") {
+            res.json({
+                api: {
+                    error: true,
+                    message: "Dieser Pfad existiert nicht.",
+                },
+                name
+            });
+            return;
+        }
+
+        let fileIndex = -1;
+
+        for (let i = 0; i < meta.fileSystem[path].files.length; i++) {
+            if (meta.fileSystem[path].files[i].originalName === name) {
+                fileIndex = i;
+                break;
+            }
+        }
+
+        if (fileIndex === -1) {
+            res.json({
+                api: {
+                    error: true,
+                    message: "Diese Datei existiert nicht.",
+                },
+                name
+            });
+            return;
+        }
+
+        const fileExtension = meta.fileSystem[path].files[fileIndex].originalName.split(".").pop();
+
+        if (fileExtension === null) {
+            res.json({
+                api: {
+                    error: true,
+                    message: "Die Dateiendung konnte nicht ermittelt werden.",
+                },
+                name
+            });
+            return;
+        }
+
+        if (newName.endsWith("." + fileExtension)) {
+            meta.fileSystem[path].files[fileIndex].originalName = newName;
+        } else {
+            meta.fileSystem[path].files[fileIndex].originalName = newName + "." + fileExtension;
+        }
+
+        await updateMetaDataForId(Number(req.session.user?.id), meta);
+
+        res.json({
+            api: {
+                error: false,
+                message: "Die Datei wurde erfolgreich umbenannt.",
+            },
+            name: meta.fileSystem[path].files[fileIndex].originalName
+    });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            api: {
+                error: true,
+                message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+            },
+            name: ""
         });
     }
 });

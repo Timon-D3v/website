@@ -5,6 +5,7 @@ import { NotificationService } from "../../services/notification.service";
 import { AuthService } from "../../services/auth.service";
 import { getElm } from "timonjs";
 import { Router } from "@angular/router";
+import { PublicUser } from "../../../@types/auth.type";
 
 @Component({
     selector: "app-login",
@@ -46,17 +47,18 @@ export class LoginComponent {
         this.disabledButton.set(true);
         this.submitButtonText.set("Wird überprüft...");
 
-        request.subscribe((response: any) => {
-            if (response?.error) {
-                this.notificationService.error("Fehler", response?.message);
+        request.subscribe((response: { message: string; token: string; error: boolean; valid: boolean; user: PublicUser }): void => {
+            if (response.error) {
+                this.notificationService.error("Fehler", response.message);
                 this.disabledButton.set(false);
                 this.submitButtonText.set("Einloggen");
-            } else {
-                this.notificationService.success("Erfolg", "Erfolgreich eingeloggt.");
-                this.authService.logIn(response.token);
-                this.authService.setUser(response.user);
-                this.router.navigate(["/settings"]);
+                return;
             }
+
+            this.notificationService.success("Erfolg", "Erfolgreich eingeloggt.");
+            this.authService.logIn(response.token);
+            this.authService.setUser(response.user);
+            this.router.navigate(["/settings"]);
         });
     }
 }

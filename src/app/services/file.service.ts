@@ -4,6 +4,7 @@ import { catchError, Observable } from "rxjs";
 import { ApiResponse, GetAllRoutesApiResponse } from "../../@types/apiResponse.type";
 import { MetaFileSystem } from "../../@types/metaData.type";
 import { Router } from "@angular/router";
+import { NotificationService } from "./notification.service";
 
 @Injectable({
     providedIn: "root",
@@ -11,6 +12,7 @@ import { Router } from "@angular/router";
 export class FileService {
     private http = inject(HttpClient);
     private router = inject(Router);
+    private notificationService = inject(NotificationService);
 
     fileSystem = signal<MetaFileSystem | null>(null);
 
@@ -29,6 +31,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),
@@ -64,6 +67,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),
@@ -153,6 +157,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),
@@ -181,6 +186,32 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
+
+    /**
+     * Renames a file from the given old name to the new name.
+     *
+     * @param {string} oldName - The current name of the file to be renamed.
+     * @param {string} newName - The new name for the file.
+     * @returns {{ api: ApiResponse; name: string }} An Observable of ApiResponse indicating the result of the rename operation.
+     */
+    renameFile(oldName: string, newName: string): Observable<{ api: ApiResponse; name: string }> {
+        const request = this.http.post<{ api: ApiResponse; name: string }>("/api/private/renameFile", {
+            path: this.getCurrentPath(),
+            name: oldName,
+            newName,
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),

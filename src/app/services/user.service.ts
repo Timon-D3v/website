@@ -2,12 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ApiResponse } from "../../@types/apiResponse.type";
 import { catchError, Observable } from "rxjs";
+import { NotificationService } from "./notification.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class UserService {
     private http = inject(HttpClient);
+    private notificationService = inject(NotificationService);
 
     /**
      * Adds a new user with the provided email, name, and family name.
@@ -27,6 +29,7 @@ export class UserService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),

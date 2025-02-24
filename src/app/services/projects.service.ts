@@ -3,12 +3,14 @@ import { inject, Injectable } from "@angular/core";
 import { ProjectApiResponse } from "../../@types/project.type";
 import { catchError, Observable } from "rxjs";
 import { ApiResponse } from "../../@types/apiResponse.type";
+import { NotificationService } from "./notification.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class ProjectsService {
     private http = inject(HttpClient);
+    private notificationService = inject(NotificationService);
 
     /**
      * Fetches all projects from the API.
@@ -35,6 +37,7 @@ export class ProjectsService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),
@@ -69,6 +72,7 @@ export class ProjectsService {
 
         request.pipe(
             catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
                 console.error(error);
                 return error;
             }),

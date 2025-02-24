@@ -8,6 +8,7 @@ import { DisplayVideoFileComponent } from "../display-video-file/display-video-f
 import { DisplayIframeFileComponent } from "../display-iframe-file/display-iframe-file.component";
 import { DisplayTextFileComponent } from "../display-text-file/display-text-file.component";
 import { isPlatformBrowser } from "@angular/common";
+import { ApiResponse } from "../../../@types/apiResponse.type";
 
 @Component({
     selector: "app-context-menu-file",
@@ -46,6 +47,11 @@ export class ContextMenuFileComponent {
     constructor() {
         effect((): void => {
             if (this.x() === 0 && this.y() === 0) return;
+
+            if (this.x() === 0.123 && this.y() === 0.123) {
+                this.openFile();
+                return;
+            }
 
             this.isVisible.set(true);
         });
@@ -128,9 +134,118 @@ export class ContextMenuFileComponent {
     moveFile() {}
 
     /**
-     * @todo Implement the renameFile method.
+     * Initiates the renaming process for a file.
+     * 
+     * This method performs the following actions:
+     * 1. Checks if the file is null or if the platform is not a browser, and returns early if either condition is true.
+     * 2. Hides the context menu.
+     * 3. Attempts to find the HTML element associated with the file to be renamed.
+     * 4. If the element is not found, displays an error notification and logs an error to the console.
+     * 5. Makes the element content editable, adjusts its style, and sets focus on it.
+     * 6. Adds event listeners to handle confirming or canceling the file rename operation.
+     * 
+     * @returns {void}
      */
-    renameFile() {}
+    renameFile(): void {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
+
+        this.isVisible.set(false);
+
+        const element = document.getElementById("rename_" + this.file()?.fileName)
+
+        if (element === null) {
+            this.notificationService.error("Fehler:", "Dieses Element konnte nicht gefunden werden.");
+            console.error("Element not found");
+            return;
+        };
+
+        element.contentEditable = "true";
+        element.style.textOverflow = "clip";
+        element.focus();
+
+        element.addEventListener("keydown", (event: KeyboardEvent): void => this.confirmFileRename(event, element as HTMLHeadingElement));
+        element.addEventListener("keydown", (event: KeyboardEvent): void => this.cancelFileRename(event, element as HTMLHeadingElement));
+    }
+
+    /**
+     * Handles the confirmation of a file rename operation when the Enter key is pressed.
+     * 
+     * @param {KeyboardEvent} event - The keyboard event triggered by pressing a key.
+     * @param {HTMLHeadingElement} element - The HTML heading element that contains the new file name.
+     * 
+     * This method performs the following actions:
+     * - Prevents the default action and stops the propagation of the event.
+     * - Sets the contentEditable property of the element to "false" and adjusts its style.
+     * - Retrieves the new file name from the element's innerText.
+     * - If the new name is the same as the original name, the method returns early.
+     * - Sends a request to rename the file using the fileService.
+     * - Subscribes to the response of the rename request and updates the element's innerText with the new name.
+     * - Updates the file system using the fileService.
+     * - Displays a success or error notification based on the response.
+     * - Removes the event listeners for confirming and canceling the file rename.
+     * 
+     * @returns {void}
+     */
+    confirmFileRename(event: KeyboardEvent, element: HTMLHeadingElement): void {
+        if (event.key !== "Enter") return
+        
+        event.stopPropagation();
+        event.preventDefault();
+
+        element.contentEditable = "false";
+        element.style.textOverflow = "ellipsis";
+
+        const newName = element.innerText;
+
+        if (newName === this.file()?.originalName) return;
+
+        const request = this.fileService.renameFile(this.file()?.originalName as string, newName);
+
+        request.subscribe((response: { api: ApiResponse; name: string }): void => {
+            element.innerText = response.name;
+
+            this.fileService.updateFileSystem();
+
+            if (response.api.error) {
+                console.error("Error renaming file", response.api.message);
+                this.notificationService.error("Fehler:", response.api.message);
+                return;
+            }
+
+            this.notificationService.success("Erfolg:", response.api.message);
+        });
+
+        element.removeEventListener("keydown", (): void => this.confirmFileRename(event, element));
+        element.removeEventListener("keydown", (): void => this.cancelFileRename(event, element));
+    }
+
+    /**
+     * Cancels the file rename operation when the Escape key is pressed.
+     * 
+     * @param {KeyboardEvent} event - The keyboard event that triggered the function.
+     * @param {HTMLHeadingElement} element - The HTML heading element that is being edited.
+     * 
+     * The function stops the propagation and default behavior of the event,
+     * sets the contentEditable property of the element to false, restores the
+     * original file name, and removes the event listeners for confirming and
+     * canceling the file rename.
+     * 
+     * @returns {void}
+     */
+    cancelFileRename(event: KeyboardEvent, element: HTMLHeadingElement): void {
+        if (event.key !== "Escape") return;
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        element.contentEditable = "false";
+        element.style.textOverflow = "ellipsis";
+        element.innerText = this.file()?.originalName as string;
+
+        element.removeEventListener("keydown", (): void => this.confirmFileRename(event, element));
+        element.removeEventListener("keydown", (): void => this.cancelFileRename(event, element));
+    }
+
 
     /**
      * Initiates the download of a file by creating an anchor element and triggering a click event on it.

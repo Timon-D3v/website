@@ -97,7 +97,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                     error: true,
                     message: meta.message,
                 },
-                name: ""
+                name: "",
             });
             return;
         }
@@ -110,7 +110,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                     error: true,
                     message: "Der Pfad, Name oder der neue Name fehlt.",
                 },
-                name
+                name,
             });
             return;
         }
@@ -121,7 +121,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                     error: true,
                     message: "Dieser Pfad existiert nicht.",
                 },
-                name
+                name,
             });
             return;
         }
@@ -141,7 +141,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                     error: true,
                     message: "Diese Datei existiert nicht.",
                 },
-                name
+                name,
             });
             return;
         }
@@ -154,7 +154,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                     error: true,
                     message: "Die Dateiendung konnte nicht ermittelt werden.",
                 },
-                name
+                name,
             });
             return;
         }
@@ -172,8 +172,8 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                 error: false,
                 message: "Die Datei wurde erfolgreich umbenannt.",
             },
-            name: meta.fileSystem[path].files[fileIndex].originalName
-    });
+            name: meta.fileSystem[path].files[fileIndex].originalName,
+        });
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
@@ -184,7 +184,7 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
                 error: true,
                 message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
             },
-            name: ""
+            name: "",
         });
     }
 });

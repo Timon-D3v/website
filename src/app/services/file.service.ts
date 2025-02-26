@@ -124,6 +124,8 @@ export class FileService {
     getCurrentPath(): string {
         const searchParams = new URLSearchParams(window.location.search);
 
+        if (!window.location.href.includes("files")) return "";
+
         if (!searchParams.has("path") || searchParams.get("path") === null || !searchParams.get("path")?.startsWith("root")) {
             this.router.navigate(["/files"], { queryParams: { path: "root" } });
             return "root";

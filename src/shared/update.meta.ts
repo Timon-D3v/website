@@ -1,4 +1,6 @@
 import fs from "fs/promises";
+import path from "path";
+import CONFIG from "../config";
 import { MetaFile } from "../@types/metaData.type";
 
 /**
@@ -9,5 +11,5 @@ import { MetaFile } from "../@types/metaData.type";
  * @returns {Promise<void>} A promise that resolves when the file has been written.
  */
 export async function updateMetaDataForId(id: number, data: MetaFile): Promise<void> {
-    await fs.writeFile(`./uploads/meta/ID_${id}.json`, JSON.stringify(data, null, 4), "utf-8");
+    await fs.writeFile(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${id}.json`), JSON.stringify(data, null, 4), "utf-8");
 }

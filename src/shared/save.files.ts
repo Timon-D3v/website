@@ -1,8 +1,10 @@
-import { Account } from "../@types/auth.type";
-import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 import fs from "fs/promises";
+import path from "path";
+import CONFIG from "../config";
 import { updateMetaDataForId } from "./update.meta";
+import { Account } from "../@types/auth.type";
 import { ApiResponse } from "../@types/apiResponse.type";
+import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 
 /**
  * Saves a single file's metadata and updates the user's metadata file.
@@ -18,7 +20,7 @@ import { ApiResponse } from "../@types/apiResponse.type";
  */
 export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<ApiResponse> {
     try {
-        await fs.access(`./uploads/meta/ID_${user.id}.json`);
+        await fs.access(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`));
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
@@ -30,7 +32,7 @@ export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Expres
         };
     }
 
-    const metaFile = await fs.readFile(`./uploads/meta/ID_${user.id}.json`, "utf-8");
+    const metaFile = await fs.readFile(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`), "utf-8");
     const metaData = JSON.parse(metaFile);
 
     const meta: MetaData = {

@@ -1,4 +1,6 @@
 import fs from "fs/promises";
+import path from "path";
+import CONFIG from "../config";
 import { MetaFile } from "../@types/metaData.type";
 
 /**
@@ -14,9 +16,9 @@ export async function getMetaFileWithId(id: number): Promise<MetaFile | Error> {
 
     try {
         const filename = `ID_${id}.json`;
-        const path = "./uploads/meta/";
+        const filePath = path.join(CONFIG.UPLOAD_PATH, "/meta");
 
-        const fileContent = await fs.readFile(path + filename, "utf-8");
+        const fileContent = await fs.readFile(path.join(filePath, filename), "utf-8");
 
         return JSON.parse(fileContent) as MetaFile;
     } catch (error) {

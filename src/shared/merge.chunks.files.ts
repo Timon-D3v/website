@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import CONFIG from "../config";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 import { ApiResponse } from "../@types/apiResponse.type";
 import { Account } from "../@types/auth.type";
@@ -22,7 +23,7 @@ import { updateMetaDataForId } from "./update.meta";
  */
 export async function mergeChunks(chunkId: string, totalChunks: number, publicMetaData: MetaDataUpload, user: Account): Promise<ApiResponse> {
     try {
-        await fs.access(`./uploads/meta/ID_${user.id}.json`);
+        await fs.access(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`));
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
@@ -34,7 +35,7 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
         };
     }
 
-    const metaFile = await fs.readFile(`./uploads/meta/ID_${user.id}.json`, "utf-8");
+    const metaFile = await fs.readFile(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`), "utf-8");
     const metaData = JSON.parse(metaFile);
 
     const meta: MetaData = {
@@ -53,12 +54,12 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
         url: publicMetaData.currentPath + "/" + publicMetaData.originalName,
     };
 
-    const finalPath = path.join("./uploads/files", meta.fileName);
+    const finalPath = path.join(CONFIG.UPLOAD_PATH, "/files", meta.fileName);
     const writeStream = await fs.open(finalPath, "w");
 
     try {
         for (let i = 0; i < totalChunks; i++) {
-            const chunkFile = path.join("./uploads/chunks", `${chunkId}_${i}.chunk`);
+            const chunkFile = path.join(CONFIG.UPLOAD_PATH, "/chunks", `${chunkId}_${i}.chunk`);
 
             // Ensure chunk exists before processing
             try {

@@ -1,13 +1,18 @@
-import { Request } from "express";
 import multer from "multer";
+import path from "path";
+import CONFIG from "../config";
 import { randomString } from "timonjs";
+import { Request } from "express";
 
 const storage = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
-        cb(null, "./uploads/projects");
+        cb(null, path.join(CONFIG.UPLOAD_PATH, "/projects"));
     },
     filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
-        cb(null, `file_${randomString(64)}.${file.originalname.split(".").pop()}`);
+        const random = randomString(64);
+        const fileExtension = file.originalname.split(".").pop();
+
+        cb(null, `file_${random}${fileExtension === file.originalname ? "" : "." + fileExtension}`);
     },
 });
 

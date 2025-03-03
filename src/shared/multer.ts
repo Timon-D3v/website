@@ -1,19 +1,24 @@
-import { Request } from "express";
 import multer from "multer";
+import path from "path";
+import CONFIG from "../config";
 import { randomString } from "timonjs";
+import { Request } from "express";
 
 const storage = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
-        cb(null, "./uploads/files");
+        cb(null, path.join(CONFIG.UPLOAD_PATH, "/files"));
     },
     filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
-        cb(null, `file_${randomString(64)}.${file.originalname.split(".").pop()}`);
+        const random = randomString(64);
+        const fileExtension = file.originalname.split(".").pop();
+
+        cb(null, `file_${random}${fileExtension === file.originalname ? "" : "." + fileExtension}`);
     },
 });
 
 const chunkStorage = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
-        cb(null, "./uploads/chunks");
+        cb(null, path.join(CONFIG.UPLOAD_PATH, "/chunks"));
     },
     filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void): void => {
         cb(null, req.body.chunkId + "_" + req.body.chunkIndex + ".chunk");

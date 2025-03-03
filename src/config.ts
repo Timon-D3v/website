@@ -17,6 +17,7 @@ export default {
     IMAGEKIT_PUBLIC_KEY: process.env["IMAGEKIT_PUBLIC_KEY"],
     IMAGEKIT_PRIVATE_KEY: process.env["IMAGEKIT_PRIVATE_KEY"],
     ORIGIN: process.env["ORIGIN"],
+    UPLOAD_PATH: process.env["UPLOAD_PATH"] as string,
     AUTO_LOGIN: process.env["AUTO_LOGIN"] === "true",
     AUTO_LOGIN_EMAIL: process.env["AUTO_LOGIN_EMAIL"] as string,
 };

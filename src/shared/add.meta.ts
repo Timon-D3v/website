@@ -1,6 +1,8 @@
 import { MetaFile } from "../@types/metaData.type";
 import getAccount from "./get.account.database";
 import fs from "fs/promises";
+import path from "path";
+import CONFIG from "../config";
 
 /**
  * Adds a new meta file for the given email.
@@ -22,7 +24,7 @@ export async function addNewMetaFile(email: string): Promise<boolean> {
     }
 
     const filename = `ID_${account.id}.json`;
-    const path = "./uploads/meta/";
+    const metaPath = path.join(CONFIG.UPLOAD_PATH, "/meta");
     const meta: MetaFile = {
         id: account.id,
         email: account.email,
@@ -39,7 +41,7 @@ export async function addNewMetaFile(email: string): Promise<boolean> {
     };
 
     try {
-        await fs.writeFile(path + filename, JSON.stringify(meta, null, 4));
+        await fs.writeFile(path.join(metaPath, filename), JSON.stringify(meta, null, 4));
     } catch (error) {
         console.error(error);
         return false;

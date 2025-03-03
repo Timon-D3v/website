@@ -124,6 +124,8 @@ export class ContextMenuFileComponent {
             this.notificationService.error("Fehler:", "Dieser Dateityp kann nicht geöffnet werden.");
         }
 
+        this.fileService.incrementOpenedCounter(file.fileName);
+
         this.isVisible.set(false);
         this.opener.update((value) => value + 1);
     }

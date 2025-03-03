@@ -189,4 +189,66 @@ router.post("/renameFile", async (req: Request, res: Response): Promise<void> =>
     }
 });
 
+router.post("/incrementOpenedCounter", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const meta = await getMetaFileWithId(Number(req.session.user?.id));
+
+        if (meta instanceof Error) {
+            res.json({
+                error: true,
+                message: meta.message,
+            });
+            return;
+        }
+
+        const { path, filename } = req.body;
+
+        if (typeof path !== "string" || path === "" || typeof filename !== "string" || filename === "") {
+            res.json({
+                error: true,
+                message: "Der Pfad oder Dateiname fehlt.",
+            });
+            return;
+        }
+
+        if (typeof meta.fileSystem[path] === "undefined") {
+            res.json({
+                error: true,
+                message: "Dieser Pfad existiert nicht.",
+            });
+            return;
+        }
+
+        for (let i = 0; i < meta.fileSystem[path].files.length; i++) {
+            if (meta.fileSystem[path].files[i].fileName === filename) {
+                meta.fileSystem[path].files[i].lastOpened = Date.now();
+                meta.fileSystem[path].files[i].timesOpened++;
+
+                await updateMetaDataForId(Number(req.session.user?.id), meta);
+
+                res.json({
+                    error: false,
+                    message: "Metadaten erfolgreich aktualisiert.",
+                });
+                
+                return;
+            }
+        }
+
+        res.json({
+            error: true,
+            message: "Datei konnte nicht gefunden werden.",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            error: true,
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+    }
+});
+
 export default router;

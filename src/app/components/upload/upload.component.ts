@@ -131,7 +131,7 @@ export class UploadComponent {
         const response = await this.uploadService.uploadSingleFileSmall(file, meta);
 
         if (response.error) {
-            return response;
+            return this.retrySingleFileUpload(file, meta);
         }
 
         this.progressValue.update((value: number): number => value + 1);
@@ -186,6 +186,24 @@ export class UploadComponent {
             error: false,
             message: `Die Datei "${meta.originalName}" wurde erfolgreich hochgeladen.`,
         };
+    }
+
+    /**
+     * Retries the upload of a single file up to a specified number of attempts if an error occurs.
+     *
+     * @param {File} file - The file to be uploaded.
+     * @param {MetaDataUpload} meta - Metadata associated with the upload.
+     * @param {number} [tries=0] - The current number of attempts made to upload the file. Defaults to 0.
+     * @returns {Promise<ApiResponse>} A promise that resolves to an ApiResponse object indicating the result of the upload.
+     */
+    async retrySingleFileUpload(file: File, meta: MetaDataUpload, tries: number = 0): Promise<ApiResponse> {
+        const response = await this.uploadService.uploadSingleFileSmall(file, meta);
+
+        if (response.error && tries < 5) {
+            return await this.retrySingleFileUpload(file, meta, tries + 1);
+        } else {
+            return response;
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 <div class="wrapper" (contextmenu)="rightClick($event)">
-    <img [src]="pictureUrl()" alt="{{ pictureAlt() }}" (click)="openFile()" />
+    <img [src]="pictureUrl()" alt="{{ pictureAlt() }}" (click)="openFile()" loading="lazy" />
     <h4 [title]="file()?.originalName" [id]="'rename_' + file()?.fileName">{{ file()?.originalName }}</h4>
 </div>
 <app-context-menu-file [x]="contextX()" [y]="contextY()" [file]="file()"></app-context-menu-file>

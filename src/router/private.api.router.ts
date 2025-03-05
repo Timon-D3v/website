@@ -230,7 +230,7 @@ router.post("/incrementOpenedCounter", async (req: Request, res: Response): Prom
                     error: false,
                     message: "Metadaten erfolgreich aktualisiert.",
                 });
-                
+
                 return;
             }
         }

@@ -37,4 +37,38 @@ export class UserService {
 
         return request;
     }
+
+    /**
+     * Retrieves the username associated with a given user ID.
+     *
+     * @param {number} id - The ID of the user whose username is to be retrieved.
+     * @returns {Observable<{ username: string; api: ApiResponse }>} An Observable that emits an object containing the username and an API response.
+     *
+     * @remarks
+     * This method sends an HTTP GET request to the `/api/public/getUsernameWithId` endpoint with the user ID as a parameter.
+     * If the request fails, a network error notification is displayed and the error is logged to the console.
+     *
+     * @example
+     * ```typescript
+     * this.userService.getUsernameWithId(123).subscribe(response => {
+     *   console.log(response.username);
+     * });
+     * ```
+     */
+    getUsernameWithId(id: number): Observable<{ username: string; api: ApiResponse }> {
+        const request = this.http.get<{ username: string; api: ApiResponse }>("/api/public/getUsernameWithId", {
+            params: { id },
+            responseType: "json",
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
 }

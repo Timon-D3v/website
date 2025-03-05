@@ -224,19 +224,19 @@ export class FileService {
 
     /**
      * Increments the opened counter for a given file.
-     * 
+     *
      * This method sends a POST request to the server to increment the counter
      * that tracks how many times a file has been opened. It logs the response
      * or any errors encountered during the request.
-     * 
+     *
      * @param {string} filename - The name of the file for which the opened counter should be incremented.
-     * 
+     *
      * @returns {void}
      */
     incrementOpenedCounter(filename: string): void {
         const request = this.http.post<ApiResponse>("/api/private/incrementOpenedCounter", {
             path: this.getCurrentPath(),
-            filename
+            filename,
         });
 
         request.pipe(

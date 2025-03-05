@@ -96,7 +96,7 @@ export class FileComponent implements OnInit, OnChanges {
         } else if (file.type.startsWith("video/")) {
             this.pictureUrl.set("/svg/symbols/video.svg");
             this.pictureAlt.set("Video");
-        } else if (file.fileName.endsWith(".exe")) {
+        } else if (file.fileName.endsWith(".exe") || file.fileName.endsWith(".msi")) {
             this.pictureUrl.set("/svg/symbols/exe.svg");
             this.pictureAlt.set("Programm");
         } else if (file.fileName.endsWith(".pdf")) {

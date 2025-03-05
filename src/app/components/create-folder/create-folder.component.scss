@@ -30,6 +30,7 @@ button {
     padding: calc($header-height / 5);
     box-sizing: border-box;
     position: relative;
+    box-shadow: 0 0 7.5px 0px rgba($secondary-200, 0.5);
 }
 
 .close {

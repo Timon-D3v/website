@@ -7,12 +7,13 @@ import { DisplayImageFileComponent } from "../display-image-file/display-image-f
 import { DisplayVideoFileComponent } from "../display-video-file/display-video-file.component";
 import { DisplayIframeFileComponent } from "../display-iframe-file/display-iframe-file.component";
 import { DisplayTextFileComponent } from "../display-text-file/display-text-file.component";
+import { FileDetailsMenuComponent } from "../file-details-menu/file-details-menu.component";
 import { isPlatformBrowser } from "@angular/common";
 import { ApiResponse } from "../../../@types/apiResponse.type";
 
 @Component({
     selector: "app-context-menu-file",
-    imports: [DisplayAudioFileComponent, DisplayImageFileComponent, DisplayVideoFileComponent, DisplayIframeFileComponent, DisplayTextFileComponent],
+    imports: [DisplayAudioFileComponent, DisplayImageFileComponent, DisplayVideoFileComponent, DisplayIframeFileComponent, DisplayTextFileComponent, FileDetailsMenuComponent],
     templateUrl: "./context-menu-file.component.html",
     styleUrl: "./context-menu-file.component.scss",
 })
@@ -31,8 +32,10 @@ export class ContextMenuFileComponent {
     audioIsShown = signal(false);
     iframeIsShown = signal(false);
     textIsShown = signal(false);
+    detailsIsShown = signal(false);
 
     opener = signal(0);
+    detailsOpener = signal(0);
 
     private platformId = inject(PLATFORM_ID);
 
@@ -127,7 +130,7 @@ export class ContextMenuFileComponent {
         this.fileService.incrementOpenedCounter(file.fileName);
 
         this.isVisible.set(false);
-        this.opener.update((value) => value + 1);
+        this.opener.update((value: number): number => value + 1);
     }
 
     /**
@@ -317,7 +320,14 @@ export class ContextMenuFileComponent {
     /**
      * @todo Implement the showFileDetails method.
      */
-    showFileDetails() {}
+    showFileDetails() {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
+
+        this.detailsIsShown.set(true);
+
+        this.isVisible.set(false);
+        this.detailsOpener.update((value: number): number => value + 1);
+    }
 
     /**
      * @todo Implement the deleteFile method.

@@ -8,6 +8,7 @@ import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
 import { EmailResponse } from "../@types/emailResponse.type";
 import getAllProjects from "../shared/get.allProjects.database";
+import { getMetaFileWithId } from "../shared/get.meta";
 
 // Router Serves under /api/public
 const router = Router();
@@ -97,6 +98,56 @@ router.get("/getAllProjects", async (_req: Request, res: Response): Promise<void
             projects: JSON.stringify([]),
             message: "Failed to Retrieve Projects",
             error: true,
+        });
+    }
+});
+
+router.get("/getUsernameWithId", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const id = Number(req.query["id"]);
+
+        if (typeof id !== "number" || isNaN(id)) {
+            res.json({
+                username: "-- Fehler --",
+                api: {
+                    message: "Keine oder ungültige ID erhalten.",
+                    error: true,
+                }
+            });
+            return;
+        }
+
+        const meta = await getMetaFileWithId(id);
+
+        if (meta instanceof Error) {
+            res.json({
+                username: "-- Fehler --",
+                api: {
+                    message: "Kein Benutzer mit dieser ID.",
+                    error: true,
+                }
+            });
+            return;
+        };
+
+        res.json({
+            username: meta.name + " " + meta.familyName,
+            api: {
+                message: "Retrieved Username",
+                error: false,
+            }
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            username: "-- Fehler --",
+            api: {
+                message: "Ein Unbekannter Fehler ist aufgetreten.",
+                error: true,
+            }
         });
     }
 });

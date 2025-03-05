@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
-import { promises as fs } from "fs";
+import CONFIG from "../config";
+import fs from "fs/promises";
 import path from "path";
 
 // Router Serves under /files/public/projects
@@ -9,10 +10,12 @@ router.get("/:name", async (req: Request, res: Response): Promise<void> => {
     try {
         const { name } = req.params;
 
-        const filePath = path.join("uploads/projects", name);
+        const filePath = path.join(CONFIG.UPLOAD_PATH, "/projects", name);
         await fs.access(filePath);
 
-        res.sendFile(name, { root: "uploads/projects" });
+        res.sendFile(name, {
+            root: path.join(CONFIG.UPLOAD_PATH, "/projects")
+        });
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);

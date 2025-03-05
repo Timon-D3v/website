@@ -1,0 +1,54 @@
+<div class="wrapper {{ isVisible() ? 'visible' : 'hidden' }} {{ open() }}" (contextmenu)="close()" (click)="close()">
+    <table (click)="stopPropagation($event)">
+        <tr>
+            <th>Details:</th>
+            <th>
+                <button type="button" title="Schliessen" (click)="close()">
+                    <img src="/svg/close.svg" alt="Schliessen" />
+                </button>
+            </th>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>
+                <a href="/files/private/file/{{ file()?.fileName }}" target="_blank">{{ file()?.originalName }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Pfad:</td>
+            <td>{{ filePath().replace("root", "") + "/" + file()?.originalName }}</td>
+        </tr>
+        <tr>
+            <td>Dateityp:</td>
+            <td>{{ file()?.type }}</td>
+        </tr>
+        <tr>
+            <td>Grösse:</td>
+            <td>{{ fileSize() }}</td>
+        </tr>
+        <tr>
+            <td>Hochgeladen von:</td>
+            <td>{{ username() }}</td>
+        </tr>
+        <tr>
+            <td>Hochgeladen am:</td>
+            <td>{{ uploadedAt() }}</td>
+        </tr>
+        <tr>
+            <td>Anzahl Downloads:</td>
+            <td>{{ file()?.timesDownloaded }}</td>
+        </tr>
+        <tr>
+            <td>Letzter Download am:</td>
+            <td>{{ lastDownloadedAt() }}</td>
+        </tr>
+        <tr>
+            <td>Anzahl Dateiöffnungen:</td>
+            <td>{{ file()?.timesOpened }}</td>
+        </tr>
+        <tr>
+            <td>Zuletzt geöffnet am:</td>
+            <td>{{ lastOpenedAt() }}</td>
+        </tr>
+    </table>
+</div>

@@ -14,7 +14,7 @@ router.get("/:name", async (req: Request, res: Response): Promise<void> => {
         await fs.access(filePath);
 
         res.sendFile(name, {
-            root: path.join(CONFIG.UPLOAD_PATH, "/profile")
+            root: path.join(CONFIG.UPLOAD_PATH, "/profile"),
         });
     } catch (error) {
         if (error instanceof Error) {

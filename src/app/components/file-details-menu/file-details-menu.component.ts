@@ -53,13 +53,13 @@ export class FileDetailsMenuComponent {
 
     /**
      * Updates various constants related to the file details.
-     * 
+     *
      * This method performs the following actions:
      * - Sets the file path using the file service.
      * - Sets the file size using the filesize utility.
      * - Retrieves the username associated with the file's user ID and sets it.
      * - Sets the uploaded date, last downloaded date, and last opened date of the file.
-     * 
+     *
      * @returns {void}
      */
     updateConstants(): void {
@@ -67,7 +67,7 @@ export class FileDetailsMenuComponent {
 
         this.fileSize.set(filesize(this.file()?.size || 0));
 
-        this.userService.getUsernameWithId(this.file()?.userId || 0).subscribe((response: { username: string; api: ApiResponse}): void => {
+        this.userService.getUsernameWithId(this.file()?.userId || 0).subscribe((response: { username: string; api: ApiResponse }): void => {
             if (response.api.error) {
                 console.warn("Failed to retrieve username for user ID:", this.file()?.userId, "\nERROR:", response.api.message);
             }
@@ -89,13 +89,15 @@ export class FileDetailsMenuComponent {
      * The format of the returned string is "dd. MMM yyyy um HH:mm".
      */
     toRealDate(date: number = 0): string {
-        return new Date(date).toLocaleDateString("de-CH", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        }).replace(",", " um");
+        return new Date(date)
+            .toLocaleDateString("de-CH", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+            })
+            .replace(",", " um");
     }
 
     /**

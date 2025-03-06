@@ -6,6 +6,7 @@ import { getMetaFileWithId } from "../shared/get.meta";
 import { randomString } from "timonjs";
 import { MetaFolder } from "../@types/metaData.type";
 import { updateMetaDataForId } from "../shared/update.meta";
+import { deleteFile } from "../shared/delete.files";
 
 // Router Serves under /api/private
 const router = Router();
@@ -238,6 +239,78 @@ router.post("/incrementOpenedCounter", async (req: Request, res: Response): Prom
         res.json({
             error: true,
             message: "Datei konnte nicht gefunden werden.",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            error: true,
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+    }
+});
+
+router.post("/deleteFile", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const meta = await getMetaFileWithId(Number(req.session.user?.id));
+
+        if (meta instanceof Error) {
+            res.json({
+                error: true,
+                message: meta.message,
+            });
+            return;
+        }
+
+        const { path, filename } = req.body;
+
+        if (typeof path !== "string" || path === "" || typeof filename !== "string" || filename === "") {
+            res.json({
+                error: true,
+                message: "Der Pfad oder Dateiname fehlt.",
+            });
+            return;
+        }
+
+        if (typeof meta.fileSystem[path] === "undefined") {
+            res.json({
+                error: true,
+                message: "Dieser Pfad existiert nicht.",
+            });
+            return;
+        }
+
+        for (let i = 0; i < meta.fileSystem[path].files.length; i++) {
+            if (meta.fileSystem[path].files[i].fileName === filename) {
+
+                const result = await deleteFile(filename);
+
+                if (!result) {
+                    res.json({
+                        error: true,
+                        message: "Die Datei konnte nicht gelöscht werden.",
+                    });
+                    return;
+                }
+
+                meta.fileSystem[path].files.splice(i, 1);
+
+                await updateMetaDataForId(Number(req.session.user?.id), meta);
+
+                res.json({
+                    error: false,
+                    message: "Die Datei wurde erfolgreich gelöscht.",
+                });
+
+                return;
+            }
+        }
+
+        res.json({
+            error: true,
+            message: "Die Datei konnte nicht gefunden werden.",
         });
     } catch (error) {
         if (error instanceof Error) {

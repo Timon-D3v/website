@@ -45,4 +45,4 @@
     <app-display-text-file [file]="file()" [open]="opener()"></app-display-text-file>
 }
 <app-file-details-menu [file]="file()" [open]="detailsOpener()"></app-file-details-menu>
-
+<app-confirm [visible]="deleteConfirmVisible()" [title]="'Löschen bestätigen'" [text]="deleteConfirmText()" [confirmText]="'Löschen'" [confirmTitle]="'Löschen'" (result)="confirmDeleteFile($event)"></app-confirm>

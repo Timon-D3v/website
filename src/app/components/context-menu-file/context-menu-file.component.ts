@@ -10,10 +10,11 @@ import { DisplayTextFileComponent } from "../display-text-file/display-text-file
 import { FileDetailsMenuComponent } from "../file-details-menu/file-details-menu.component";
 import { isPlatformBrowser } from "@angular/common";
 import { ApiResponse } from "../../../@types/apiResponse.type";
+import { ConfirmComponent } from "../confirm/confirm.component";
 
 @Component({
     selector: "app-context-menu-file",
-    imports: [DisplayAudioFileComponent, DisplayImageFileComponent, DisplayVideoFileComponent, DisplayIframeFileComponent, DisplayTextFileComponent, FileDetailsMenuComponent],
+    imports: [DisplayAudioFileComponent, DisplayImageFileComponent, DisplayVideoFileComponent, DisplayIframeFileComponent, DisplayTextFileComponent, FileDetailsMenuComponent, ConfirmComponent],
     templateUrl: "./context-menu-file.component.html",
     styleUrl: "./context-menu-file.component.scss",
 })
@@ -36,6 +37,9 @@ export class ContextMenuFileComponent {
 
     opener = signal(0);
     detailsOpener = signal(0);
+
+    deleteConfirmVisible = signal(false);
+    deleteConfirmText = signal("Willst du diese Datei wirklich löschen?");
 
     private platformId = inject(PLATFORM_ID);
 
@@ -318,9 +322,17 @@ export class ContextMenuFileComponent {
     shareFile() {}
 
     /**
-     * @todo Implement the showFileDetails method.
+     * Displays the file details if the file is not null and the platform is a browser.
+     * 
+     * This method performs the following actions:
+     * 1. Checks if the file is not null and the platform is a browser.
+     * 2. Sets the `detailsIsShown` state to true.
+     * 3. Sets the `isVisible` state to false.
+     * 4. Increments the `detailsOpener` value by 1.
+     * 
+     * @returns {void}
      */
-    showFileDetails() {
+    showFileDetails(): void {
         if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
 
         this.detailsIsShown.set(true);
@@ -330,9 +342,56 @@ export class ContextMenuFileComponent {
     }
 
     /**
-     * @todo Implement the deleteFile method.
+     * Deletes the current file after confirming with the user.
+     * 
+     * This method checks if the file is not null and if the platform is a browser.
+     * If both conditions are met, it sets a confirmation message asking the user
+     * if they really want to delete the file, makes the confirmation dialog visible,
+     * and hides the context menu.
+     * 
+     * @returns {void}
      */
-    deleteFile() {}
+    deleteFile(): void {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
+
+        this.deleteConfirmText.set(`Willst du die Datei ${this.file()?.originalName} wirklich löschen?`);
+        this.deleteConfirmVisible.set(true);
+
+        this.isVisible.set(false);
+    }
+
+    /**
+     * Handles the confirmation of file deletion.
+     * 
+     * This method is triggered when the user confirms or cancels the deletion of a file.
+     * It hides the delete confirmation dialog and, if the deletion is confirmed, sends a 
+     * request to delete the file. Upon receiving the response, it updates the file system 
+     * and displays a notification based on the success or failure of the deletion.
+     * 
+     * @param {boolean} result - The result of the delete confirmation dialog. 
+     *                           `true` if the user confirmed the deletion, `false` otherwise.
+     * @returns {void}
+     */
+    confirmDeleteFile(result: boolean): void {
+        this.deleteConfirmVisible.set(false);
+
+        if (!result) return;
+
+        const request = this.fileService.deleteFile(this.file()?.fileName as string);
+
+        request.subscribe((response: ApiResponse): void => {
+            this.fileService.updateFileSystem();
+
+            if (response.error) {
+                console.error("Error deleting file", response.message);
+                this.notificationService.error("Fehler:", response.message);
+                return;
+            }
+
+            this.notificationService.success("Erfolg:", response.message);
+        });
+    }
+
 
     /**
      * Closes the context menu by setting its visibility to false.

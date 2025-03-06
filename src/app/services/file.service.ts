@@ -256,4 +256,21 @@ export class FileService {
             this.updateFileSystem();
         });
     }
+
+    deleteFile(filename: string): Observable<ApiResponse> {
+        const request = this.http.post<ApiResponse>("/api/private/deleteFile", {
+            filename,
+            path: this.getCurrentPath(),
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
 }

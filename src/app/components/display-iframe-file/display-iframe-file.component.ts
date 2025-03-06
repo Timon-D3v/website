@@ -29,7 +29,8 @@ export class DisplayIframeFileComponent {
      */
     constructor() {
         effect((): void => {
-            this.open();
+            if (this.open() === 0) return;
+
             this.isVisible.set(true);
 
             this.secureRoute.set(this.getSafeUrl());

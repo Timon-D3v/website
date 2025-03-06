@@ -27,7 +27,7 @@ router.get("/:name", async (req: Request, res: Response): Promise<void> => {
             for (let i = 0; i < meta.fileSystem[key].files.length; i++) {
                 if (meta.fileSystem[key].files[i].fileName === name) {
                     res.sendFile(name, {
-                        root: path.join(CONFIG.UPLOAD_PATH, "/files")
+                        root: path.join(CONFIG.UPLOAD_PATH, "/files"),
                     });
                     return;
                 }

@@ -30,7 +30,8 @@ export class DisplayVideoFileComponent {
      */
     constructor() {
         effect((): void => {
-            this.open();
+            if (this.open() === 0) return;
+
             this.isVisible.set(true);
         });
     }

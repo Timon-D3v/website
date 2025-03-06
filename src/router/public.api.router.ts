@@ -112,7 +112,7 @@ router.get("/getUsernameWithId", async (req: Request, res: Response): Promise<vo
                 api: {
                     message: "Keine oder ungültige ID erhalten.",
                     error: true,
-                }
+                },
             });
             return;
         }
@@ -125,17 +125,17 @@ router.get("/getUsernameWithId", async (req: Request, res: Response): Promise<vo
                 api: {
                     message: "Kein Benutzer mit dieser ID.",
                     error: true,
-                }
+                },
             });
             return;
-        };
+        }
 
         res.json({
             username: meta.name + " " + meta.familyName,
             api: {
                 message: "Retrieved Username",
                 error: false,
-            }
+            },
         });
     } catch (error) {
         if (error instanceof Error) {
@@ -147,7 +147,7 @@ router.get("/getUsernameWithId", async (req: Request, res: Response): Promise<vo
             api: {
                 message: "Ein Unbekannter Fehler ist aufgetreten.",
                 error: true,
-            }
+            },
         });
     }
 });

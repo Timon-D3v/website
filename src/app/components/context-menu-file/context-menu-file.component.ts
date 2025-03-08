@@ -140,7 +140,9 @@ export class ContextMenuFileComponent {
     /**
      * @todo Implement the moveFile method.
      */
-    moveFile() {}
+    moveFile() {
+        this.notificationService.error("Fehler:", "Diese Funktion ist noch nicht implementiert.");
+    }
 
     /**
      * Initiates the renaming process for a file.
@@ -317,9 +319,37 @@ export class ContextMenuFileComponent {
     }
 
     /**
-     * @todo Implement the shareFile method.
+     * Shares the current file by generating a shareable link and copying it to the clipboard.
+     * 
+     * This method performs the following steps:
+     * 1. Checks if the file is not null and if the platform is a browser.
+     * 2. Retrieves the file metadata.
+     * 3. Sends a request to the file service to share the file.
+     * 4. Subscribes to the response from the file service.
+     * 5. If there is an error in the response, logs the error and shows a notification.
+     * 6. If the response is successful, copies the shareable link to the clipboard and shows a success notification.
+     * 
+     * @returns {void}
      */
-    shareFile() {}
+    shareFile(): void {
+        if (this.file() === null || !isPlatformBrowser(this.platformId)) return;
+
+        const file = this.file() as MetaData;
+
+        const request = this.fileService.shareFile(file.fileName);
+
+        request.subscribe((response: ApiResponse): void => {
+            if (response.error) {
+                console.error("Error sharing file", response.message);
+                this.notificationService.error("Fehler:", response.message);
+                return;
+            }
+
+            navigator.clipboard.writeText(window.location.origin + "/files/public/file/" + file.fileName);
+
+            this.notificationService.success("Erfolg:", response.message + " Der Link wurde in die Zwischenablage kopiert.");
+        });
+    }
 
     /**
      * Displays the file details if the file is not null and the platform is a browser.

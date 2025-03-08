@@ -1,4 +1,4 @@
-import { inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Notification } from "../../@types/notification.type";
 

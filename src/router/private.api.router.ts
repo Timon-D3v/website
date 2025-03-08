@@ -7,6 +7,11 @@ import { randomString } from "timonjs";
 import { MetaFolder } from "../@types/metaData.type";
 import { updateMetaDataForId } from "../shared/update.meta";
 import { deleteFile } from "../shared/delete.files";
+import { checkIfUserOwnsFile } from "../shared/check-if-user-owns-file.meta";
+import { addSharedFile } from "../shared/add.shared.database";
+import { deleteSharedFile } from "../shared/delete.shared.database";
+import getSharedFiles from "../shared/get.shared.database";
+import { SharedFileEntry } from "../@types/sharedFiles.type";
 
 // Router Serves under /api/private
 const router = Router();
@@ -299,6 +304,8 @@ router.post("/deleteFile", async (req: Request, res: Response): Promise<void> =>
 
                 await updateMetaDataForId(Number(req.session.user?.id), meta);
 
+                await deleteSharedFile(filename);
+
                 res.json({
                     error: false,
                     message: "Die Datei wurde erfolgreich gelöscht.",
@@ -311,6 +318,74 @@ router.post("/deleteFile", async (req: Request, res: Response): Promise<void> =>
         res.json({
             error: true,
             message: "Die Datei konnte nicht gefunden werden.",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            error: true,
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+    }
+});
+
+router.post("/shareFile", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { filename } = req.body;
+
+        const meta = await getMetaFileWithId(Number(req.session.user?.id));
+
+        if (meta instanceof Error) {
+            res.json({
+                error: true,
+                message: meta.message,
+            });
+            return;
+        }
+
+        if (!checkIfUserOwnsFile(filename, meta.fileSystem)) {
+            res.json({
+                error: true,
+                message: "Diese Datei existiert nicht, oder du hast keine Berechtigung auf den Zugriff dieser Datei.",
+            });
+            return;
+        }
+
+        const allSharedFiles = await getSharedFiles();
+
+        if (allSharedFiles instanceof Error) {
+            res.json({
+                error: true,
+                message: allSharedFiles.message,
+            });
+            return;
+        }
+
+        const alreadyShared = allSharedFiles.some((file: SharedFileEntry): boolean => file.filename === filename);
+
+        if (alreadyShared) {
+            res.json({
+                error: false,
+                message: "Diese Datei wurde bereits geteilt.",
+            });
+            return;
+        }
+
+        const result = await addSharedFile(filename);
+
+        if (!result) {
+            res.json({
+                error: true,
+                message: "Die Datei konnte nicht geteilt werden, weil keine Verbindung zur Datenbank möglich war.",
+            });
+            return;
+        }
+
+        res.json({
+            error: false,
+            message: "Die Datei wurde erfolgreich geteilt.",
         });
     } catch (error) {
         if (error instanceof Error) {

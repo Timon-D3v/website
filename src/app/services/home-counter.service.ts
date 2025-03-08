@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { HomeCount } from "../../@types/homeCount.type";
 import { ApiResponse } from "../../@types/apiResponse.type";
-import { Observable } from "rxjs";
+import { catchError, Observable } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -16,7 +16,16 @@ export class HomeCounterService {
      * @returns {Observable<HomeCount>} An Observable of type HomeCount containing the current home counter value.
      */
     getCurrentCount(): Observable<HomeCount> {
-        return this.http.get<HomeCount>("/api/public/getCurrentHomeCounter");
+        const request = this.http.get<HomeCount>("/api/public/getCurrentHomeCounter");
+
+        request.pipe(
+            catchError((error): any => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
     }
 
     /**
@@ -25,6 +34,15 @@ export class HomeCounterService {
      * @returns {Observable<ApiResponse>} An observable containing the server's response.
      */
     incrementCount(): Observable<ApiResponse> {
-        return this.http.post<ApiResponse>("/api/public/incrementHomeCounter", {});
+        const request = this.http.post<ApiResponse>("/api/public/incrementHomeCounter", {});
+
+        request.pipe(
+            catchError((error): any => {
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
     }
 }

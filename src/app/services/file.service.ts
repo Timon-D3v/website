@@ -5,6 +5,7 @@ import { ApiResponse, GetAllRoutesApiResponse } from "../../@types/apiResponse.t
 import { MetaFileSystem } from "../../@types/metaData.type";
 import { Router } from "@angular/router";
 import { NotificationService } from "./notification.service";
+import publicConfig from "../../public.config";
 
 @Injectable({
     providedIn: "root",
@@ -31,7 +32,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -67,7 +68,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -159,7 +160,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -188,7 +189,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -213,7 +214,7 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -257,6 +258,18 @@ export class FileService {
         });
     }
 
+    /**
+     * Deletes a file from the server.
+     *
+     * @param {string} filename - The name of the file to be deleted.
+     * @returns {Observable<ApiResponse>} An Observable of ApiResponse indicating the result of the delete operation.
+     *
+     * @remarks
+     * This method sends a POST request to the server to delete the specified file.
+     * It includes the current path in the request payload.
+     *
+     * @throws Will catch and handle any network errors, displaying a notification to the user.
+     */
     deleteFile(filename: string): Observable<ApiResponse> {
         const request = this.http.post<ApiResponse>("/api/private/deleteFile", {
             filename,
@@ -265,7 +278,32 @@ export class FileService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
+
+    /**
+     * Shares a file with the given filename.
+     * 
+     * This method sends a POST request to the server to share the specified file.
+     * If the request fails, an error notification is displayed to the user.
+     * 
+     * @param {string} filename - The name of the file to be shared.
+     * @returns {Observable<ApiResponse>} An Observable of ApiResponse indicating the result of the share operation.
+     */
+    shareFile(filename: string): Observable<ApiResponse> {
+        const request = this.http.post<ApiResponse>("/api/private/shareFile", {
+            filename
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),

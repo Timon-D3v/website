@@ -97,4 +97,7 @@ export default {
     } as Record<string, string>,
     SECURED_ROUTES: ["/admin", "/settings", "/files"],
     ADMIN_ROUTES: ["/admin"],
+    ERRORS: {
+        NETWORK: "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.",
+    }
 };

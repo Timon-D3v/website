@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, Observable } from "rxjs";
 import { ApiResponse } from "../../@types/apiResponse.type";
 import { NotificationService } from "./notification.service";
+import publicConfig from "../../public.config";
 
 @Injectable({
     providedIn: "root",
@@ -121,7 +122,7 @@ export class ContactService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),

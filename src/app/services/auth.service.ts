@@ -3,8 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 import { catchError, Observable } from "rxjs";
 import { LoginValidation, PublicUser } from "../../@types/auth.type";
-import publicConfig from "../../public.config";
 import { NotificationService } from "./notification.service";
+import publicConfig from "../../public.config";
 
 @Injectable({
     providedIn: "root",
@@ -165,7 +165,7 @@ export class AuthService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -193,7 +193,7 @@ export class AuthService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),
@@ -221,7 +221,7 @@ export class AuthService {
 
         request.pipe(
             catchError((error): any => {
-                this.notificationService.error("Netzwerkfehler", "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.");
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
                 console.error(error);
                 return error;
             }),

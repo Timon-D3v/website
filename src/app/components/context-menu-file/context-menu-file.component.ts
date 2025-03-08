@@ -320,7 +320,7 @@ export class ContextMenuFileComponent {
 
     /**
      * Shares the current file by generating a shareable link and copying it to the clipboard.
-     * 
+     *
      * This method performs the following steps:
      * 1. Checks if the file is not null and if the platform is a browser.
      * 2. Retrieves the file metadata.
@@ -328,7 +328,7 @@ export class ContextMenuFileComponent {
      * 4. Subscribes to the response from the file service.
      * 5. If there is an error in the response, logs the error and shows a notification.
      * 6. If the response is successful, copies the shareable link to the clipboard and shows a success notification.
-     * 
+     *
      * @returns {void}
      */
     shareFile(): void {
@@ -353,13 +353,13 @@ export class ContextMenuFileComponent {
 
     /**
      * Displays the file details if the file is not null and the platform is a browser.
-     * 
+     *
      * This method performs the following actions:
      * 1. Checks if the file is not null and the platform is a browser.
      * 2. Sets the `detailsIsShown` state to true.
      * 3. Sets the `isVisible` state to false.
      * 4. Increments the `detailsOpener` value by 1.
-     * 
+     *
      * @returns {void}
      */
     showFileDetails(): void {
@@ -373,12 +373,12 @@ export class ContextMenuFileComponent {
 
     /**
      * Deletes the current file after confirming with the user.
-     * 
+     *
      * This method checks if the file is not null and if the platform is a browser.
      * If both conditions are met, it sets a confirmation message asking the user
      * if they really want to delete the file, makes the confirmation dialog visible,
      * and hides the context menu.
-     * 
+     *
      * @returns {void}
      */
     deleteFile(): void {
@@ -392,13 +392,13 @@ export class ContextMenuFileComponent {
 
     /**
      * Handles the confirmation of file deletion.
-     * 
+     *
      * This method is triggered when the user confirms or cancels the deletion of a file.
-     * It hides the delete confirmation dialog and, if the deletion is confirmed, sends a 
-     * request to delete the file. Upon receiving the response, it updates the file system 
+     * It hides the delete confirmation dialog and, if the deletion is confirmed, sends a
+     * request to delete the file. Upon receiving the response, it updates the file system
      * and displays a notification based on the success or failure of the deletion.
-     * 
-     * @param {boolean} result - The result of the delete confirmation dialog. 
+     *
+     * @param {boolean} result - The result of the delete confirmation dialog.
      *                           `true` if the user confirmed the deletion, `false` otherwise.
      * @returns {void}
      */
@@ -421,7 +421,6 @@ export class ContextMenuFileComponent {
             this.notificationService.success("Erfolg:", response.message);
         });
     }
-
 
     /**
      * Closes the context menu by setting its visibility to false.

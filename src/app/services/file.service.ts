@@ -289,16 +289,16 @@ export class FileService {
 
     /**
      * Shares a file with the given filename.
-     * 
+     *
      * This method sends a POST request to the server to share the specified file.
      * If the request fails, an error notification is displayed to the user.
-     * 
+     *
      * @param {string} filename - The name of the file to be shared.
      * @returns {Observable<ApiResponse>} An Observable of ApiResponse indicating the result of the share operation.
      */
     shareFile(filename: string): Observable<ApiResponse> {
         const request = this.http.post<ApiResponse>("/api/private/shareFile", {
-            filename
+            filename,
         });
 
         request.pipe(

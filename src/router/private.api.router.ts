@@ -289,7 +289,6 @@ router.post("/deleteFile", async (req: Request, res: Response): Promise<void> =>
 
         for (let i = 0; i < meta.fileSystem[path].files.length; i++) {
             if (meta.fileSystem[path].files[i].fileName === filename) {
-
                 const result = await deleteFile(filename);
 
                 if (!result) {

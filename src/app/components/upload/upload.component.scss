@@ -16,6 +16,7 @@ progress {
     width: 100%;
     height: calc($header-height / 5);
     background-color: $secondary-500;
+    transition: all 0.1s;
 
     &::-webkit-progress-bar {
         background-color: $secondary-500;

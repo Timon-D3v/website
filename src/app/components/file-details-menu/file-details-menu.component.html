@@ -1,4 +1,4 @@
-<div class="wrapper {{ isVisible() ? 'visible' : 'hidden' }} {{ open() }}" (contextmenu)="close()" (click)="close()">
+<div class="wrapper" (contextmenu)="close()" (click)="close()">
     <table (click)="stopPropagation($event)">
         <tr>
             <th>Details:</th>

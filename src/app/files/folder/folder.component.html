@@ -1,5 +1,5 @@
-<div class="wrapper" [routerLink]="'/files'" [queryParams]="urlParams()">
+<div class="wrapper" [routerLink]="'/files'" [queryParams]="urlParams()" (contextmenu)="rightClick($event)">
     <img src="/svg/folder.svg" alt="Ein Ordner" />
     <h4 [title]="folder()?.name">{{ folder()?.name }}</h4>
 </div>
-<app-context-menu-folder></app-context-menu-folder>
+<app-context-menu-folder [x]="contextX()" [y]="contextY()" [folder]="folder()" [urlParams]="urlParams()"></app-context-menu-folder>

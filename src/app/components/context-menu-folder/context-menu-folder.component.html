@@ -1,1 +1,32 @@
-<p>context-menu-folder works!</p>
+<ul [style.left.px]="x()" [style.top.px]="y()" [class]="isVisible() ? 'visible' : 'hidden'">
+    <li title="Ordner öffnen" (click)="openFolder()">
+        <img src="/svg/contextmenu/open.svg" alt="Öffnen" />
+        <h4>Öffnen</h4>
+    </li>
+    <li title="Datei in einen anderen Ordner verschieben" (click)="moveFolder()">
+        <img src="/svg/contextmenu/move.svg" alt="Verschieben" />
+        <h4>Verschieben</h4>
+    </li>
+    <li title="Ordner umbenennen" (click)="renameFolder()">
+        <img src="/svg/contextmenu/rename.svg" alt="Umbenennen" />
+        <h4>Umbenennen</h4>
+    </li>
+    <li title="Ordner herunterladen" (click)="downloadFolder()">
+        <img src="/svg/contextmenu/download.svg" alt="Herunterladen" />
+        <h4>Herunterladen</h4>
+    </li>
+    <li title="Link zum Ordner teilen" (click)="shareFolder()">
+        <img src="/svg/contextmenu/share.svg" alt="Teilen" />
+        <h4>Teilen</h4>
+    </li>
+    <li title="Details zum Ordner anzeigen" (click)="showFolderDetails()">
+        <img src="/svg/contextmenu/details.svg" alt="Details" />
+        <h4>Details</h4>
+    </li>
+    <li title="Ordner Löschen" (click)="deleteFolder()">
+        <img src="/svg/contextmenu/delete.svg" alt="Löschen" />
+        <h4>Löschen</h4>
+    </li>
+</ul>
+<div class="overlay" [class]="isVisible() ? 'visible' : 'hidden'" (click)="close()" (contextmenu)="close()"></div>
+<app-confirm [visible]="deleteConfirmVisible()" [title]="'Löschen bestätigen'" [text]="deleteConfirmText()" [confirmText]="'Löschen'" [confirmTitle]="'Löschen'" (result)="confirmDeleteFolder($event)"></app-confirm>

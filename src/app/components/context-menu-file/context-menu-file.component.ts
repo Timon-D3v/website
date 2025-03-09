@@ -368,7 +368,6 @@ export class ContextMenuFileComponent {
         this.detailsIsShown.set(true);
 
         this.isVisible.set(false);
-        this.detailsOpener.update((value: number): number => value + 1);
     }
 
     /**
@@ -445,5 +444,14 @@ export class ContextMenuFileComponent {
         this.audioIsShown.set(false);
         this.iframeIsShown.set(false);
         this.textIsShown.set(false);
+    }
+
+    /**
+     * Closes the details view by setting the `detailsIsShown` property to `false`.
+     * 
+     * @returns {void}
+     */
+    closeDetails(): void {
+        this.detailsIsShown.set(false);
     }
 }

@@ -1,6 +1,4 @@
 import { Request, Response, Router } from "express";
-import uploadRouter from "./upload.router";
-import adminRouter from "./admin.router";
 import { canAccessAdminApi } from "../shared/auth.middleware";
 import { getMetaFileWithId } from "../shared/get.meta";
 import { randomString } from "timonjs";
@@ -10,8 +8,11 @@ import { deleteFile } from "../shared/delete.files";
 import { checkIfUserOwnsFile } from "../shared/check-if-user-owns-file.meta";
 import { addSharedFile } from "../shared/add.shared.database";
 import { deleteSharedFile } from "../shared/delete.shared.database";
-import getSharedFiles from "../shared/get.shared.database";
 import { SharedFileEntry } from "../@types/sharedFiles.type";
+import uploadRouter from "./upload.router";
+import adminRouter from "./admin.router";
+import getSharedFiles from "../shared/get.shared.database";
+import publicConfig from "../public.config";
 
 // Router Serves under /api/private
 const router = Router();
@@ -385,6 +386,75 @@ router.post("/shareFile", async (req: Request, res: Response): Promise<void> => 
         res.json({
             error: false,
             message: "Die Datei wurde erfolgreich geteilt.",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            error: true,
+            message: "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        });
+    }
+});
+
+router.post("/deleteFolder", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { path, folderName } = req.body;
+
+        const meta = await getMetaFileWithId(Number(req.session.user?.id));
+
+        if (meta instanceof Error) {
+            res.json({
+                error: true,
+                message: meta.message,
+            });
+            return;
+        }
+
+        if (typeof path !== "string" || path === "" || typeof folderName !== "string" || folderName === "") {
+            res.json({
+                error: true,
+                message: "Der Pfad oder Ordnername fehlt.",
+            });
+            return;
+        }
+
+        if (typeof meta.fileSystem[path] === "undefined") {
+            res.json({
+                error: true,
+                message: "Dieser Pfad existiert nicht.",
+            });
+            return;
+        }
+
+        const folder = meta.fileSystem[path].folders.find((folder: string): boolean => meta.fileSystem[folder].name === folderName);
+
+        if (typeof folder === "undefined") {
+            res.json({
+                error: true,
+                message: "Dieser Ordner existiert nicht.",
+            });
+            return;
+        }
+
+        if (meta.fileSystem[folder].files.length > 0 || meta.fileSystem[folder].folders.length > 0) {
+            res.json({
+                error: true,
+                message: publicConfig.ERRORS.FOLDER_NOT_FULLY_DELETED,
+            });
+            return;
+        }
+
+        meta.fileSystem[path].folders = meta.fileSystem[path].folders.filter((subfolder: string): boolean => subfolder !== folder);
+        delete meta.fileSystem[folder];
+
+        await updateMetaDataForId(Number(req.session.user?.id), meta);
+
+        res.json({
+            error: false,
+            message: "Der Ordner wurde erfolgreich gelöscht.",
         });
     } catch (error) {
         if (error instanceof Error) {

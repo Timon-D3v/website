@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { catchError, Observable } from "rxjs";
+import { catchError, lastValueFrom, Observable } from "rxjs";
 import { ApiResponse, GetAllRoutesApiResponse } from "../../@types/apiResponse.type";
-import { MetaFileSystem } from "../../@types/metaData.type";
+import { MetaFileSystem, MetaFolder } from "../../@types/metaData.type";
 import { Router } from "@angular/router";
 import { NotificationService } from "./notification.service";
 import publicConfig from "../../public.config";
@@ -270,10 +270,10 @@ export class FileService {
      *
      * @throws Will catch and handle any network errors, displaying a notification to the user.
      */
-    deleteFile(filename: string): Observable<ApiResponse> {
+    deleteFile(filename: string, path: string = this.getCurrentPath()): Observable<ApiResponse> {
         const request = this.http.post<ApiResponse>("/api/private/deleteFile", {
             filename,
-            path: this.getCurrentPath(),
+            path,
         });
 
         request.pipe(
@@ -310,5 +310,59 @@ export class FileService {
         );
 
         return request;
+    }
+
+    async deleteFolder(folderName: string, path: string = this.getCurrentPath()): Promise<ApiResponse> {
+        const fileSystem = this.fileSystem() as MetaFileSystem;
+
+        const currentFolder = fileSystem[path];
+        let folderToDeletePath = "ERROR";
+
+        console.log(folderName, "NEW\n\n\n\n\n\n\n\n\n\n")
+
+        for (const folder of currentFolder.folders) {
+            console.log(folder)
+            if (fileSystem[folder].name === folderName) {
+                const folderToDelete = fileSystem[folder];
+                folderToDeletePath = folder;
+
+                for (const subfolder of folderToDelete.folders) {
+                    const test = fileSystem[subfolder].name
+                    console.log(test, subfolder, folderToDelete.folders)
+                    const response = await this.deleteFolder(fileSystem[subfolder].name, folder);
+
+                    if (response.error) {
+                        console.error(response.message);
+                        return response;
+                    }
+                }
+
+                for (const file of folderToDelete.files) {
+                    const response = await lastValueFrom(this.deleteFile(file.fileName, folder));
+
+                    if (response.error) {
+                        console.error(response.message);
+                        return response;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        const request = this.http.post<ApiResponse>("/api/private/deleteFolder", {
+            path,
+            folderName,
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return lastValueFrom(request);
     }
 }

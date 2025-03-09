@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from "@angular/core";
+import { Component, effect, inject, input, output, signal } from "@angular/core";
 import { randomString } from "timonjs";
 import { filesize } from "filesize";
 import { MetaData } from "../../../@types/metaData.type";
@@ -14,9 +14,8 @@ import { FileService } from "../../services/file.service";
 })
 export class FileDetailsMenuComponent {
     file = input<MetaData | null>(null);
-    open = input(0);
 
-    isVisible = signal(false);
+    closeSignal = output();
 
     id = randomString(22);
 
@@ -31,21 +30,16 @@ export class FileDetailsMenuComponent {
     private fileService = inject(FileService);
 
     /**
-     * Constructor for the DisplayTextFileComponent.
-     *
-     * Initializes the component by calling the `open` method and setting the `isVisible` property to true.
-     *
-     * @remarks
-     * The `effect` function is used to ensure that the `open` method is called and the `isVisible` property is set
-     * whenever the component is instantiated.
-     *
+     * Creates an instance of the FileDetailsMenuComponent.
+     * 
+     * The constructor sets up a reactive effect that triggers whenever the `file` property changes.
+     * If the `file` is not null, it calls the `updateConstants` method to update the component's constants.
+     * 
      * @constructor
      */
     constructor() {
         effect((): void => {
-            if (this.open() === 0) return;
-
-            this.isVisible.set(true);
+            if (this.file() === null) return;
 
             this.updateConstants();
         });
@@ -101,12 +95,13 @@ export class FileDetailsMenuComponent {
     }
 
     /**
-     * Closes the display text file component by setting its visibility to false.
-     *
+     * Emits a signal to close the file details menu.
+     * This method triggers the `closeSignal` event emitter.
+     * 
      * @returns {void}
      */
     close(): void {
-        this.isVisible.set(false);
+        this.closeSignal.emit();
     }
 
     /**

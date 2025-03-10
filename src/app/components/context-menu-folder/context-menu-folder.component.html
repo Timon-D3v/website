@@ -15,10 +15,6 @@
         <img src="/svg/contextmenu/download.svg" alt="Herunterladen" />
         <h4>Herunterladen</h4>
     </li>
-    <li title="Link zum Ordner teilen" (click)="shareFolder()">
-        <img src="/svg/contextmenu/share.svg" alt="Teilen" />
-        <h4>Teilen</h4>
-    </li>
     <li title="Details zum Ordner anzeigen" (click)="showFolderDetails()">
         <img src="/svg/contextmenu/details.svg" alt="Details" />
         <h4>Details</h4>
@@ -29,4 +25,7 @@
     </li>
 </ul>
 <div class="overlay" [class]="isVisible() ? 'visible' : 'hidden'" (click)="close()" (contextmenu)="close()"></div>
+@if (detailsAreShown()) {
+    <app-folder-details-menu [folder]="folder()" (closeSignal)="closeDetails()"></app-folder-details-menu>
+}
 <app-confirm [visible]="deleteConfirmVisible()" [title]="'Löschen bestätigen'" [text]="deleteConfirmText()" [confirmText]="'Löschen'" [confirmTitle]="'Löschen'" (result)="confirmDeleteFolder($event)"></app-confirm>

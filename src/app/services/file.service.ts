@@ -318,17 +318,12 @@ export class FileService {
         const currentFolder = fileSystem[path];
         let folderToDeletePath = "ERROR";
 
-        console.log(folderName, "NEW\n\n\n\n\n\n\n\n\n\n")
-
         for (const folder of currentFolder.folders) {
-            console.log(folder)
             if (fileSystem[folder].name === folderName) {
                 const folderToDelete = fileSystem[folder];
                 folderToDeletePath = folder;
 
                 for (const subfolder of folderToDelete.folders) {
-                    const test = fileSystem[subfolder].name
-                    console.log(test, subfolder, folderToDelete.folders)
                     const response = await this.deleteFolder(fileSystem[subfolder].name, folder);
 
                     if (response.error) {

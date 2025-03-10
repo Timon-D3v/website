@@ -1,0 +1,34 @@
+<div class="wrapper" (contextmenu)="close()" (click)="close()">
+    <table (click)="stopPropagation($event)">
+        <tr>
+            <th>Details:</th>
+            <th>
+                <button type="button" title="Schliessen" (click)="close()">
+                    <img src="/svg/close.svg" alt="Schliessen" />
+                </button>
+            </th>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td routerLink="files" [queryParams]="{ path: path() }">
+                {{ folder()?.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>Pfad:</td>
+            <td>{{ displayPath() }}</td>
+        </tr>
+        <tr>
+            <td>Grösse:</td>
+            <td>{{ size() }}</td>
+        </tr>
+        <tr>
+            <td>Anzahl Unterordner:</td>
+            <td>{{ folders() }} Ordner</td>
+        </tr>
+        <tr>
+            <td>Anzahl Dateien:</td>
+            <td>{{ files() }} Dateien</td>
+        </tr>
+    </table>
+</div>

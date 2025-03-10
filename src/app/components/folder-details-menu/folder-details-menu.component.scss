@@ -1,0 +1,56 @@
+@use "../../../styles/components/filePreview.scss";
+@use "../../../styles/_index.scss" as *;
+
+.wrapper {
+    padding-top: $header-height;
+}
+
+table {
+    width: clamp(200px, 50%, 800px);
+    height: auto;
+    background-color: $background-900;
+    border-radius: calc($header-height / 5);
+    padding: calc($header-height / 5);
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 0 7.5px 0px rgba($secondary-200, 0.5);
+}
+
+td {
+    padding-top: 1rem;
+    max-height: 25ch;
+    display: inline-block;
+    width: 50%;
+    box-sizing: border-box;
+    overflow-y: auto;
+
+    &:first-child {
+        padding-right: 1rem;
+    }
+
+    a {
+        overflow-y: visible;
+        word-break: break-all;
+    }
+}
+
+th {
+    position: relative;
+    text-align: left;
+    padding-left: calc($header-height / 5);
+    font-size: calc($header-height / 3);
+
+    button {
+        top: 0;
+        right: 0;
+        width: calc($header-height / 3);
+        height: calc($header-height / 3);
+        aspect-ratio: 1 / 1;
+
+        img {
+            width: 100%;
+            height: 100%;
+            filter: invert(1);
+        }
+    }
+}

@@ -31,10 +31,10 @@ export class FileDetailsMenuComponent {
 
     /**
      * Creates an instance of the FileDetailsMenuComponent.
-     * 
+     *
      * The constructor sets up a reactive effect that triggers whenever the `file` property changes.
      * If the `file` is not null, it calls the `updateConstants` method to update the component's constants.
-     * 
+     *
      * @constructor
      */
     constructor() {
@@ -97,7 +97,7 @@ export class FileDetailsMenuComponent {
     /**
      * Emits a signal to close the file details menu.
      * This method triggers the `closeSignal` event emitter.
-     * 
+     *
      * @returns {void}
      */
     close(): void {

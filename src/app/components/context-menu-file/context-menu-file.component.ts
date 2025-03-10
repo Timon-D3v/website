@@ -448,7 +448,7 @@ export class ContextMenuFileComponent {
 
     /**
      * Closes the details view by setting the `detailsIsShown` property to `false`.
-     * 
+     *
      * @returns {void}
      */
     closeDetails(): void {

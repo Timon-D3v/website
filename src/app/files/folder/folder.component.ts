@@ -12,7 +12,7 @@ import { ContextMenuFolderComponent } from "../../components/context-menu-folder
 export class FolderComponent {
     folder = input<MetaFolder | null>(null);
     urlParams = input<{ path: string }>({ path: "" });
-    
+
     contextX = signal(0);
     contextY = signal(0);
 

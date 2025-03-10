@@ -5,10 +5,11 @@ import { ConfirmComponent } from "../confirm/confirm.component";
 import { MetaFolder } from "../../../@types/metaData.type";
 import { Router } from "@angular/router";
 import { isPlatformBrowser } from "@angular/common";
+import { FolderDetailsMenuComponent } from "../folder-details-menu/folder-details-menu.component";
 
 @Component({
     selector: "app-context-menu-folder",
-    imports: [ConfirmComponent],
+    imports: [ConfirmComponent, FolderDetailsMenuComponent],
     templateUrl: "./context-menu-folder.component.html",
     styleUrl: "./context-menu-folder.component.scss",
 })
@@ -19,6 +20,8 @@ export class ContextMenuFolderComponent {
     y = input(0);
 
     isVisible = signal(false);
+
+    detailsAreShown = signal(false);
 
     private notificationService = inject(NotificationService);
     private fileService = inject(FileService);
@@ -52,13 +55,26 @@ export class ContextMenuFolderComponent {
         this.notificationService.error("Fehler:", "Diese Funktion ist noch nicht implementiert.");
     }
 
-    renameFolder(): void {}
+    /**
+     * @todo Implement the renameFolder method.
+     */
+    renameFolder(): void {
+        this.notificationService.error("Fehler:", "Diese Funktion ist noch nicht implementiert.");
+    }
 
-    downloadFolder(): void {}
+    /**
+     * @todo Implement the downloadFolder method.
+     */
+    downloadFolder(): void {
+        this.notificationService.error("Fehler:", "Diese Funktion ist noch nicht implementiert.");
+    }
 
-    shareFolder(): void {}
+    showFolderDetails(): void {
+        if (this.folder() === null || !isPlatformBrowser(this.platformId)) return;
 
-    showFolderDetails(): void {}
+        this.detailsAreShown.set(true);
+        this.isVisible.set(false);
+    }
 
     deleteFolder(): void {
         if (this.folder() === null || !isPlatformBrowser(this.platformId)) return;
@@ -90,5 +106,9 @@ export class ContextMenuFolderComponent {
 
     close() {
         this.isVisible.set(false);
+    }
+
+    closeDetails() {
+        this.detailsAreShown.set(false);
     }
 }

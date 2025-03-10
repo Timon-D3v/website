@@ -99,6 +99,6 @@ export default {
     ADMIN_ROUTES: ["/admin"],
     ERRORS: {
         NETWORK: "Es konnte keine Verbindung hergestellt werden. Stelle sicher, dass du eingeloggt bis und eine Internetverbindung hast.",
-        FOLDER_NOT_FULLY_DELETED: "Es konnten nicht alle Dateien und Ordner gelöscht werden. Bitte versuche es erneut. (Bitte beachte, dass einige Dateien oder Ordner möglicherweise bereits gelöscht wurden.)"
+        FOLDER_NOT_FULLY_DELETED: "Es konnten nicht alle Dateien und Ordner gelöscht werden. Bitte versuche es erneut. (Bitte beachte, dass einige Dateien oder Ordner möglicherweise bereits gelöscht wurden.)",
     },
 };

@@ -48,7 +48,7 @@ export class FooterComponent implements OnInit {
         });
 
         window.addEventListener("mousemove", (event: MouseEvent): void => {
-            this.currentX.set(event.clientX);
+            this.currentX.set(Math.abs(event.clientX));
             this.clipBoxPath();
             this.setGradientRotation();
         });

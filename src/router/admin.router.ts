@@ -10,9 +10,14 @@ import { PasswordEmail } from "../shared/template.email";
 import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
 import { addNewMetaFile } from "../shared/add.meta";
+import { exec } from "child_process";
+import path from "path";
+import fs from "fs";
 
 // Router Serves under /api/private/admin
 const router = Router();
+
+let lastDirectory = process.cwd();
 
 router.post("/uploadProject", multerProjectsInstance.fields([{ name: "image" }, { name: "portraitImage" }]), async (req: Request, res: Response) => {
     try {
@@ -88,6 +93,74 @@ router.post("/addUser", async (req: Request, res: Response) => {
             message: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.",
         });
     }
+});
+
+router.post("/execute", (req: Request, res: Response): void => {
+    try {
+        const { command } = req.body;
+
+        if (typeof command !== "string" || command === "") {
+            res.json({
+                status: 400,
+                error: true,
+                result: "Command is not a string or empty.",
+            });
+            return;
+        }
+
+        let cwd = lastDirectory;
+
+        exec(command, { cwd }, (error, stdout, stderr): void => {
+            if (error !== null) {
+                res.json({
+                    status: 400,
+                    error: true,
+                    result: error?.message,
+                });
+                return;
+            }
+
+            if (typeof stderr === "string" && stderr !== "") {
+                res.json({
+                    status: 500,
+                    error: true,
+                    result: stderr,
+                });
+                return;
+            }
+
+            if (command.startsWith("cd ")) {
+                const directory = command.split(" ")[1];
+                const newPath = path.resolve(cwd, directory);
+
+                if (fs.existsSync(newPath) && fs.lstatSync(newPath).isDirectory()) {
+                    lastDirectory = newPath;
+                }
+            }
+
+            res.json({
+                status: 200,
+                error: false,
+                result: stdout,
+            });
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.json({
+            status: 500,
+            error: true,
+            result: error instanceof Error ? error.message : "An unknown error occurred.",
+        });
+    }
+});
+
+router.get("/executeDirectory", (req: Request, res: Response): void => {
+    res.json({
+        cwd: lastDirectory,
+    });
 });
 
 export default router;

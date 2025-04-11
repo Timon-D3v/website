@@ -6,6 +6,7 @@ dotenv.config();
 export default {
     ENV: process.env["ENV"] as "dev" | "prod",
     PORT: Number(process.env["PORT"]),
+    HOST: process.env["HOST"] as string,
     SESSION_SECRET: process.env["SESSION_SECRET"] as string,
     MYSQL_HOST: process.env["MYSQL_HOST"],
     MYSQL_USER: process.env["MYSQL_USER"],

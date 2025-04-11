@@ -10,7 +10,12 @@
     "serve:ssr:portfolio": "node dist/portfolio/server/server.mjs",
     "dev": "ng serve --port=8080",
     "format": "npx prettier --write \"src/**/*.{ts,html,scss}\"",
-    "prettier": "npx prettier"
+    "prettier": "npx prettier",
+    "docker:build": "docker build . -t portfolio",
+    "docker:run": "docker run --rm --name portfolio -p 8080:8080 --env-file ./docker.env portfolio",
+    "docker:stop": "docker stop portfolio",
+    "docker:tag": "docker tag portfolio timond3v/portfolio",
+    "docker:push": "docker push timond3v/portfolio"
   },
   "private": true,
   "dependencies": {

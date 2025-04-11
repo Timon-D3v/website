@@ -75,7 +75,7 @@ app.use("/**", (req, res, next) => {
  * The server listens on the port defined by the `PORT` environment variable.
  */
 if (isMainModule(import.meta.url)) {
-    app.listen(CONFIG.PORT, () => {
+    app.listen(CONFIG.PORT, CONFIG.HOST, () => {
         console.log(`\x1b[34m%s\x1b[0m`, `Node Express server listening on http://localhost:${CONFIG.PORT}`);
     });
 }

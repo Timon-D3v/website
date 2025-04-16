@@ -46,3 +46,6 @@ Thumbs.db
 TODO.txt
 HOW TO DO THE CLOUD.txt
 *.env
+/.vscode
+.vscode/
+.vscode/**

@@ -5,13 +5,9 @@ import { randomString } from "timonjs";
 import { MetaFolder } from "../@types/metaData.type";
 import { updateMetaDataForId } from "../shared/update.meta.database";
 import { deleteFile } from "../shared/delete.files";
-import { checkIfUserOwnsFile } from "../shared/check-if-user-owns-file.meta";
 import { addSharedFile } from "../shared/add.shared.database";
-import { deleteSharedFile } from "../shared/delete.shared.database";
-import { SharedFileEntry } from "../@types/sharedFiles.type";
 import uploadRouter from "./upload.router";
 import adminRouter from "./admin.router";
-import getSharedFiles from "../shared/get.shared.database";
 import publicConfig from "../public.config";
 
 // Router Serves under /api/private
@@ -290,7 +286,7 @@ router.post("/deleteFile", async (req: Request, res: Response): Promise<void> =>
 
         for (let i = 0; i < meta.fileSystem[path].files.length; i++) {
             if (meta.fileSystem[path].files[i].fileName === filename) {
-                const result = await deleteFile(filename);
+                const result = await deleteFile(filename, Number(req.session.user?.id));
 
                 if (!result) {
                     res.json({
@@ -303,8 +299,6 @@ router.post("/deleteFile", async (req: Request, res: Response): Promise<void> =>
                 meta.fileSystem[path].files.splice(i, 1);
 
                 await updateMetaDataForId(Number(req.session.user?.id), meta);
-
-                await deleteSharedFile(filename);
 
                 res.json({
                     error: false,
@@ -335,45 +329,7 @@ router.post("/shareFile", async (req: Request, res: Response): Promise<void> => 
     try {
         const { filename } = req.body;
 
-        const meta = await getMetaFileWithId(Number(req.session.user?.id));
-
-        if (meta instanceof Error) {
-            res.json({
-                error: true,
-                message: meta.message,
-            });
-            return;
-        }
-
-        if (!checkIfUserOwnsFile(filename, meta.fileSystem)) {
-            res.json({
-                error: true,
-                message: "Diese Datei existiert nicht, oder du hast keine Berechtigung auf den Zugriff dieser Datei.",
-            });
-            return;
-        }
-
-        const allSharedFiles = await getSharedFiles();
-
-        if (allSharedFiles instanceof Error) {
-            res.json({
-                error: true,
-                message: allSharedFiles.message,
-            });
-            return;
-        }
-
-        const alreadyShared = allSharedFiles.some((file: SharedFileEntry): boolean => file.filename === filename);
-
-        if (alreadyShared) {
-            res.json({
-                error: false,
-                message: "Diese Datei wurde bereits geteilt.",
-            });
-            return;
-        }
-
-        const result = await addSharedFile(filename);
+        const result = await addSharedFile(filename, Number(req.session.user?.id));
 
         if (!result) {
             res.json({
@@ -401,6 +357,7 @@ router.post("/shareFile", async (req: Request, res: Response): Promise<void> => 
 
 router.post("/deleteFolder", async (req: Request, res: Response): Promise<void> => {
     try {
+        // The folder needs to be empty or else the files inside will not be deleted
         const { path, folderName } = req.body;
 
         const meta = await getMetaFileWithId(Number(req.session.user?.id));

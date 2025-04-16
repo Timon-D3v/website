@@ -5,7 +5,7 @@ import { FieldPacket, RowDataPacket } from "mysql2";
  * Checks if metadata exists for a given user ID in the database.
  *
  * @param {number} id - The ID of the user to check for metadata.
- * 
+ *
  * @returns {Promise<boolean>} - A promise that resolves to `true` if metadata exists for the user, otherwise `false`.
  *
  * @throws Will log an error message to the console if a database query error occurs.

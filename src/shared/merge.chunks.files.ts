@@ -11,24 +11,36 @@ import { cleanUpChunks } from "./cleanup.chunks.database";
 import { updateFile } from "./update.files.database";
 
 /**
- * Merges file chunks into a single file and updates metadata.
+ * Merges file chunks into a single file, updates metadata, and cleans up temporary chunks.
  *
- * @param {string} chunkId - The unique identifier for the chunks.
- * @param {number} totalChunks - The total number of chunks to merge.
- * @param {MetaDataUpload} publicMetaData - The metadata associated with the upload.
- * @param {Account} user - The user account performing the upload.
- * @returns {Promise<ApiResponse>} - The result of the merge operation.
+ * @param {string} chunkId - The unique identifier for the chunks to be merged.
+ * @param {number} totalChunks - The total number of chunks to be merged.
+ * @param {MetaDataUpload} publicMetaData - Metadata about the file being uploaded, including its original name, type, size, and path.
+ * @param {Account} user - The account of the user performing the upload.
  *
- * @throws {Error} - If the metadata file cannot be accessed or read.
- * @throws {Error} - If a chunk cannot be processed.
- * @throws {Error} - If the specified path does not exist in the metadata.
- * @throws {Error} - If there is an error saving the updated metadata.
+ * @returns {Promise<ApiResponse>} - A promise that resolves to an `ApiResponse` indicating success or failure of the operation.
+ *
+ * @throws Will return an error response if:
+ * - The user's metadata cannot be found or loaded.
+ * - The chunks cannot be retrieved.
+ * - The file cannot be saved or updated in the database.
+ * - The specified path does not exist in the user's metadata.
+ * - An error occurs while saving the updated metadata.
+ *
+ * The function performs the following steps:
+ * 1. Validates the existence of the user's metadata.
+ * 2. Generates a unique filename for the merged file.
+ * 3. Retrieves all chunks associated with the given `chunkId`.
+ * 4. Saves the merged file to the database and appends each chunk to it.
+ * 5. Updates the user's metadata with the new file information.
+ * 6. Cleans up the temporary chunks after successful merging.
  */
 export async function mergeChunks(chunkId: string, totalChunks: number, publicMetaData: MetaDataUpload, user: Account): Promise<ApiResponse> {
-    if (!await hasMetaData(user.id)) return {
-        error: true,
-        message: "Deine Metadaten wurden nicht gefunden.",
-    };
+    if (!(await hasMetaData(user.id)))
+        return {
+            error: true,
+            message: "Deine Metadaten wurden nicht gefunden.",
+        };
 
     const metaData = await getMetaFileWithId(user.id);
 
@@ -41,7 +53,7 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
 
     const random = randomString(64);
     const fileExtension = publicMetaData.originalName.split(".").pop();
-    const filename = `file_${random}${fileExtension === publicMetaData.originalName ? "" : "." + fileExtension}`
+    const filename = `file_${random}${fileExtension === publicMetaData.originalName ? "" : "." + fileExtension}`;
 
     const meta: MetaData = {
         userId: user.id,
@@ -71,18 +83,20 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
     try {
         const result = await saveFile(filename, user.id, publicMetaData.type, Buffer.alloc(0), publicMetaData.originalName);
 
-        if (!result) return {
-            error: true,
-            message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
-        };
+        if (!result)
+            return {
+                error: true,
+                message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
+            };
 
-        for (let i = 0; i < chunkArray.length; i++) {
+        for (let i = 0; i < totalChunks; i++) {
             const worked = await updateFile(filename, chunkArray[i].chunk);
 
-            if (!worked) return {
-                error: true,
-                message: "Die Datei konnte nicht vollständig gespeichert werden.",
-            };
+            if (!worked)
+                return {
+                    error: true,
+                    message: "Die Datei konnte nicht vollständig gespeichert werden.",
+                };
         }
     } catch (error) {
         if (error instanceof Error) {

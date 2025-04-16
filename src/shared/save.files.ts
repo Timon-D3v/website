@@ -8,40 +8,47 @@ import { saveFile } from "./save.files.database";
 import { randomString } from "timonjs";
 
 /**
- * Saves a single file's metadata and updates the user's metadata file.
+ * Saves a single file to the database and updates the user's metadata.
  *
- * @param {MetaDataUpload} publicMetaData - The metadata of the file to be uploaded.
- * @param {Express.Multer.File} file - The file object provided by Multer.
+ * @param {MetaDataUpload} publicMetaData - Metadata about the file being uploaded, including its type, size, and path.
+ * @param {Express.Multer.File} file - The file object provided by Multer, containing the file's buffer and original name.
  * @param {Account} user - The account of the user uploading the file.
- * @returns {Promise<ApiResponse>} A promise that resolves to an ApiResponse indicating success or failure.
  *
- * @throws Will return an error response if the user's metadata file is not found.
- * @throws Will return an error response if the specified path does not exist in the metadata.
- * @throws Will return an error response if there is an error saving the metadata.
+ * @returns {Promise<ApiResponse>} - A promise that resolves to an `ApiResponse` object indicating success or failure.
+ *
+ * @throws Will return an error response if:
+ * - The user's metadata cannot be found.
+ * - The user's metadata cannot be loaded.
+ * - The file cannot be saved in the database.
+ * - The specified path in the metadata does not exist.
+ * - An error occurs while saving the updated metadata.
  */
 export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<ApiResponse> {
-    if (!await hasMetaData(user.id)) return {
-        error: true,
-        message: "Deine Metadaten wurden nicht gefunden.",
-    };
+    if (!(await hasMetaData(user.id)))
+        return {
+            error: true,
+            message: "Deine Metadaten wurden nicht gefunden.",
+        };
 
     const metaData = await getMetaFileWithId(user.id);
 
-    if (metaData instanceof Error) return {
-        error: true,
-        message: "Deine Metadaten konnten nicht geladen werden.",
-    };
+    if (metaData instanceof Error)
+        return {
+            error: true,
+            message: "Deine Metadaten konnten nicht geladen werden.",
+        };
 
     const random = randomString(64);
     const fileExtension = file.originalname.split(".").pop();
-    const filename = `file_${random}${fileExtension === file.originalname ? "" : "." + fileExtension}`
+    const filename = `file_${random}${fileExtension === file.originalname ? "" : "." + fileExtension}`;
 
     const result = await saveFile(filename, user.id, publicMetaData.type, file.buffer, file.originalname);
 
-    if (!result) return {
-        error: true,
-        message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
-    };
+    if (!result)
+        return {
+            error: true,
+            message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
+        };
 
     const meta: MetaData = {
         userId: user.id,

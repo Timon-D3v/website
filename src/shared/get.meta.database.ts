@@ -6,7 +6,7 @@ import { FieldPacket, RowDataPacket } from "mysql2";
  * Retrieves metadata for a user with the specified ID from the database.
  *
  * @param {number} id - The ID of the user whose metadata is to be retrieved.
- * 
+ *
  * @returns {Promise<MetaFile | Error>} A promise that resolves to a `MetaFile` object if the user is found,
  *          or an `Error` object if the ID is invalid or the query fails.
  *

@@ -62,7 +62,10 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
             },
         });
     } catch (error) {
-        console.error(error);
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
         res.json({
             message: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
             token: "",

@@ -8,6 +8,7 @@ import connection from "./connection.database";
  * @param {string} familyName - The family name of the user.
  * @param {string} passwordHash - The hashed password of the user.
  * @param {string} pictureUrl - The URL of the user's profile picture.
+ *
  * @returns {Promise<boolean>} - A promise that resolves to `true` if the user was added successfully, or `false` if there was an error.
  */
 export async function addUser(email: string, name: string, familyName: string, passwordHash: string, pictureUrl: string): Promise<boolean> {

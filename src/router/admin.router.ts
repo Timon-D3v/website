@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import multerProjectsInstance from "../shared/projects.multer";
+import multerInstance from "../shared/multer";
 import { ProjectFilesUpload } from "../@types/project.type";
 import addProject from "../shared/add.project.database";
 import { getAllUsers } from "../shared/get.allUsers.database";
@@ -13,13 +13,14 @@ import { addNewMetaFile } from "../shared/add.meta.database";
 import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
+import { saveFile } from "../shared/save.files.database";
 
 // Router Serves under /api/private/admin
 const router = Router();
 
 let lastDirectory = process.cwd();
 
-router.post("/uploadProject", multerProjectsInstance.fields([{ name: "image" }, { name: "portraitImage" }]), async (req: Request, res: Response) => {
+router.post("/uploadProject", multerInstance.fields([{ name: "image" }, { name: "portraitImage" }]), async (req: Request, res: Response) => {
     try {
         const { title, description, url } = req.body;
         const files = req.files as ProjectFilesUpload;
@@ -27,12 +28,18 @@ router.post("/uploadProject", multerProjectsInstance.fields([{ name: "image" }, 
         const image = files.image[0];
         const portraitImage = files.portraitImage[0];
 
-        const imageUrl = "/files/public/projects/" + image.filename;
-        const portraitImageUrl = "/files/public/projects/" + portraitImage.filename;
+        const random = randomString(64);
+        const imageFileExtension = image.originalname.split(".").pop();
+        const imageName = `file_${random}_1${imageFileExtension === image.originalname ? "" : "." + imageFileExtension}`;
+        const portraitImageFileExtension = portraitImage.originalname.split(".").pop();
+        const portraitImageName = `file_${random}_2${portraitImageFileExtension === portraitImage.originalname ? "" : "." + portraitImageFileExtension}`;
 
-        const valid = await addProject(title, description, url, imageUrl, portraitImageUrl);
+        const valid = await addProject(title, description, url, "/files/public/file/" + imageName, "/files/public/file/" + portraitImageName);
 
         if (!valid) throw new Error("Beim Hochladen des Projekts ist ein Fehler aufgetreten.");
+
+        await saveFile(imageName, req.session.user?.id as number, image.mimetype, image.buffer, image.originalname, true);
+        await saveFile(portraitImageName, req.session.user?.id as number, portraitImage.mimetype, portraitImage.buffer, portraitImage.originalname, true);
 
         res.json({
             error: false,
@@ -65,7 +72,7 @@ router.post("/addUser", async (req: Request, res: Response) => {
         const generatedPassword = randomString(15);
         const hash = await bcrypt.hash(generatedPassword, 10);
 
-        const valid = await addUser(email, name, familyName, hash, "/files/public/pictures/DEFAULT.jpg");
+        const valid = await addUser(email, name, familyName, hash, "/files/public/file/DEFAULT.jpg");
 
         if (!valid) throw new Error("Das Hinzufügen des Benutzers zur Datenbank hat nicht geklappt.");
 

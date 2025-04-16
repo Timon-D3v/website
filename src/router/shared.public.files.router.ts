@@ -1,39 +1,25 @@
 import { Request, Response, Router } from "express";
-import CONFIG from "../config";
-import path from "path";
-import getSharedFiles from "../shared/get.shared.database";
-import { SharedFileEntry } from "../@types/sharedFiles.type";
+import { Readable } from "stream";
+import { getPublicFile } from "../shared/get.public.files.database";
 
 // Router Serves under /files/public/files
 const router = Router();
 
 router.get("/:name", async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name } = req.params;
+        const result = await getPublicFile(req.params["name"]);
 
-        const sharedFiles = await getSharedFiles();
+        if (result instanceof Error) throw result;
 
-        if (sharedFiles instanceof Error) {
-            res.status(500).end();
-        }
+        res.set({
+            "Content-Type": result.mimetype,
+            "Content-Disposition": `inline; filename="${result.originalName}"`,
+            "Content-Length": result.data.length,
+        });
 
-        for (const file of sharedFiles as SharedFileEntry[]) {
-            if (file.filename === name) {
-                if (file.deleted) {
-                    res.status(410).end();
+        const stream = Readable.from(result.data);
 
-                    return;
-                }
-
-                res.sendFile(name, {
-                    root: path.join(CONFIG.UPLOAD_PATH, "/files"),
-                });
-
-                return;
-            }
-        }
-
-        res.status(404).end();
+        stream.pipe(res);
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);

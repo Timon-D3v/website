@@ -20,7 +20,8 @@ const mailjet = new Mailjet({
  * @param {string} html - The HTML content of the email.
  * @param {MailjetAttachment[]} [files=[]] - An array of files to attach to the email. Defaults to an empty array.
  * @param {string} [id=randomString(16)] - A custom ID for the email. Defaults to a random 16-character string.
- * @returns {Promise<EmailResponse>} A promise that resolves to an EmailResponse object indicating the success or failure of the email sending operation.
+ *
+ * @returns {Promise<EmailResponse>} - A promise that resolves to an EmailResponse object indicating the success or failure of the email sending operation.
  */
 export async function sendMail(to: string | { Email: string }[], from: string, name: string, subject: string, text: string, html: string, files: Array<MailjetAttachment> = [], id: string = randomString(16)): Promise<EmailResponse> {
     try {

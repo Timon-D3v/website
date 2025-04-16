@@ -11,7 +11,7 @@ import { MetaFile } from "../@types/metaData.type";
  * @param {number} id - The unique identifier of the user whose metadata is being updated.
  * @param {MetaFile} data - An object containing the metadata to be updated. The `fileSystem`
  *                          property of this object will be stored in the database.
- * 
+ *
  * @returns {Promise<void>} A promise that resolves when the update operation is complete.
  */
 export async function updateMetaDataForId(id: number, data: MetaFile): Promise<void> {

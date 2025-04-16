@@ -6,6 +6,7 @@ import { MetaData, MetaFileSystem } from "../@types/metaData.type";
  * @param {string} filename - The name of the file to check for ownership.
  * @param {MetaFileSystem} fileSystem - The file system metadata object to search within.
  * @param {string} folder - The folder to start the search from. Defaults to "root".
+ *
  * @returns {boolean} A boolean indicating whether the user owns the file.
  *
  * @throws Will log an error message if an error or type error occurs during the search.

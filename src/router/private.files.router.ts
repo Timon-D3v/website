@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { getMetaFileWithId } from "../shared/get.meta";
+import { getMetaFileWithId } from "../shared/get.meta.database";
 import privateFileFilesRouter from "./file.private.files.router";
 
 // Router Serves under /files/private

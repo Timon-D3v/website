@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { getMetaFileWithId } from "../shared/get.meta";
+import { getMetaFileWithId } from "../shared/get.meta.database";
 import CONFIG from "../config";
 import fs from "fs/promises";
 import path from "path";

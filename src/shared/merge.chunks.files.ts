@@ -1,11 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
 import CONFIG from "../config";
+import { randomString } from "timonjs";
+import { hasMetaData } from "./has.meta.database";
+import { getMetaFileWithId } from "./get.meta.database";
+import { updateMetaDataForId } from "./update.meta.database";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 import { ApiResponse } from "../@types/apiResponse.type";
 import { Account } from "../@types/auth.type";
-import { randomString } from "timonjs";
-import { updateMetaDataForId } from "./update.meta";
 
 /**
  * Merges file chunks into a single file and updates metadata.
@@ -22,21 +24,19 @@ import { updateMetaDataForId } from "./update.meta";
  * @throws {Error} - If there is an error saving the updated metadata.
  */
 export async function mergeChunks(chunkId: string, totalChunks: number, publicMetaData: MetaDataUpload, user: Account): Promise<ApiResponse> {
-    try {
-        await fs.access(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`));
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(error.message);
-        }
+    if (!await hasMetaData(user.id)) return {
+        error: true,
+        message: "Deine Metadaten wurden nicht gefunden.",
+    };
 
+    const metaData = await getMetaFileWithId(user.id);
+
+    if (metaData instanceof Error) {
         return {
             error: true,
-            message: "Deine Metadaten wurden nicht gefunden.",
+            message: "Deine Metadaten konnten nicht geladen werden.",
         };
     }
-
-    const metaFile = await fs.readFile(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`), "utf-8");
-    const metaData = JSON.parse(metaFile);
 
     const meta: MetaData = {
         userId: user.id,

@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
 import { canAccessAdminApi } from "../shared/auth.middleware";
-import { getMetaFileWithId } from "../shared/get.meta";
+import { getMetaFileWithId } from "../shared/get.meta.database";
 import { randomString } from "timonjs";
 import { MetaFolder } from "../@types/metaData.type";
-import { updateMetaDataForId } from "../shared/update.meta";
+import { updateMetaDataForId } from "../shared/update.meta.database";
 import { deleteFile } from "../shared/delete.files";
 import { checkIfUserOwnsFile } from "../shared/check-if-user-owns-file.meta";
 import { addSharedFile } from "../shared/add.shared.database";

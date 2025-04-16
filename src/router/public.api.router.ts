@@ -8,7 +8,7 @@ import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
 import { EmailResponse } from "../@types/emailResponse.type";
 import getAllProjects from "../shared/get.allProjects.database";
-import { getMetaFileWithId } from "../shared/get.meta";
+import { getMetaFileWithId } from "../shared/get.meta.database";
 
 // Router Serves under /api/public
 const router = Router();

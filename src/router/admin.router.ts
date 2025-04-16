@@ -9,7 +9,7 @@ import { addUser } from "../shared/add.user.database";
 import { PasswordEmail } from "../shared/template.email";
 import { sendMail } from "../shared/send.email";
 import publicConfig from "../public.config";
-import { addNewMetaFile } from "../shared/add.meta";
+import { addNewMetaFile } from "../shared/add.meta.database";
 import { exec } from "child_process";
 import path from "path";
 import fs from "fs";

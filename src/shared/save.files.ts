@@ -1,7 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-import CONFIG from "../config";
-import { updateMetaDataForId } from "./update.meta";
+import { hasMetaData } from "./has.meta.database";
+import { getMetaFileWithId } from "./get.meta.database";
+import { updateMetaDataForId } from "./update.meta.database";
 import { Account } from "../@types/auth.type";
 import { ApiResponse } from "../@types/apiResponse.type";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
@@ -19,21 +18,19 @@ import { MetaData, MetaDataUpload } from "../@types/metaData.type";
  * @throws Will return an error response if there is an error saving the metadata.
  */
 export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Express.Multer.File, user: Account): Promise<ApiResponse> {
-    try {
-        await fs.access(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`));
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(error.message);
-        }
+    if (!await hasMetaData(user.id)) return {
+        error: true,
+        message: "Deine Metadaten wurden nicht gefunden.",
+    };
 
+    const metaData = await getMetaFileWithId(user.id);
+
+    if (metaData instanceof Error) {
         return {
             error: true,
-            message: "Deine Metadaten wurden nicht gefunden.",
+            message: "Deine Metadaten konnten nicht geladen werden.",
         };
     }
-
-    const metaFile = await fs.readFile(path.join(CONFIG.UPLOAD_PATH, `/meta/ID_${user.id}.json`), "utf-8");
-    const metaData = JSON.parse(metaFile);
 
     const meta: MetaData = {
         userId: user.id,

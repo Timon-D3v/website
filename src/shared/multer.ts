@@ -26,7 +26,7 @@ const chunkStorage = multer.diskStorage({
 });
 
 const multerInstance = multer({
-    storage,
+    storage: multer.memoryStorage(),
 });
 
 const multerChunkInstance = multer({

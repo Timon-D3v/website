@@ -42,3 +42,12 @@ export interface MetaFolder {
     files: MetaData[];
     folders: string[];
 }
+
+export interface DatabaseFile {
+    filename: string;
+    ownerId: number;
+    isPublic: boolean;
+    data: Buffer;
+    mimetype: string;
+    originalName: string;
+}

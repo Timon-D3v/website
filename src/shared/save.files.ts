@@ -4,6 +4,8 @@ import { updateMetaDataForId } from "./update.meta.database";
 import { Account } from "../@types/auth.type";
 import { ApiResponse } from "../@types/apiResponse.type";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
+import { saveFile } from "./save.files.database";
+import { randomString } from "timonjs";
 
 /**
  * Saves a single file's metadata and updates the user's metadata file.
@@ -25,16 +27,25 @@ export async function saveSingeFile(publicMetaData: MetaDataUpload, file: Expres
 
     const metaData = await getMetaFileWithId(user.id);
 
-    if (metaData instanceof Error) {
-        return {
-            error: true,
-            message: "Deine Metadaten konnten nicht geladen werden.",
-        };
-    }
+    if (metaData instanceof Error) return {
+        error: true,
+        message: "Deine Metadaten konnten nicht geladen werden.",
+    };
+
+    const random = randomString(64);
+    const fileExtension = file.originalname.split(".").pop();
+    const filename = `file_${random}${fileExtension === file.originalname ? "" : "." + fileExtension}`
+
+    const result = await saveFile(filename, user.id, publicMetaData.type, file.buffer, file.originalname);
+
+    if (!result) return {
+        error: true,
+        message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
+    };
 
     const meta: MetaData = {
         userId: user.id,
-        fileName: file.filename,
+        fileName: filename,
         originalName: publicMetaData.originalName,
         type: publicMetaData.type,
         size: publicMetaData.size,

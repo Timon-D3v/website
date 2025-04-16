@@ -44,10 +44,20 @@ export interface MetaFolder {
 }
 
 export interface DatabaseFile {
+    id: number;
     filename: string;
     ownerId: number;
     isPublic: boolean;
     data: Buffer;
     mimetype: string;
     originalName: string;
+}
+
+export interface DatabaseChunk {
+    id: number;
+    ownerId: number;
+    chunkId: string;
+    chunkIndex: number;
+    totalChunks: number;
+    chunk: Buffer;
 }

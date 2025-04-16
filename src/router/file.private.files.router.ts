@@ -1,3 +1,4 @@
+import { Readable } from "stream";
 import { Request, Response, Router } from "express";
 import { getFile } from "../shared/get.files.database";
 
@@ -16,7 +17,9 @@ router.get("/:name", async (req: Request, res: Response): Promise<void> => {
             "Content-Length": result.data.length,
         });
 
-        res.send(result.data);
+        const stream = Readable.from(result.data);
+
+        stream.pipe(res);
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);

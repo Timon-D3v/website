@@ -1,6 +1,3 @@
-import fs from "fs/promises";
-import path from "path";
-import CONFIG from "../config";
 import { randomString } from "timonjs";
 import { hasMetaData } from "./has.meta.database";
 import { getMetaFileWithId } from "./get.meta.database";
@@ -8,6 +5,10 @@ import { updateMetaDataForId } from "./update.meta.database";
 import { MetaData, MetaDataUpload } from "../@types/metaData.type";
 import { ApiResponse } from "../@types/apiResponse.type";
 import { Account } from "../@types/auth.type";
+import { getAllChunks } from "./get.chunks.database";
+import { saveFile } from "./save.files.database";
+import { cleanUpChunks } from "./cleanup.chunks.database";
+import { updateFile } from "./update.files.database";
 
 /**
  * Merges file chunks into a single file and updates metadata.
@@ -38,9 +39,13 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
         };
     }
 
+    const random = randomString(64);
+    const fileExtension = publicMetaData.originalName.split(".").pop();
+    const filename = `file_${random}${fileExtension === publicMetaData.originalName ? "" : "." + fileExtension}`
+
     const meta: MetaData = {
         userId: user.id,
-        fileName: `merged_file_${randomString(64)}.${publicMetaData.originalName.split(".").pop()}`,
+        fileName: filename,
         originalName: publicMetaData.originalName,
         type: publicMetaData.type,
         size: publicMetaData.size,
@@ -54,31 +59,40 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
         url: publicMetaData.currentPath + "/" + publicMetaData.originalName,
     };
 
-    const finalPath = path.join(CONFIG.UPLOAD_PATH, "/files", meta.fileName);
-    const writeStream = await fs.open(finalPath, "w");
+    const chunkArray = await getAllChunks(chunkId);
+
+    if (chunkArray instanceof Error) {
+        return {
+            error: true,
+            message: "Die Chunks konnten nicht geladen werden.",
+        };
+    }
 
     try {
-        for (let i = 0; i < totalChunks; i++) {
-            const chunkFile = path.join(CONFIG.UPLOAD_PATH, "/chunks", `${chunkId}_${i}.chunk`);
+        const result = await saveFile(filename, user.id, publicMetaData.type, Buffer.alloc(0), publicMetaData.originalName);
 
-            // Ensure chunk exists before processing
-            try {
-                const data = await fs.readFile(chunkFile);
-                await writeStream.writeFile(data);
-                await fs.unlink(chunkFile); // Delete chunk after writing
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error(`Error processing chunk ${i}:`, error.message);
-                }
+        if (!result) return {
+            error: true,
+            message: "Die Datei konnte nicht in der Datenbank gespeichert werden.",
+        };
 
-                return {
-                    error: true,
-                    message: "Ein Chunk konnte nicht verarbeitet werden. Bitte versuche es erneut.",
-                };
-            }
+        for (let i = 0; i < chunkArray.length; i++) {
+            const worked = await updateFile(filename, chunkArray[i].chunk);
+
+            if (!worked) return {
+                error: true,
+                message: "Die Datei konnte nicht vollständig gespeichert werden.",
+            };
         }
-    } finally {
-        await writeStream.close();
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        return {
+            error: true,
+            message: "Die Datei konnte nicht gespeichert werden.",
+        };
     }
 
     try {
@@ -106,6 +120,8 @@ export async function mergeChunks(chunkId: string, totalChunks: number, publicMe
             message: "Beim Speichern der Metadaten ist ein Fehler aufgetreten.",
         };
     }
+
+    await cleanUpChunks(chunkId);
 
     return {
         error: false,

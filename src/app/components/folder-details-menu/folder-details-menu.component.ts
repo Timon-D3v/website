@@ -54,7 +54,7 @@ export class FolderDetailsMenuComponent {
         if (currentFolder === undefined) return;
 
         const folderPath = currentFolder.folders.find((folder: string): boolean => {
-            return this.fileService.fileSystem()?.[folder].name === this.folder()?.name
+            return this.fileService.fileSystem()?.[folder].name === this.folder()?.name;
         });
 
         this.path.set(folderPath as string);

@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <h1>Command Window</h1>
+    <div class="topbar">
+        <div class="left">
+            <img src="/svg/cmd.svg" alt="Die Eingabeaufforderung" />
+            <p>Command Prompt</p>
+        </div>
+        <div>
+            <button type="button" title="Minimieren">
+                <img src="/svg/line.svg" alt="Eine Linie" />
+            </button>
+            <button type="button" title="Maximieren">
+                <img src="/svg/square.svg" alt="Ein Quadrat" />
+            </button>
+            <button class="close" type="button" title="Schliessen" (click)="clearWindow()">
+                <img src="/svg/close.svg" alt="Ein Kreuz" />
+            </button>
+        </div>
+    </div>
+    <label class="container" for="cmd_input" id="cmd_input_label">
+        <div class="command">
+            <div class="current">
+                <p>
+                    Microsoft Windows [Version 10.0.26100.3194]
+                    <br />
+                    (c) Microsoft Corporation. Alle Rechte vorbehalten.
+                </p>
+            </div>
+        </div>
+        @for (command of finishedCommands(); track $index) {
+            <div class="command">
+                <div class="current">
+                    <p>{{ command.cwd }}&gt;</p>
+                    <p>{{ command.command }}</p>
+                </div>
+                <div class="result {{ command.result.status }} {{ command.result.error }}">
+                    <p [innerHTML]="command.result.status === 500 && command.result.error ? 'Internal Server Error:\<br\>' : '' + command.result.result.replaceAll('\n', '\<br\>').replaceAll('\r', '')"></p>
+                </div>
+            </div>
+        }
+        <div class="current">
+            <p>{{ cwd() }}&gt;</p>
+            <input id="cmd_input" type="text" (keyup)="onKeyUp($event)" title="Eingabe" />
+        </div>
+    </label>
+</div>

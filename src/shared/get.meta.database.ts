@@ -24,6 +24,12 @@ export async function getMetaFileWithId(id: number): Promise<MetaFile | Error> {
     try {
         const [rows, fields]: [RowDataPacket[], FieldPacket[]] = await connection.query("SELECT `user`.`id`, `user`.`email`, `user`.`name`, `user`.`family_name` AS familyName, `user`.picture, `meta`.`fileSystem` FROM `main`.`user` AS `user` JOIN `main`.`metadata` AS `meta` ON `user`.`id` = `meta`.`userId` WHERE `user`.`id` = ?;", [id]);
 
+        if (rows.length === 0) return new Error("User not found");
+
+        if (typeof rows[0]["fileSystem"] === "string") {
+            rows[0]["fileSystem"] = JSON.parse(rows[0]["fileSystem"]);
+        }
+
         return rows[0] as MetaFile;
     } catch (error) {
         if (error instanceof Error) {

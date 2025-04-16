@@ -49,3 +49,4 @@ HOW TO DO THE CLOUD.txt
 /.vscode
 .vscode/
 .vscode/**
+.angular/**

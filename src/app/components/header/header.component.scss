@@ -3,6 +3,7 @@
 @use "sass:color";
 
 $header-content-height: calc($header-height * 0.8);
+$mobile-header-content-height: calc($mobile-header-height * 0.8);
 
 header {
     display: flex;
@@ -72,8 +73,8 @@ header {
     &::after {
         content: "";
         position: absolute;
-        left: -455px;
-        top: -455px;
+        left: calc(-500px + (90px / 2));
+        top: calc(-500px + (90px / 2));
         min-width: 1000px;
         min-height: 1000px;
         pointer-events: none;
@@ -109,14 +110,42 @@ img:hover ~ .particles::after {
 }
 
 @media screen and (max-width: 600px) {
+    header {
+        height: $mobile-header-height;
+        padding: calc($mobile-header-height / 10) $padding-side;
+
+        > a {
+            height: $mobile-header-content-height;
+            gap: calc($mobile-header-height / 7.5);
+    
+            span {
+                font-size: calc($mobile-header-height / 2);
+                transform: translateY(calc($mobile-header-height / 40));
+            }
+        }
+    }
+    
+    .particles {
+        width: calc(90px / 3 * 2);
+        height: calc(90px / 3 * 2);
+        &::after {
+            left: calc(-500px + ((90px / 3 * 2) / 2));
+            top: calc(-500px + ((90px / 3 * 2) / 2));
+        }
+    }
+    
+    .header-buttons {
+        gap: calc($mobile-header-height / 5);
+    }
+
     app-primary-button {
         display: none;
     }
 
     .contact-button-small {
         background-color: $background-950;
-        width: calc($header-height * 0.6);
-        height: calc($header-height * 0.6);
+        width: calc($mobile-header-height * 0.6);
+        height: calc($mobile-header-height * 0.6);
         aspect-ratio: 1 / 1;
         border-radius: 20%;
         display: grid;

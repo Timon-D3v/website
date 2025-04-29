@@ -1,1 +1,1 @@
-<a [title]="title()" [class]="bold() ? 'bold' : ''">{{ text() }}</a>
+<a [title]="title()" [class]="bold() ? 'bold' : ''" [attr.href]="href() === '' ? null : href()">{{ text() }}</a>

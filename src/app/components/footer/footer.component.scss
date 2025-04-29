@@ -7,6 +7,7 @@ footer {
     width: 100%;
     position: relative;
     height: $footer-height;
+    min-height: fit-content;
     background: linear-gradient(var(--angle), $accent-800 8%, $secondary-700 100%);
     box-sizing: border-box;
     padding-top: $height-4;
@@ -65,12 +66,25 @@ app-socials-icon {
 }
 
 @media screen and (max-width: 630px) {
+    footer {
+        height: auto;
+        padding-bottom: calc(1.3rem * 2);
+    }
+
     .cc {
         flex-direction: column;
 
         span {
             display: none;
         }
+    }
+
+    .social {
+        height: auto;
+    }
+
+    app-socials-icon {
+        height: calc($footer-height / 15);
     }
 }
 
@@ -92,9 +106,5 @@ app-socials-icon {
         &::before {
             height: calc($height-4 / 2);
         }
-    }
-
-    app-socials-icon {
-        height: calc($footer-height / 12);
     }
 }

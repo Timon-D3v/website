@@ -1,1 +1,13 @@
+@use "../../../styles/colors.scss" as *;
 @use "../../../styles/components/form.scss";
+
+@media screen and (max-width: 600px) {
+    p {
+        font-size: calc(1.3rem / 1.25);
+        line-height: 1.25;
+
+        a {
+            color: $primary-400
+        }
+    }
+}

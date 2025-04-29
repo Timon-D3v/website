@@ -73,3 +73,9 @@ img::selection {
         filter: invert(1) invert(49%) sepia(98%) saturate(2436%) hue-rotate(89deg) brightness(124%) contrast(122%) hue-rotate(360deg);
     }
 }
+
+@media screen and (max-width: 600px) {
+    main::before {
+        height: $mobile-header-height;
+    }
+}

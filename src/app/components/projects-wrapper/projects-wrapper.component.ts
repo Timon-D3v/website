@@ -113,7 +113,7 @@ export class ProjectsWrapperComponent implements OnInit, OnDestroy, AfterViewIni
                 trigger: container,
                 pin: true,
                 scrub: 1,
-                end: "+=" + (sections.length - 1) * 2000,
+                end: "+=" + (sections.length - 1) * 300,
             },
         });
 

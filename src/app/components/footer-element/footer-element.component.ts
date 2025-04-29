@@ -10,4 +10,5 @@ export class FooterElementComponent {
     text = input("");
     title = input("");
     bold = input(false);
+    href = input("");
 }

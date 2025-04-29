@@ -76,7 +76,7 @@ app.use("/**", (req, res, next) => {
  */
 if (isMainModule(import.meta.url)) {
     app.listen(CONFIG.PORT, CONFIG.HOST, () => {
-        console.log(`\x1b[34m%s\x1b[0m`, `Node Express server listening on http://localhost:${CONFIG.PORT}`);
+        console.log(`\x1b[34m%s\x1b[0m`, `Node Express server listening on http://${CONFIG.HOST}:${CONFIG.PORT}`);
     });
 }
 

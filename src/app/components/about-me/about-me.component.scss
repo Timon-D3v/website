@@ -1,5 +1,7 @@
 @use "../../../styles/index" as *;
 
+$font-size: 1.3rem;
+
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -69,7 +71,8 @@ app-about-me-canvas {
 
 .title-small,
 .me,
-.subtitle-small {
+.subtitle-small,
+.fog {
     display: none;
 }
 
@@ -99,6 +102,35 @@ app-about-me-canvas {
             height: calc($header-height / 2 * 1.5);
             margin-top: calc($header-height / 2 * 1.5);
         }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .subtitle-small {
+        font-size: calc($font-size * 1.5);
+    }
+
+    .right p {
+        font-size: calc($font-size / 1.25);
+        max-height: 40vh;
+        overflow-y: auto;
+        position: relative;
+
+        &::after {
+            content: "";
+            display: block;
+            height: calc($mobile-header-height / 2);
+        }
+    }
+
+    .fog {
+        display: block;
+        position: relative;
+        height: 1px;
+        transform: scaleY(strip-unit(calc($mobile-header-height / 2)));
+        width: 100%;
+        top: calc($mobile-header-height / -2 / 2);
+        background: linear-gradient(0deg, rgba($text-50, 0.75), rgba($secondary-500, 0));
     }
 }
 
@@ -209,14 +241,14 @@ app-about-me-canvas {
     }
 
     .subtitle-small {
-        font-size: calc($header-height / 3 / 2 * 3 / 2);
+        font-size: calc($font-size * 1.4);
     }
 
     .right {
         padding: calc($header-height / 2) calc($padding-side * 2);
 
         p {
-            font-size: calc(1.5rem / 2);
+            font-size: calc($font-size / 1.25);
         }
 
         .socials {

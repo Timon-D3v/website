@@ -1,5 +1,7 @@
 @use "../../../styles/index" as *;
 
+$font-size: 1.3rem;
+
 .bold {
     font-weight: bold;
     font-family: $title;
@@ -12,6 +14,7 @@ a {
     font-size: calc($footer-height / 25);
     line-height: calc($footer-height / 25);
     color: $text-50;
+    text-decoration: none;
 
     &:hover {
         color: $text-50;
@@ -20,5 +23,11 @@ a {
     &::selection {
         background-color: rgba($accent-400, 0.5);
         color: $text-50;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    a {
+        font-size: calc($font-size / 1.25);
     }
 }

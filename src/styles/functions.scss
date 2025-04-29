@@ -1,3 +1,10 @@
 @function kathete($kathete2, $winkel) {
     @return ($kathete2 / cos($winkel)) * sin($winkel);
 }
+
+@function strip-unit($value) {
+    @if type-of($value) == "number" and unit($value) != "" {
+        @return $value / ($value * 0 + 1);
+    }
+    @return $value;
+}

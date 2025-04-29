@@ -23,3 +23,10 @@ img {
     object-position: center;
     border-radius: 50%;
 }
+
+@media screen and (max-width: 600px) {
+    button {
+        width: calc($mobile-header-height * 0.6);
+        height: calc($mobile-header-height * 0.6);
+    }
+}

@@ -8,7 +8,9 @@
       {
         "ignore": [
           "text-wrap: pretty",
-          "text-wrap: balance"
+          "text-wrap: balance",
+          "overscroll-behavior",
+          "overscroll-behavior: contain"
         ]
       }
     ],

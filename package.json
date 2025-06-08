@@ -1,6 +1,17 @@
 {
   "name": "portfolio",
   "version": "2.0.1",
+  "description": "This is the source code of my website www.timondev.com.",
+  "homepage": "https://www.timondev.com",
+  "author": "Timon Fiedler",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timon-D3v/website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Timon-D3v/website/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "node dist/server/server.mjs",
@@ -17,7 +28,6 @@
     "docker:tag": "docker tag portfolio timond3v/portfolio",
     "docker:push": "docker push timond3v/portfolio"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^19.2.1",
     "@angular/common": "^19.2.1",
@@ -70,5 +80,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.5.3",
     "typescript": "~5.7.3"
-  }
+  },
+  "keywords": ["nodejs", "javascript", "typescript", "angular", "portfolio", "website", "threejs", "express", "cloud", "sql", "scss", "prettier", "expressjs", "gsap", "full-stack", "poisson-disk-sampling", "gsap-scrolltrigger"]
 }

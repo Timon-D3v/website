@@ -1,8 +1,10 @@
 import { Request, Response, Router } from "express";
 import multerInstance from "../shared/multer";
 import { ProjectFilesUpload } from "../@types/project.type";
-import addProject from "../shared/add.project.database";
+import { addProject } from "../shared/add.project.database";
+import { addApiKey } from "../shared/add.apiKey.database";
 import { getAllUsers } from "../shared/get.allUsers.database";
+import { getAllApiKeys } from "../shared/get.allApiKeys.database";
 import { randomString } from "timonjs";
 import bcrypt from "bcryptjs";
 import { addUser } from "../shared/add.user.database";
@@ -13,6 +15,7 @@ import { addNewMetaFile } from "../shared/add.meta.database";
 import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
+import crypto from "crypto";
 import { saveFile } from "../shared/save.files.database";
 
 // Router Serves under /api/private/admin
@@ -89,6 +92,42 @@ router.post("/addUser", async (req: Request, res: Response) => {
         res.json({
             error: false,
             message: `Der Benutzer ${name} ${familyName} (${email}) wurde erfolgreich hinzugefügt.`,
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+
+        res.status(500).json({
+            error: true,
+            message: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten.",
+        });
+    }
+});
+
+router.post("/generateApiKey", async (req: Request, res: Response) => {
+    try {
+        const { organizationName } = req.body;
+
+        console.log(organizationName);
+
+        const allKeys = await getAllApiKeys();
+
+        if (allKeys instanceof Error) throw new Error("Beim Abrufen der Organisationsnamen ist ein Fehler aufgetreten.");
+
+        const userExists = allKeys.some((user) => user.name === organizationName);
+
+        if (userExists) throw new Error(`Die Organisation mit Namen ${organizationName} existiert bereits.`);
+
+        const key = crypto.randomBytes(64).toString("hex");
+
+        const valid = await addApiKey(organizationName, key);
+
+        if (!valid) throw new Error("Das Hinzufügen der Organisation zur Datenbank hat nicht geklappt.");
+
+        res.json({
+            error: false,
+            message: key,
         });
     } catch (error) {
         if (error instanceof Error) {

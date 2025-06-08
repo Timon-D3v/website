@@ -117,14 +117,14 @@ img:hover ~ .particles::after {
         > a {
             height: $mobile-header-content-height;
             gap: calc($mobile-header-height / 7.5);
-    
+
             span {
                 font-size: calc($mobile-header-height / 2);
                 transform: translateY(calc($mobile-header-height / 40));
             }
         }
     }
-    
+
     .particles {
         width: calc(90px / 3 * 2);
         height: calc(90px / 3 * 2);
@@ -133,7 +133,7 @@ img:hover ~ .particles::after {
             top: calc(-500px + ((90px / 3 * 2) / 2));
         }
     }
-    
+
     .header-buttons {
         gap: calc($mobile-header-height / 5);
     }

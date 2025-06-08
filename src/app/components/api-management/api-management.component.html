@@ -1,0 +1,12 @@
+<form [formGroup]="generateApiKeyForm" (submit)="onSubmit()">
+    <div class="container full">
+        <h1>API-Schlüssel generieren</h1>
+    </div>
+    <div class="container full">
+        <label for="generate_api_key_organization_name">Name der Organisation:</label>
+        <input type="text" id="generate_api_key_organization_name" title="Der Name der Organisation" formControlName="organizationNameControl" required />
+    </div>
+    <div class="container full center">
+        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'API-Schlüssel generieren'" [disabled]="disabledButton()"></app-primary-button>
+    </div>
+</form>

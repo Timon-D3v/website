@@ -21,4 +21,5 @@ export default {
     UPLOAD_PATH: process.env["UPLOAD_PATH"] as string,
     AUTO_LOGIN: process.env["AUTO_LOGIN"] === "true",
     AUTO_LOGIN_EMAIL: process.env["AUTO_LOGIN_EMAIL"] as string,
+    DELIVAPI_API_KEY: process.env["DELIVAPI_API_KEY"] as string,
 };

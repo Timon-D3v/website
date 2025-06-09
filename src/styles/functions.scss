@@ -1,10 +1,13 @@
+@use "sass:math";
+@use "sass:meta";
+
 @function kathete($kathete2, $winkel) {
-    @return ($kathete2 / cos($winkel)) * sin($winkel);
+    @return math.div($kathete2, cos($winkel)) * sin($winkel);
 }
 
 @function strip-unit($value) {
-    @if type-of($value) == "number" and unit($value) != "" {
-        @return $value / ($value * 0 + 1);
+    @if meta.type-of($value) == "number" and math.unit($value) != "" {
+        @return math.div($value, ($value * 0 + 1));
     }
     @return $value;
 }

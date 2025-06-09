@@ -17,6 +17,8 @@ import path from "path";
 import fs from "fs";
 import crypto from "crypto";
 import { saveFile } from "../shared/save.files.database";
+import { createOrganizationsDatabase } from "../shared/create.organizations.database";
+import { testOrganizationsDatabase } from "../shared/test.organizations.database";
 
 // Router Serves under /api/private/admin
 const router = Router();
@@ -109,7 +111,13 @@ router.post("/generateApiKey", async (req: Request, res: Response) => {
     try {
         const { organizationName } = req.body;
 
-        console.log(organizationName);
+        if (!organizationName || typeof organizationName !== "string" || organizationName === "") {
+            res.status(400).json({
+                error: true,
+                message: "Der Organisationsname ist nicht gültig.",
+            });
+            return;
+        }
 
         const allKeys = await getAllApiKeys();
 
@@ -119,6 +127,17 @@ router.post("/generateApiKey", async (req: Request, res: Response) => {
 
         if (userExists) throw new Error(`Die Organisation mit Namen ${organizationName} existiert bereits.`);
 
+        // Create the organizations database
+        const created = await createOrganizationsDatabase(organizationName);
+
+        if (!created) throw new Error("Das Erstellen der Organisationsdatenbank ist fehlgeschlagen.");
+
+        // Test the connection to the database
+        const testResult = await testOrganizationsDatabase(organizationName);
+
+        if (testResult.length === 0) throw new Error("Die Organisationsdatenbank konnte nicht erstellt werden oder ist leer. Wahrscheinlich ist der Name ungültig.");
+
+        // Generate the API key
         const key = crypto.randomBytes(64).toString("hex");
 
         const valid = await addApiKey(organizationName, key);

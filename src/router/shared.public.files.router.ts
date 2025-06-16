@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { Readable } from "stream";
 import { getPublicFile } from "../shared/get.public.files.database";
 
-// Router Serves under /files/public/files
+// Router Serves under /files/public/file
 const router = Router();
 
 router.get("/:name", async (req: Request, res: Response): Promise<void> => {

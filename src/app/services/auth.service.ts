@@ -215,6 +215,10 @@ export class AuthService {
      * @returns {void}
      */
     updateLoginState(): void {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+
         const request = this.http.post<{ message: string; token: string; valid: boolean; error: boolean }>("/api/public/auth/isLoggedIn", {
             token: this.getLocalStorage(),
         });

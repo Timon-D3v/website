@@ -31,12 +31,13 @@ export function canAccessSecuredRoutes(req: Request, res: Response, next: NextFu
  * @param {Response} res - The response object.
  * @param {NextFunction} next - The next middleware function in the stack.
  *
- * @returns {void | Response} void or a 401 Unauthorized response.
+ * @returns {void} - If the user is authenticated, the next middleware is called.
+ *                   If the user is not authenticated, a 401 Unauthorized response is sent.
  */
-export function canAccessSecuredApi(req: Request, res: Response, next: NextFunction): void | Response {
+export function canAccessSecuredApi(req: Request, res: Response, next: NextFunction): void {
     if (typeof req.session?.user?.email === "string") return next();
 
-    return res.status(401).end();
+    res.status(401).end();
 }
 
 /**
@@ -71,10 +72,11 @@ export function canAccessAdminRoutes(req: Request, res: Response, next: NextFunc
  * @param {Response} res - The response object.
  * @param {NextFunction} next - The next middleware function.
  *
- * @returns {void} void or a 401 Unauthorized response.
+ * @returns {void} - If the user has admin privileges, the next middleware is called.
+ *                   If the user does not have admin privileges, a 401 Unauthorized response is sent.
  */
-export function canAccessAdminApi(req: Request, res: Response, next: NextFunction): void | Response {
+export function canAccessAdminApi(req: Request, res: Response, next: NextFunction): void {
     if (typeof req.session?.user?.email === "string" && req.session.user.email === publicConfig.CONTACT_EMAIL) return next();
 
-    return res.status(401).end();
+    res.status(401).end();
 }

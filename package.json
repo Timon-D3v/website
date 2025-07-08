@@ -4,7 +4,7 @@
   "description": "This is the source code of my website www.timondev.com.",
   "homepage": "https://www.timondev.com",
   "author": "Timon Fiedler",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Timon-D3v/website.git"

@@ -83,18 +83,51 @@ export default {
     },
     SITEMAP: {
         // "URL": "SITENAME"
-        "/": "Home",
-        "/contact": "Kontakt",
-        "/about": "Über Mich",
-        "/projects": "Projekte",
-        "/imprint": "Impressum",
-        "/privacy": "Datenschutz",
-        "/admin": "Adminseite",
-        "/login": "Login",
-        "/settings": "Einstellungen",
-        "/logout": "Logout",
-        "/files": "Dateien",
-    } as Record<string, string>,
+        "/": {
+            title: "Home",
+            description: "Timon Fiedler – Fullstack Webentwickler aus Zürich. Ich entwickle moderne, performante Webseiten und hoste sie auf meinem eigenen Server. Schau dir meine Projekte an oder kontaktiere mich direkt!",
+        },
+        "/contact": {
+            title: "Kontakt",
+            description: "Du möchtest mit mir zusammenarbeiten oder hast Fragen? Kontaktiere mich direkt per E-Mail über das Kontaktformular.",
+        },
+        "/about": {
+            title: "Über Mich",
+            description: "Timon Fiedler – Fullstack Webentwickler aus Zürich. Ich entwickle moderne, performante Webseiten und hoste sie auf meinem eigenen Server.",
+        },
+        "/projects": {
+            title: "Projekte",
+            description: "Schau dir meine Projekte an. Ich entwickle moderne, performante Webseiten und hoste sie auf meinem eigenen Server.",
+        },
+        "/imprint": {
+            title: "Impressum",
+            description: "Impressum von Timon Fiedler – Fullstack Webentwickler aus Zürich.",
+        },
+        "/privacy": {
+            title: "Datenschutz",
+            description: "Datenschutz von Timon Fiedler – Fullstack Webentwickler aus Zürich.",
+        },
+        "/admin": {
+            title: "Adminseite",
+            description: "Adminseite von Timon Fiedler – Fullstack Webentwickler aus Zürich.",
+        },
+        "/login": {
+            title: "Login",
+            description: "Login – Zugriff auf dein persönliches Konto bei Timon.dev.",
+        },
+        "/settings": {
+            title: "Einstellungen",
+            description: "Einstellungen für dein persönliches Konto bei Timon.dev.",
+        },
+        "/logout": {
+            title: "Logout",
+            description: "Logout – Abmeldung von deinem persönlichen Konto bei Timon.dev.",
+        },
+        "/files": {
+            title: "Dateien",
+            description: "Dateien – Verwalte deine hochgeladenen Dateien auf Timon.dev.",
+        },
+    } as Record<string, { title: string; description: string }>,
     SECURED_ROUTES: ["/admin", "/settings", "/files"],
     ADMIN_ROUTES: ["/admin"],
     ERRORS: {

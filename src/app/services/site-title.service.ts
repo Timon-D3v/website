@@ -22,7 +22,7 @@ export class SiteTitleService {
         try {
             let title = "";
 
-            title = publicConfig.SITEMAP[route];
+            title = publicConfig.SITEMAP[route].title;
 
             if (typeof title === "undefined") title = "";
 
@@ -54,13 +54,17 @@ export class SiteTitleService {
      */
     setTitleForRoute(route: string): void {
         const title = this.getTitleFromRoute(route);
+        const description = publicConfig.SITEMAP[route]?.description || "-";
 
         if (!isPlatformBrowser(this.platformId)) return;
 
         document.title = title;
+        document.querySelector("meta[name='description']")?.setAttribute("content", description);
         document.querySelector("meta[property='og:title']")?.setAttribute("content", title);
         document.querySelector("meta[property='og:url']")?.setAttribute("content", window.location.origin + route);
+        document.querySelector("meta[property='og:description']")?.setAttribute("content", description);
         console.log("Title set to:", title);
+        console.log("Description set to:", description);
     }
 
     /**
@@ -80,7 +84,7 @@ export class SiteTitleService {
      * 8. Finally, it returns the name of the folder.
      */
     getSiteTitleForFolder(title: string): string {
-        if (title !== "" && title !== publicConfig.SITEMAP["/files"]) return title;
+        if (title !== "" && title !== publicConfig.SITEMAP["/files"].title) return title;
 
         if (!isPlatformBrowser(this.platformId)) return title;
 

@@ -1,6 +1,7 @@
 import { AngularNodeAppEngine, createNodeRequestHandler, isMainModule, writeResponseToNodeResponse } from "@angular/ssr/node";
 import express from "express";
 import session from "express-session";
+import cors from "cors";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import CONFIG from "./config";
@@ -15,6 +16,21 @@ const browserDistFolder = resolve(serverDistFolder, "../browser");
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+/**
+ * Enable CORS for all origins.
+ * This allows cross-origin requests, which is useful for APIs and resources that need to be accessed
+ * from different domains or ports.
+ */
+app.use(
+    cors({
+        origin: [
+            /https?:\/\/.*\.timondev\.com/, // Allow all subdomains of timondev.com
+            /https?:\/\/localhost(:\d+)?/, // Allow localhost with any port
+            /https?:\/\/127\.0\.0\.1(:\d+)?/,
+        ],
+    }),
+);
 
 /**
  * Serve static files from /public

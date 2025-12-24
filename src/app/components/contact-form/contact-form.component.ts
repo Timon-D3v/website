@@ -6,19 +6,14 @@ import { NotificationService } from "../../services/notification.service";
 import { getElm } from "timonjs";
 import publicConfig from "../../../public.config";
 import { isPlatformBrowser } from "@angular/common";
+import { ApiResponse } from "../../../@types/apiResponse.type";
 
 @Component({
     selector: "app-contact-form",
     imports: [PrimaryButtonComponent, ReactiveFormsModule],
     templateUrl: "./contact-form.component.html",
     styleUrl: "./contact-form.component.scss",
-    providers: [
-        {
-            provide: "NG_VALUE_ACCESSOR",
-            useExisting: forwardRef(() => ContactFormComponent),
-            multi: true,
-        },
-    ],
+    providers: [],
 })
 export class ContactFormComponent {
     contactForm = new FormGroup({
@@ -26,12 +21,15 @@ export class ContactFormComponent {
         familyNameControl: new FormControl(""),
         emailControl: new FormControl(""),
         messageControl: new FormControl(""),
+        honeypotControl: new FormControl("🍯")
     });
 
     email = publicConfig.EMAIL;
 
     submitButtonText = signal("Abschicken");
     disabledButton = signal(false);
+
+    emailClass = signal<null | "ng-valid" | "ng-invalid">(null);
 
     private contactService = inject(ContactService);
     private notificationService = inject(NotificationService);
@@ -56,18 +54,24 @@ export class ContactFormComponent {
     onSubmit(): void {
         if (!isPlatformBrowser(this.platformId)) return;
 
+        if (this.contactForm.value.honeypotControl !== "🍯") {
+            return this.notificationService.info("Bot erkannt", "Du hast den Honeypot ausgelöst. Dieser ist dazu da, Bots zu enttarnen. Es wurde keine E-Mail verschickt.")
+        }
+
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");
 
-        getElm("email").removeClass("ng-valid", "ng-invalid");
-        data.email.valid ? getElm("email").addClass("ng-valid") : getElm("email").addClass("ng-invalid");
-        if (!valid) return this.notificationService.error(error.title, error.message);
+        this.emailClass.set(data.email.valid ? "ng-valid" : "ng-invalid");
+
+        if (!valid) {
+            return this.notificationService.error(error.title, error.message);
+        }
 
         const request = this.contactService.sendData(data);
 
         this.disabledButton.set(true);
         this.submitButtonText.set("Wird gesendet...");
 
-        request.subscribe((response: any) => {
+        request.subscribe((response: ApiResponse) => {
             if (response?.error) {
                 this.notificationService.error("Fehler", "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
                 this.disabledButton.set(false);

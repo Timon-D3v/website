@@ -1,0 +1,15 @@
+User-agent: ia_archiver
+Disallow: 
+User-agent: baiduspider
+Disallow: /
+User-agent: yahoo-mmcrawler
+Disallow: /
+User-agent: yahoo-blogs/v3.9
+Disallow: /
+User-agent: *
+Disallow: 
+Crawl-delay: 10
+Disallow: /cgi-bin/
+Disallow: /contact/
+Disallow: /api/
+Disallow: /admin/

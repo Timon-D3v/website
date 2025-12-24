@@ -36,7 +36,7 @@ export default {
             Email: {
                 type: "Email",
                 commonName: "Email",
-                url: "mailto:fiedlertimon@gmail.com",
+                url: "mailto:info@timondev.com",
                 iconUrl: "/socials/logo_email_",
             } as SocialsIconInfo,
         } as Record<string, SocialsIconInfo>,
@@ -45,7 +45,7 @@ export default {
         EMAIL: {
             COLOR: "#2046df",
             TITLE: "Nachricht über Kontaktformular",
-            MESSAGE_END: 'Diese Nachricht wurde über das Webseitenformular von <a href="https://www.timondev.com" style="color:#8c8c8c;">timondev.com</a> versendet.',
+            MESSAGE_END: "Diese Nachricht wurde über das Webseitenformular von <a href='https://www.timondev.com' style='color:#8c8c8c;'>timondev.com</a> versendet.",
             FOOTER: "Der Ersteller (Timon Fiedler) ist nicht verantwortlich für eventuellen Spam oder missbrauch jeglicher Art, welche durch den Endnutzer entstehen.",
             FOOTER_2: "Bitte lass es mich wissen, wenn du denkst, dass dir diese E-Mail nicht zugestellt hätte werden sollen.",
             URLS: {
@@ -59,7 +59,7 @@ export default {
             TITLE: "Login-Bestätigung",
         },
         ABOUT_ME_TEXT:
-            "Hallo, ich bin Timon, 18 Jahre alt und eins meiner Hobbies ist das Programmieren. Dabei habe ich mir durch Learning-by-Doing die Webentwicklung selbst beigebracht und auch schon einige Projekte erfolgreich hinter mir. Dazu gehört unter anderem die Entwicklung der Webseite für das Wohltätigkeitsprojekt „zurich meets tanzania“, aber auch etwas kleinere Projekte. Weil das Programmieren mein Hobby ist, bin ich schnell und billig und versuche immer das beste Resultat zu erreichen. Ein weiterer Vorteil meiner Interesse an Technik ist, dass ich meinen eigenen Server habe und somit auch deine Webseite selbst hosten kann, was einiges an jährlichen Kosten sparen kann. Um weitere Eindrücke über meine Arbeit zu erhalten, sieh dir meine Projekte weiter unten an oder kontaktiere mich direkt. Ich freue mich auf deine Nachricht :] ",
+            "Hallo, ich bin Timon, 18 Jahre alt und eins meiner Hobbies ist das Programmieren. Dabei habe ich mir durch Learning-by-Doing die Webentwicklung selbst beigebracht und auch schon einige Projekte erfolgreich hinter mir. Dazu gehört unter anderem die Entwicklung der Webseite für das Wohltätigkeitsprojekt „zurich meets tanzania“ und weitere etwas kleinere Projekte. Weil das Programmieren mein Hobby ist, bin ich schnell, billig und strebe immer das beste Resultat an. Ein weiterer Vorteil meiner Interesse an Technik ist, dass ich meinen eigenen Server habe und somit auch deine Webseite selbst hosten kann, was einiges an jährlichen Kosten sparen kann. Um weitere Eindrücke über meine Arbeit zu erhalten, sieh dir meine Projekte weiter unten an oder kontaktiere mich direkt. Ich freue mich auf deine Nachricht :] ",
     },
     FALLBACKS: {
         PROJECTS: [

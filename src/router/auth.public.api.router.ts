@@ -22,7 +22,7 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
 
-        if (!email && !password) throw new Error("Bad Request.");
+        if (!email || !password) throw new Error("Bad Request.");
 
         if (typeof email !== "string" || typeof password !== "string") throw new Error("Bad Request.");
 

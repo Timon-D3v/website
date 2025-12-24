@@ -15,11 +15,15 @@
     </div>
     <div class="container full">
         <label for="email">E-Mail</label>
-        <input type="email" id="email" title="Deine E-Mail-Adresse" formControlName="emailControl" required autocomplete="email" />
+        <input type="email" id="email" [classList]="emailClass()" title="Deine E-Mail-Adresse" formControlName="emailControl" required autocomplete="email" />
     </div>
     <div class="container full">
         <label for="message">Nachricht</label>
         <textarea id="message" title="Deine Nachricht an mich" formControlName="messageControl" required></textarea>
+    </div>
+    <div class="container full honeypot">
+        <label for="honeypot">Honeypot</label>
+        <input type="text" id="honeypot" title="Honeypot" formControlName="honeypotControl" required>
     </div>
     <div class="container full center">
         <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Nachricht abschicken'" [disabled]="disabledButton()"></app-primary-button>

@@ -1,6 +1,11 @@
 @use "../../../styles/colors.scss" as *;
 @use "../../../styles/components/form.scss";
 
+.honeypot {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 @media screen and (max-width: 600px) {
     p {
         font-size: calc(1.3rem / 1.25);

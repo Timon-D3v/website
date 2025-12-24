@@ -317,6 +317,12 @@ export class AboutMeCanvasComponent implements OnInit {
     fillPositionTextureFromPoints(texture: THREE.DataTexture, points: Point[]): void {
         const array = texture.image.data;
 
+        if (array === null) {
+            console.error("Texture has no image data.")
+
+            return;
+        }
+
         for (let i = 0, j = 0; i < array.length && j < points.length; i += 4, j += 1) {
             array[i + 0] = 2 * (points[j][0] - 0.5);
             array[i + 1] = -2 * (points[j][1] - 0.5);
@@ -337,6 +343,12 @@ export class AboutMeCanvasComponent implements OnInit {
      */
     fillVelocityTexture(texture: THREE.DataTexture): void {
         const array = texture.image.data;
+
+        if (array === null) {
+            console.error("Texture has no image data.")
+
+            return;
+        }
 
         for (let i = 0; i < array.length; i += 4) {
             array[i + 0] = 0.01 * (Math.random() - 0.5);

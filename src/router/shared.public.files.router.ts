@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/:name", async (req: Request, res: Response): Promise<void> => {
     try {
-        const result = await getPublicFile(req.params["name"]);
+        const result = await getPublicFile(Array.isArray(req.params["name"]) ? req.params["name"][0] : req.params["name"]);
 
         if (result instanceof Error) throw result;
 

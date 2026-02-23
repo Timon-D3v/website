@@ -318,7 +318,7 @@ export class AboutMeCanvasComponent implements OnInit {
         const array = texture.image.data;
 
         if (array === null) {
-            console.error("Texture has no image data.")
+            console.error("Texture has no image data.");
 
             return;
         }
@@ -345,7 +345,7 @@ export class AboutMeCanvasComponent implements OnInit {
         const array = texture.image.data;
 
         if (array === null) {
-            console.error("Texture has no image data.")
+            console.error("Texture has no image data.");
 
             return;
         }

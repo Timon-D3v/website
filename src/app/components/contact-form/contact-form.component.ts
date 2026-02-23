@@ -21,7 +21,7 @@ export class ContactFormComponent {
         familyNameControl: new FormControl(""),
         emailControl: new FormControl(""),
         messageControl: new FormControl(""),
-        honeypotControl: new FormControl("🍯")
+        honeypotControl: new FormControl("🍯"),
     });
 
     email = publicConfig.EMAIL;
@@ -55,7 +55,7 @@ export class ContactFormComponent {
         if (!isPlatformBrowser(this.platformId)) return;
 
         if (this.contactForm.value.honeypotControl !== "🍯") {
-            return this.notificationService.info("Bot erkannt", "Du hast den Honeypot ausgelöst. Dieser ist dazu da, Bots zu enttarnen. Es wurde keine E-Mail verschickt.")
+            return this.notificationService.info("Bot erkannt", "Du hast den Honeypot ausgelöst. Dieser ist dazu da, Bots zu enttarnen. Es wurde keine E-Mail verschickt.");
         }
 
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");

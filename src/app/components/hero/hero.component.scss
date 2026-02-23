@@ -109,6 +109,12 @@ $font-size: 1.3rem;
     .max {
         display: block;
     }
+
+    .left {
+        transform: scale(1.2);
+        transform-origin: left;
+        max-width: 80%;
+    }
 }
 
 @media screen and (max-width: 1999px) {
@@ -225,12 +231,5 @@ $font-size: 1.3rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-}
-
-@media screen and (min-width: 2000px) {
-    .left {
-        transform: scale(1.2);
-        transform-origin: left;
     }
 }

@@ -26,7 +26,20 @@ router.post("/small", multerInstance.single("file"), async (req: Request, res: R
 
     const meta: MetaDataUpload = JSON.parse(req.body.meta);
 
-    if (typeof meta.size !== "number" || meta.size < 1 || typeof meta.type !== "string" || meta.type === "" || typeof meta.lastModified !== "number" || meta.lastModified < 0 || typeof meta.originalName !== "string" || meta.originalName === "" || typeof meta.uploadedAt !== "number" || meta.uploadedAt < 0 || typeof meta.currentPath !== "string" || meta.currentPath === "") {
+    if (
+        typeof meta.size !== "number" ||
+        meta.size < 1 ||
+        typeof meta.type !== "string" ||
+        meta.type === "" ||
+        typeof meta.lastModified !== "number" ||
+        meta.lastModified < 0 ||
+        typeof meta.originalName !== "string" ||
+        meta.originalName === "" ||
+        typeof meta.uploadedAt !== "number" ||
+        meta.uploadedAt < 0 ||
+        typeof meta.currentPath !== "string" ||
+        meta.currentPath === ""
+    ) {
         return res.json({
             error: true,
             message: "Die Metadaten sind nicht vollständig.",
@@ -53,7 +66,20 @@ router.post("/big", multerInstance.single("chunk"), async (req: Request, res: Re
             return;
         }
 
-        if (typeof meta.size !== "number" || meta.size < 1 || typeof meta.type !== "string" || meta.type === "" || typeof meta.lastModified !== "number" || meta.lastModified < 0 || typeof meta.originalName !== "string" || meta.originalName === "" || typeof meta.uploadedAt !== "number" || meta.uploadedAt < 0 || typeof meta.currentPath !== "string" || meta.currentPath === "") {
+        if (
+            typeof meta.size !== "number" ||
+            meta.size < 1 ||
+            typeof meta.type !== "string" ||
+            meta.type === "" ||
+            typeof meta.lastModified !== "number" ||
+            meta.lastModified < 0 ||
+            typeof meta.originalName !== "string" ||
+            meta.originalName === "" ||
+            typeof meta.uploadedAt !== "number" ||
+            meta.uploadedAt < 0 ||
+            typeof meta.currentPath !== "string" ||
+            meta.currentPath === ""
+        ) {
             res.json({
                 error: true,
                 message: "Die Metadaten sind nicht vollständig.",

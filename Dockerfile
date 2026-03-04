@@ -1,13 +1,15 @@
-FROM node:22.16.0-alpine3.20
+FROM node:24.14.0-alpine3.23
 
-WORKDIR /build
+WORKDIR /portfolio
 
 COPY package*.json .
 
-RUN npm install --omit=dev
-RUN npm cache clean --force
-
 COPY dist dist
 COPY public public
+
+RUN mkdir cert
+
+RUN npm install --omit=dev
+RUN npm cache clean --force
 
 CMD ["node", "dist/server/server.mjs"]

@@ -51,3 +51,4 @@ HOW TO DO THE CLOUD.txt
 .vscode/**
 .angular/**
 dockerizeBuild.sh
+cert/

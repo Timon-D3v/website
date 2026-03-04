@@ -4,6 +4,8 @@ import session from "express-session";
 import cors from "cors";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import https from "node:https";
 import CONFIG from "./config";
 import rootRouter from "./router/root.router";
 import apiRouter from "./router/api.router";
@@ -93,6 +95,24 @@ app.use((req, res, next) => {
 if (isMainModule(import.meta.url)) {
     app.listen(CONFIG.PORT, CONFIG.HOST, () => {
         console.log(`\x1b[34m%s\x1b[0m`, `Node Express server listening on http://${CONFIG.HOST}:${CONFIG.PORT}`);
+    });
+}
+
+/**
+ * Start the HTTPS server if this module is the main entry point and HTTPS is enabled.
+ * The HTTPS server listens on the port defined by the `HTTPS_PORT` environment variable.
+ */
+if (isMainModule(import.meta.url) && CONFIG.HTTPS_ACTIVE) {
+    const httpsOptions = {
+        key: readFileSync("./cert/key.pem"),
+        cert: readFileSync("./cert/cert.pem"),
+        passphrase: CONFIG.HTTPS_CERT_PASSPHRASE,
+    };
+
+    const httpsServer = https.createServer(httpsOptions, app);
+
+    httpsServer.listen(CONFIG.HTTPS_PORT, CONFIG.HOST, () => {
+        console.log(`\x1b[34m%s\x1b[0m`, `HTTPS Node Express server listening on https://${CONFIG.HOST}:${CONFIG.HTTPS_PORT}`);
     });
 }
 

@@ -1,0 +1,14 @@
+---
+services:
+  portfolio:
+    image: timond3v/portfolio:2.3.3
+    container_name: portfolio
+    pull_policy: if_not_present
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./cert:/portfolio/cert:ro
+    ports:
+      - 3005:8080
+      - 5006:8081

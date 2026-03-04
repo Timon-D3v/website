@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "This is the source code of my website www.timondev.com.",
   "homepage": "https://www.timondev.com",
   "author": "Timon Fiedler",
@@ -28,7 +28,8 @@
     "docker:stop": "docker stop portfolio",
     "docker:tag": "docker tag portfolio timond3v/portfolio",
     "docker:push": "docker push timond3v/portfolio",
-    "docker:compile:for:all:platforms": "docker buildx build --platform linux/arm64,linux/amd64 -t timond3v/portfolio:latest --push ."
+    "docker:buildx": "docker buildx build --platform linux/arm64,linux/amd64 -t portfolio",
+    "docker:buildx:push": "docker buildx build --platform linux/arm64,linux/amd64 -t timond3v/portfolio:latest --push ."
   },
   "dependencies": {
     "@angular/animations": "^21.1.5",

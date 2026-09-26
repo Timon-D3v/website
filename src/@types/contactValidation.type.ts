@@ -9,3 +9,15 @@ export interface ContactValidation {
     email: ValidationObject;
     message: ValidationObject;
 }
+
+export type ContactConfirmRequest = {
+    token: string;
+    timestamp: number;
+    verificationCode: string;
+    payload: {
+        name: string;
+        familyName: string;
+        email: string;
+        message: string;
+    };
+};

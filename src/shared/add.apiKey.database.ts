@@ -10,43 +10,6 @@ import connection from "./connection.database";
  */
 export async function addApiKey(organizationName: string, key: string): Promise<boolean> {
     try {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        console.warn("CHANGE THE CONNECTION TO THE DELIVAPI ONE.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
         await connection.query("INSERT INTO `delivapi`.`user` (`name`, `key`) VALUES (?, ?);", [organizationName, key]);
         return true;
     } catch (error) {

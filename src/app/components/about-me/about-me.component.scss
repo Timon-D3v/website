@@ -113,15 +113,15 @@ app-about-me-canvas {
 
     .right p {
         font-size: calc($font-size / 1.25);
-        max-height: 40vh;
+        // max-height: 40vh;
         overflow-y: auto;
         position: relative;
 
-        &::after {
-            content: "";
-            display: block;
-            height: calc($mobile-header-height / 2);
-        }
+        // &::after {
+        //     content: "";
+        //     display: block;
+        //     height: calc($mobile-header-height / 2);
+        // }
     }
 
     .fog {

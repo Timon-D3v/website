@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private router = inject(Router);
 
     private siteTitleService = inject(SiteTitleService);
-    private gsapService = inject(GsapService);
+    // private gsapService = inject(GsapService);
     private authService = inject(AuthService);
 
     /**
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         timonjs_message();
 
-        this.gsapService.init();
+        // this.gsapService.init();
 
         const navigationEndPipe = this.router.events.pipe(filter((event): boolean => event instanceof NavigationEnd));
         const navigationStartPipe = this.router.events.pipe(filter((event): boolean => event instanceof NavigationStart));

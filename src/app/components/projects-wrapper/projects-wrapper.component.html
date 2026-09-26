@@ -1,7 +1,7 @@
 <div class="wrapper">
     <h2>Meine Projekte</h2>
-    <div class="carousel" [style]="{ width: elements.length * 100 + 'vw' }">
-        @for (element of elements; track element.id) {
+    <div #carousel class="carousel" [style.width.vw]="elements.length * 100">
+        @for (element of elements; track $index) {
             <div [class]="'carousel__item id-' + element.id">
                 <app-project [id]="element.id" [title]="element.title" [description]="element.description" [url]="element.url" [image]="element.image_url" [portrait_image]="element.portrait_image_url"></app-project>
             </div>

@@ -21,13 +21,19 @@ export class ContactFormComponent {
         familyNameControl: new FormControl(""),
         emailControl: new FormControl(""),
         messageControl: new FormControl(""),
-        honeypotControl: new FormControl("🍯"),
+    });
+
+    contactVerificationForm = new FormGroup({
+        tokenControl: new FormControl(""),
+        verificationCodeControl: new FormControl(""),
     });
 
     email = publicConfig.EMAIL;
 
     submitButtonText = signal("Abschicken");
     disabledButton = signal(false);
+
+    verificationCodeSent = signal(false);
 
     emailClass = signal<null | "ng-valid" | "ng-invalid">(null);
 
@@ -54,10 +60,6 @@ export class ContactFormComponent {
     onSubmit(): void {
         if (!isPlatformBrowser(this.platformId)) return;
 
-        if (this.contactForm.value.honeypotControl !== "🍯") {
-            return this.notificationService.info("Bot erkannt", "Du hast den Honeypot ausgelöst. Dieser ist dazu da, Bots zu enttarnen. Es wurde keine E-Mail verschickt.");
-        }
-
         const [valid, data, error] = this.contactService.validateData(this.contactForm.value.nameControl ?? "", this.contactForm.value.familyNameControl ?? "", this.contactForm.value.emailControl ?? "", this.contactForm.value.messageControl ?? "");
 
         this.emailClass.set(data.email.valid ? "ng-valid" : "ng-invalid");
@@ -77,9 +79,78 @@ export class ContactFormComponent {
                 this.disabledButton.set(false);
                 this.submitButtonText.set("Abschicken");
             } else {
-                this.notificationService.success("Erfolg", "Ihre Nachricht wurde erfolgreich versendet.");
-                this.submitButtonText.set("Verschickt");
+                this.notificationService.info("Bestätigung erforderlich:", "Um Spam zu vermeiden erfordert die Anfrage eine Bestätigung deiner E-Mail-Adresse. Bitte gib den Code aus deinem Postfach ein, um deine Anfrage zu bestätigen.");
+
+                this.contactForm.reset();
+
+                this.verificationCodeSent.set(true);
+                this.disabledButton.set(false);
+                this.submitButtonText.set("Bestätigen");
+
+                console.info("Verification token:", response.message);
+                this.contactVerificationForm.patchValue({
+                    tokenControl: response.message,
+                });
             }
+        });
+    }
+
+    onVerificationSubmit(event: Event): void {
+        event.preventDefault();
+
+        this.disabledButton.set(true);
+        this.submitButtonText.set("Bestätigen...");
+
+        const token = this.contactVerificationForm.value.tokenControl;
+        const verificationCode = this.contactVerificationForm.value.verificationCodeControl;
+
+        if (typeof token !== "string" || !/^[a-z0-9]{64}$/.test(token.toLowerCase())) {
+            this.notificationService.error("Applikationsfehler:", "Es wurde kein gültiger Token übermittelt. Bitte lade die Seite neu und versuche es noch einmal.");
+
+            this.disabledButton.set(false);
+            this.submitButtonText.set("Bestätigen");
+
+            return;
+        }
+
+        if (typeof verificationCode !== "string" || !/^[a-z0-9]{10}$/.test(verificationCode.toLowerCase())) {
+            this.notificationService.error("Eingabefehler:", "Bitte gib einen gültigen Bestätigungscode ein.");
+
+            this.disabledButton.set(false);
+            this.submitButtonText.set("Bestätigen");
+
+            return;
+        }
+
+        const request = this.contactService.confirmRequest(token, verificationCode);
+
+        request.subscribe({
+            next: (response: ApiResponse) => {
+                if (response.error) {
+                    this.notificationService.error("Fehler:", "Deine Anfrage konnte nicht bestätigt werden, da der Bestätigungscode ungültig oder abgelaufen ist.");
+
+                    this.disabledButton.set(false);
+                    this.submitButtonText.set("Bestätigen");
+
+                    return;
+                }
+
+                this.notificationService.success("Versendet!", "Deine E-Mail-Adresse wurde erfolgreich bestätigt und deine Nachricht wurde versendet. Wir werden uns so schnell wie möglich bei dir melden.");
+
+                this.verificationCodeSent.set(false);
+
+                this.contactVerificationForm.reset();
+
+                this.disabledButton.set(false);
+                this.submitButtonText.set("Absenden");
+            },
+            error: (error: unknown) => {
+                console.error("Error while confirming contact request verification token:", error);
+                this.notificationService.error("Fehler", "Beim Bestätigen des Bestätigungscodes ist ein Fehler aufgetreten. Bitte versuche es erneut.");
+
+                this.disabledButton.set(false);
+                this.submitButtonText.set("Bestätigen");
+            },
         });
     }
 }

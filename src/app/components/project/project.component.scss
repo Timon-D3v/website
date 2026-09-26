@@ -15,34 +15,43 @@
     color: inherit;
     animation: moveBoxShadow 5s infinite ease-in-out;
     transition: box-shadow 0.5s ease;
-    overflow-y: auto;
+    // overflow-y: auto;
 
     &.even {
         background-image: linear-gradient(138deg, $primary-950, $background-950);
     }
 
+    .inner-wrapper {
+        display: block;
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+    }
+
     .imageWrapper {
         width: 100%;
-        height: 60%;
+        // height: 60%;
         border-radius: calc($header-height / 4) calc($header-height / 4) 0 0;
         transition: transform 0.3s ease-in-out;
         overflow: hidden;
 
-        picture {
-            display: block;
+        // picture {
+        //     display: block;
+        //     width: 100%;
+        //     height: auto;
+        //     object-fit: cover;
+        //     transition: transform 0.3s ease-in-out;
+
+        img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            max-height: 55vh;
             object-fit: cover;
             transition: transform 0.3s ease-in-out;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
         }
+        // }
 
-        picture:hover {
+        img:hover {
             transform: scale(1.1);
         }
     }
@@ -63,11 +72,11 @@
     }
 }
 
-@media screen and (max-width: 900px) {
-    .wrapper .imageWrapper {
-        height: 50%;
-    }
-}
+// @media screen and (max-width: 900px) {
+//     .wrapper .imageWrapper {
+//         height: 50%;
+//     }
+// }
 
 @media screen and (max-width: 380px) {
     .wrapper {

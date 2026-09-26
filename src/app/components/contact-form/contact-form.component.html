@@ -1,31 +1,50 @@
-<form [formGroup]="contactForm" (submit)="onSubmit()">
-    <div class="container full top">
-        <h1>Kontaktiere mich</h1>
+@if (!verificationCodeSent()) {
+    <form [formGroup]="contactForm" (submit)="onSubmit()">
+        <div class="container full top">
+            <h1>Kontaktiere mich</h1>
+            <p>
+                Du kannst mich entweder durch das Formular unten, oder direkt via E-Mail unter <a href="mailto:{{ email }}" target="_blank">{{ email }}</a> erreichen.
+            </p>
+        </div>
+        <div class="container">
+            <label for="name">Name</label>
+            <input type="text" id="name" title="Dein Name" formControlName="nameControl" required autocomplete="given-name" />
+        </div>
+        <div class="container">
+            <label for="family_name">Nachname</label>
+            <input type="text" id="family_name" title="Dein Nachname" formControlName="familyNameControl" required autocomplete="family-name" />
+        </div>
+        <div class="container full">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" [classList]="emailClass()" title="Deine E-Mail-Adresse" formControlName="emailControl" required autocomplete="email" />
+        </div>
+        <div class="container full">
+            <label for="message">Nachricht</label>
+            <textarea id="message" title="Deine Nachricht an mich" formControlName="messageControl" required></textarea>
+        </div>
+        <div class="container full center">
+            <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Nachricht abschicken'" [disabled]="disabledButton()"></app-primary-button>
+        </div>
+    </form>
+} @else {
+    <form [formGroup]="contactVerificationForm" (submit)="onVerificationSubmit($event)">
+        <div class="container full top">
+            <h2>Anfrage Bestätigen</h2>
+            <p>
+                Bitte gib den Bestätigungscode ein, der dir per E-Mail geschickt wurde, um deine Anfrage zu bestätigen. Dieser Schritt hilft, Spam zu vermeiden und sicherzustellen, dass ich der richtigen Person antworten kann. Vielen Dank für dein
+                Verständnis.
+            </p>
+        </div>
+        <h2>Anfrage Bestätigen</h2>
         <p>
-            Du kannst mich entweder durch das Formular unten, oder direkt via E-Mail unter <a href="mailto:{{ email }}" target="_blank">{{ email }}</a> erreichen.
+            Bitte gib den Bestätigungscode ein, den wir dir per E-Mail geschickt haben, um deine Anfrage zu bestätigen. Dieser Schritt hilft uns, Spam zu vermeiden und sicherzustellen, dass wir der richtigen Person antworten können. Vielen Dank für
+            dein Verständnis.
         </p>
-    </div>
-    <div class="container">
-        <label for="name">Name</label>
-        <input type="text" id="name" title="Dein Name" formControlName="nameControl" required autocomplete="given-name" />
-    </div>
-    <div class="container">
-        <label for="family_name">Nachname</label>
-        <input type="text" id="family_name" title="Dein Nachname" formControlName="familyNameControl" required autocomplete="family-name" />
-    </div>
-    <div class="container full">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" [classList]="emailClass()" title="Deine E-Mail-Adresse" formControlName="emailControl" required autocomplete="email" />
-    </div>
-    <div class="container full">
-        <label for="message">Nachricht</label>
-        <textarea id="message" title="Deine Nachricht an mich" formControlName="messageControl" required></textarea>
-    </div>
-    <div class="container full honeypot">
-        <label for="honeypot">Honeypot</label>
-        <input type="text" id="honeypot" title="Honeypot" formControlName="honeypotControl" required />
-    </div>
-    <div class="container full center">
-        <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Nachricht abschicken'" [disabled]="disabledButton()"></app-primary-button>
-    </div>
-</form>
+        <label for="verificationCode">Bestätigungscode:</label>
+        <input type="text" id="verificationCode" placeholder="Bestätigungscode eingeben" required formControlName="verificationCodeControl" />
+
+        <div class="container full center">
+            <app-primary-button [text]="submitButtonText()" [type]="'submit'" [title]="'Bestätigungscode abschicken'" [disabled]="disabledButton()"></app-primary-button>
+        </div>
+    </form>
+}

@@ -75,7 +75,7 @@ export class ContactService {
         }
 
         // Check if email is valid
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(result.email.value)) {
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/.test(result.email.value)) {
             result.email.valid = false;
             valid = false;
             setError("Fehler", "Bitte geben Sie eine gültige E-Mail-Adresse ein.");
@@ -118,6 +118,23 @@ export class ContactService {
             familyName: data.familyName.value,
             email: data.email.value,
             message: data.message.value,
+        });
+
+        request.pipe(
+            catchError((error): any => {
+                this.notificationService.error("Netzwerkfehler", publicConfig.ERRORS.NETWORK);
+                console.error(error);
+                return error;
+            }),
+        );
+
+        return request;
+    }
+
+    confirmRequest(token: string, verificationCode: string): Observable<ApiResponse> {
+        const request = this.http.post<ApiResponse>("/api/public/confirmContactRequest", {
+            token,
+            verificationCode,
         });
 
         request.pipe(

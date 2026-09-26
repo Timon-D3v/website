@@ -18,7 +18,7 @@ const browserDistFolder = resolve(serverDistFolder, "../browser");
 
 const app = express();
 const angularApp = new AngularNodeAppEngine({
-    allowedHosts: ['*.timondev.com', '*.localhost', '127.0.0.1'],
+    allowedHosts: CONFIG.ALLOWED_HOSTS,
 });
 
 /**

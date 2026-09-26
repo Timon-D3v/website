@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "This is the source code of my website www.timondev.com.",
   "homepage": "https://www.timondev.com",
   "author": "Timon Fiedler",
@@ -48,7 +48,7 @@
     "gsap": "^3.15.0",
     "multer": "^2.4.0",
     "mysql2": "^3.24.4",
-    "node-mailjet": "^6.0.7",
+    "nodemailer": "^10.0.10",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "poisson-disk-sampling": "^2.3.1",
@@ -59,7 +59,7 @@
     "zone.js": "^0.16.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^22.2.0",
+    "@angular/build": "^22.2.0",
     "@angular/cli": "^22.2.0",
     "@angular/compiler-cli": "^22.2.0",
     "@types/express": "^5.0.3",
@@ -99,9 +99,9 @@
     "gsap-scrolltrigger"
   ],
   "allowScripts": {
-    "msgpackr-extract@3.0.3": true,
-    "lmdb@3.4.4": true,
     "esbuild@0.28.2": true,
-    "@parcel/watcher@2.6.0": true
+    "@parcel/watcher@2.6.0": true,
+    "lmdb@3.5.6": true,
+    "msgpackr-extract@3.0.4": true
   }
 }

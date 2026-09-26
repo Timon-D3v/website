@@ -1,7 +1,6 @@
-import { LibraryResponse } from "node-mailjet";
-import { RequestData } from "node-mailjet/declarations/request/Request";
+import { SMTPSentMessageInfo } from "nodemailer/lib/smtp-transport";
 
 export type EmailResponse = {
     success: boolean;
-    data: string | LibraryResponse<RequestData>;
+    data: string | SMTPSentMessageInfo;
 };

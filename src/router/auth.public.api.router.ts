@@ -43,7 +43,7 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
 
             if (!response.success) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
 
-            if (typeof response.data !== "string" && response.data.response.status !== 200) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
+            if (typeof response.data !== "string" && response.data.rejected.length > 0) throw new Error("Die Bestätigungs-E-Mail konnte nicht verschickt werden. Zur Sicherheit wurden Sie nicht eingeloggt. Bitte versuchen Sie es erneut.");
         }
 
         req.session.user = account;

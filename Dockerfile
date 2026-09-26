@@ -1,15 +1,14 @@
-FROM node:24.14.0-alpine3.23
+FROM node:24-slim
 
 WORKDIR /portfolio
 
-COPY package*.json .
+COPY package.json package-lock.json ./
 
-COPY dist dist
-COPY public public
+RUN npm ci --omit=dev
+
+COPY dist ./dist
+COPY public ./public
 
 RUN mkdir cert
-
-RUN npm install --omit=dev
-RUN npm cache clean --force
 
 CMD ["node", "dist/server/server.mjs"]

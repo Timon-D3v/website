@@ -50,5 +50,10 @@ HOW TO DO THE CLOUD.txt
 .vscode/
 .vscode/**
 .angular/**
-dockerizeBuild.sh
+dockerize.sh
 cert/
+dev/mysql/
+dev/delivapi/
+dev/*.sql
+dev/*.sh
+dev/bugs/

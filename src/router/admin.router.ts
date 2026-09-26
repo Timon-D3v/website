@@ -111,7 +111,7 @@ router.post("/generateApiKey", async (req: Request, res: Response) => {
     try {
         const { organizationName } = req.body;
 
-        if (!organizationName || typeof organizationName !== "string" || organizationName === "") {
+        if (!organizationName || typeof organizationName !== "string" || organizationName.trim() === "" || organizationName.trim() === "user") {
             res.status(400).json({
                 error: true,
                 message: "Der Organisationsname ist nicht gültig.",
